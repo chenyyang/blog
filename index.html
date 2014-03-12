@@ -6,7 +6,8 @@
 　　<p>最新文章</p>
 　　<ul>
 
- {% assign categories_list = site.categories %}
+{{ site.categories }} <p>123</p>
+{% assign categories_list = site.categories %}
 {% if categories_list.first[0] == null %}
     {% for category in categories_list %} 
     	<li><a href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ category }}-ref">
