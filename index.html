@@ -6,21 +6,22 @@
 　　<p>最新文章</p>
 　　<ul>
 
-{{ site.categories }} <p>123</p>
 {% assign categories_list = site.categories %}
 {% if categories_list.first[0] == null %}
-    {% for category in categories_list %} 
+11  
+  {% for category in categories_list %} 
     	<li><a href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ category }}-ref">
     		{{ category | join: "/" }} <span>{{ site.categories[category].size }}</span>
     	</a></li>
     {% endfor %}
-  {% else %}
+{% else %}
+22
     {% for category in categories_list %} 
     	<li><a href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ category[0] }}-ref">
     		{{ category[0] | join: "/" }} <span>{{ category[1].size }}</span>
     	</a></li>
     {% endfor %}
-  {% endif %}
+{% endif %}
 
 
 {% for post in site.posts  %}
