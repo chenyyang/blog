@@ -1,1 +1,22 @@
 baseurl: /blog
+production: false
+timezone: America/New_York
+markdown: kramdown
+kramdown:
+  use_coderay: true
+  coderay:
+    coderay_wrap: div
+    coderay_line_numbers: 
+    coderay_tab_width: 2
+    coderay_css: class
+permalink: /:year/:month/:day/:title
+exclude:
+- Gemfile
+- Gemfile.lock
+- README.txt
+- tidy.conf
+- config.ru
+- tasks
+- bin
+- public
+- tmp

@@ -1,12 +1,57 @@
-<!DOCTYPE html>
-　　<html>
-　　<head>
-　　　　<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-　　　　<title>{{ page.title }}</title>
-　　</head>
-　　<body>
-
-　　　　{{ content }}
-
-　　</body>
-　　</html>
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ken Collins" />
+    <meta name="google-site-verification" content="W3DG-CkoWHypH24OfrGmGbMezvhC6AyLql4jLI7hXhI" />
+    <title>{{ page.title }} @MetaSkills.net</title>
+    <link rel="alternate" type="application/atom+xml" href="http://feeds.feedburner.com/metaskills" title="MetaSkills.net" />
+    <link rel="author" href="mailto:ken@metaskills.net" />
+    <link rel="stylesheet" href="/resource/reset.css" />
+    <link rel="stylesheet" href="/resource/site.css" />
+    <link rel="shortcut icon" href="/favicon.png" />
+    <script src="/resource/jquery-1.7.1.min.js"></script>
+    <script src="/resource/site.js"></script>
+  </head>
+  <body>
+    <header id="mast">
+      <div class="content">
+        <section id="identity" >
+          <div id="avatar"></div>
+          <div>MetaSkills.net</div>
+          <div>Coding things under other things!</div>
+        </section>
+        <nav>
+          <ul>
+            <li><a href="/" class="button" data-icon="H">Home</a></li>
+            <li><a href="/pages/colophon.html" class="button" data-icon="U">About Me</a></li>
+            <li><a href="/pages/projects.html" class="button" data-icon="x">Projects</a></li>
+            <li><a href="/pages/resume.html" class="button" data-icon="N">Resume</a></li>
+            <li><a href="http://twitter.com/metaskills" class="button" data-icon="B">Twitter</a></li>
+            <li><a href="/archive.html" class="button" data-icon="l">Archives</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <section id="page">
+      <section id="content">
+        {{ content }}
+      </section>
+      <nav>
+        <div><a href="http://www.youtube.com/watch?v=8pBTK-pdMP0">Society for coding things on top  of other things!</a></div>
+        <h3>Categories</h3>
+        <ul>
+          <li><a href="/categories/heuristics.html">Heuristics</a></li>
+          <li><a href="/categories/workflow.html">Workflow</a></li>
+          <li><a href="/categories/apple-os.html">Apple/OS</a></li>
+          <li><a href="/categories/database.html">Database</a></li>
+          <li><a href="/categories/lifestyle.html">Lifestyle</a></li>
+          <li><a href="/categories/miscellaneous.html">Miscellaneous</a></li>
+          <li><a href="/categories/ruby-rails.html">Ruby/Rails</a></li>
+          <li><a href="/categories/javascript.html">JavaScript</a></li>
+          <li><a href="/categories/tools.html">Tools</a></li>
+        </ul>
+      </nav>
+    </section>
+</body>
+</html>
