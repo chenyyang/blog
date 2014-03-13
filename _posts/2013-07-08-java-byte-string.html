@@ -1,0 +1,27 @@
+---
+layout: default
+title: byte和String转换发生改变
+categories:
+  - java
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			最近的项目中要使用到把byte[]类型转换成String字符串然后通过网络发送，但发现发现出去的字符串和获取的字符串虽然是一样的，但当用String的getBytes()的方法得到的byte[]跟原来的byte[]是不一样的。
+<p>看如下代码：</p>
+<p>bytebytes[] = new byte[] { 50, 0, -1, 28, -24 };</p>
+<p>String string = new String(bytes);</p>
+<p>byte[] ret = string.getBytes();</p>
+<p>查看ret的数据发现是50, 0, -17, -65, -67, 28, -17, -65,
+-67,发现数据并不是原来的数据。</p>
+<p>而使用如下代码就可以得到原来的数据：</p>
+<p>bytebytes[] = new byte[] { 50, 0, -1, 28, -24 };</p>
+<p>StringisoString = new String(bytes, "ISO-8859-1");</p>
+<p>byte[] isoret = isoString.getBytes("ISO-8859-1");</p>
+<p>这 是为什么呢？原因是第一种方法默认是用UTF-8编码来生成String的，用
+System.getProperty("sun.jnu.encoding")可以得到Android默认编码是UTF-8。UTF-8是可变长度的编
+码，原来的字节数组就被改变了。而ISO8859-1通常叫做Latin-1，Latin-1包括了书写所有西方欧洲语言不可缺少的附加字符，其中
+0~127的字符与ASCII码相同，它是单字节的编码方式，这样第二种方式生成的String里的字节数组就跟原来的字节数组一样。在new
+String使用其他编码如GBK,GB2312的话一样也会导致字节数组发生变化，因此要想获取String里单字节数组，就应该使用
+iso8859-1编码。</p>							
+		</div>

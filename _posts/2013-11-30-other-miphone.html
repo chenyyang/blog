@@ -1,0 +1,167 @@
+---
+layout: default
+title: 小米手机利用USB连接到Ubuntu 12.04系统
+categories:
+  - other
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<p>主要命令：</p>
+<div><font color="#ED1C24"><b><span style="font-size:10pt;">cd
+android-sdk/platform-tools</span></b></font></div>
+<font color="#ED1C24">sudo ./adb kill-server</font>
+<div><font color="#ED1C24">sudo ./adb start-server</font></div>
+<div><font color="#ED1C24">sudo ./adb logcat</font></div>
+<p>发现Ubuntu12.04不能连接小米开发，adb devices不能看到设备！
+&nbsp;<wbr>搞了一个上午才搞成功！</p>
+<p>小米手机利用USB连接到Ubuntu 12.04系统。运行下面的命令：</p>
+<p>longskywang@bjb0503:~$ lsusb<br>
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root
+hub<br>
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root
+hub<br>
+Bus 001 Device 002: ID 8087:0020 Intel Corp. Integrated Rate
+Matching Hub<br>
+Bus 002 Device 002: ID 8087:0020 Intel Corp. Integrated Rate
+Matching Hub<br>
+Bus 001 Device 003: ID 0a5c:4500 Broadcom Corp. BCM2046B1 USB 2.0
+Hub (part of BCM2046 Bluetooth)<br>
+Bus 001 Device 004: ID 138a:0008 Validity Sensors, Inc. VFS300
+Fingerprint Reader<br>
+Bus 002 Device 007: ID 1a40:0101 Terminus Technology Inc. 4-Port
+HUB<br>
+Bus 002 Device 008: ID 1a40:0101 Terminus Technology Inc. 4-Port
+HUB<br>
+Bus 002 Device 025: ID 0461:4d22 Primax Electronics,
+Ltd&nbsp;<wbr><br>
+Bus 002 Device 005: ID 0c45:6481 Microdia&nbsp;<wbr><br>
+Bus 001 Device 005: ID 413c:8161 Dell Computer Corp. Integrated
+Keyboard<br>
+Bus 001 Device 006: ID 413c:8162 Dell Computer Corp. Integrated
+Touchpad [Synaptics]<br>
+<span>Bus 002 Device 028: ID 2717:904e
+&nbsp;<wbr></span><br>
+Bus 001 Device 007: ID 413c:8160 Dell Computer Corp. Wireless 365
+Bluetooth</p>
+<p>&nbsp;<wbr></p>
+<p>拔掉手机的USB连接线，再运行：</p>
+<p>longskywang@bjb0503:~$ lsusb<br>
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root
+hub<br>
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root
+hub<br>
+Bus 001 Device 002: ID 8087:0020 Intel Corp. Integrated Rate
+Matching Hub<br>
+Bus 002 Device 002: ID 8087:0020 Intel Corp. Integrated Rate
+Matching Hub<br>
+Bus 001 Device 003: ID 0a5c:4500 Broadcom Corp. BCM2046B1 USB 2.0
+Hub (part of BCM2046 Bluetooth)<br>
+Bus 001 Device 004: ID 138a:0008 Validity Sensors, Inc. VFS300
+Fingerprint Reader<br>
+Bus 002 Device 007: ID 1a40:0101 Terminus Technology Inc. 4-Port
+HUB<br>
+Bus 002 Device 008: ID 1a40:0101 Terminus Technology Inc. 4-Port
+HUB<br>
+Bus 002 Device 025: ID 0461:4d22 Primax Electronics,
+Ltd&nbsp;<wbr><br>
+Bus 002 Device 005: ID 0c45:6481 Microdia&nbsp;<wbr><br>
+Bus 001 Device 005: ID 413c:8161 Dell Computer Corp. Integrated
+Keyboard<br>
+Bus 001 Device 006: ID 413c:8162 Dell Computer Corp. Integrated
+Touchpad [Synaptics]<br>
+Bus 001 Device 007: ID 413c:8160 Dell Computer Corp. Wireless 365
+Bluetooth</p>
+<p>&nbsp;<wbr></p>
+<p><span>对比发现，<span>Bus 002 Device 028: ID 2717:904e
+&nbsp;<wbr></span>&nbsp;<wbr>&nbsp;<wbr>就是小米手机的</span></p>
+<p>&nbsp;<wbr></p>
+<p><span>sudo gedit
+&nbsp;<wbr>/etc/udev/rules.d/50-android.rules在打开的文件中增加以下文本：</span></p>
+<p>SUBSYSTEM=="usb", SYSFS{idVendor}=="2717", MODE=="0666"<br>
+SUBSYSTEM=="usb_device", SYSFS{idVendor}=="2717",
+MODE=="0666"<br>
+SUBSYSTEM=="usb", ATTR{idVendor}=="2717", ATTR{idProduct}=="9039",
+SYMLINK+="android_adb"</p>
+<p>&nbsp;<wbr></p>
+<p><span>sudo chmod a+rx
+/etc/udev/rules.d/50-android.rules</span></p>
+<p>&nbsp;<wbr></p>
+<p>&nbsp;<wbr></p>
+<p>
+注意，这个<span>50-android.rules</span>&nbsp;<wbr>文件名字应该是随意命名的，试过&nbsp;<wbr><span>51-android.rules
+，<span>52-android.rules
+&nbsp;<wbr></span></span>似乎是都可以的。</p>
+<p>注意 "<span>SUBSYSTEM=="usb", SYSFS{idVendor}=="2717",
+MODE=="0666"&nbsp;<wbr></span>"这句是给 ubuntu 7.01
+以后的系统识别用的</p>
+<p>而"<span>SUBSYSTEM=="usb_device", SYSFS{idVendor}=="2717",
+MODE=="0666"</span>"是给 Ubuntu 7.01之前的系统识别用的。相当于系统兼容。</p>
+<p>&nbsp;<wbr></p>
+<p>longskywang@bjb0503:/etc/udev/rules.d$ sudo service udev restart
+&nbsp;<wbr> &nbsp;<wbr>//or restart udev</p>
+<p>udev start/running, process 7147</p>
+<p>在 android sdk 的 tools 目录下运行 （这一步很重要，必须要sudo，否则没效果）</p>
+<p>&nbsp;<wbr></p>
+<p>longskywang@bjb0503:~/android-sdk/platform-tools$ sudo ./adb
+kill-server</p>
+<p>longskywang@bjb0503:~/android-sdk/platform-tools$ sudo ./adb
+devices</p>
+<p>* daemon not running. starting it now on port 5037 *</p>
+<p>* daemon started successfully *</p>
+<p>List of devices attached&nbsp;<wbr><br>
+<br></p>
+<p>到这一步了，结果发现 List of devices attached 下面没有设备出现，这就意味着 adb不识别新的USB
+设备，纠结了。</p>
+<p>&nbsp;<wbr></p>
+<p>如果跟我一样悲惨，请执行如下操作</p>
+<p>longskywang@bjb0503:~$ cd ~<br>
+longskywang@bjb0503:~$ cd .android/</p>
+<p>longskywang@bjb0503:~/.android$ ls<br>
+adbkey &nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+adb_usb.ini~ &nbsp;<wbr> &nbsp;<wbr> avd
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+debug.keystore &nbsp;<wbr> &nbsp;<wbr>
+repositories.cfg<br>
+adbkey.pub &nbsp;<wbr> androidtool.cfg
+&nbsp;<wbr>cache &nbsp;<wbr> &nbsp;<wbr>
+default.keyset &nbsp;<wbr> &nbsp;<wbr>
+sites-settings.cfg<br>
+<span>adb_usb.ini</span>&nbsp;<wbr>&nbsp;<wbr>androidwin.cfg
+&nbsp;<wbr> ddms.cfg
+&nbsp;<wbr>modem-nv-ram-5554<br>
+<br>
+<strong><span style="color: #ff0000;">请注意这个&nbsp;<wbr>adb_usb.ini（如果没有，可以自己建立一个）</span></strong></p>
+<p>longskywang@bjb0503:~/.android$ gedit adb_usb.ini<br>
+<br></p>
+<p>里面的内容一般如下：</p>
+<p># ANDROID 3RD PARTY USB VENDOR ID LIST -- DO NOT EDIT.<br>
+# USE 'android update adb' TO GENERATE.<br>
+# 1 USB VENDOR ID PER LINE.</p>
+<p>&nbsp;<wbr></p>
+<p>我们在其中加一行</p>
+<p># ANDROID 3RD PARTY USB VENDOR ID LIST -- DO NOT EDIT.<br>
+# USE 'android update adb' TO GENERATE.<br>
+# 1 USB VENDOR ID PER LINE.<br>
+<span>0x2717</span></p>
+<p>&nbsp;<wbr></p>
+<p>
+请注意，这个&nbsp;<wbr><span>0x2717</span>&nbsp;<wbr>就是我们得到的设备号码</p>
+<p>&nbsp;<wbr></p>
+<p>保存，关掉，然后</p>
+<p>longskywang@bjb0503:~/android-sdk/platform-tools$ sudo ./adb
+kill-server</p>
+<p>longskywang@bjb0503:~/android-sdk/platform-tools$ sudo ./adb
+devices</p>
+<p>List of devices attached&nbsp;<wbr><br>
+<span>9109ce53 &nbsp;<wbr>
+&nbsp;<wbr>device</span><br>
+<br></p>
+<p>注意 &nbsp;<wbr><span>9109ce53 &nbsp;<wbr>
+&nbsp;<wbr>device</span>&nbsp;<wbr>这行就是我们的识别到的小米手机了。哈哈</p>
+<br>
+<br>
+<p>
+原文：http://www.cnblogs.com/loulijun/archive/2012/12/18/2823272.html<br>
+</p>							
+		</div>

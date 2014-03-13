@@ -1,0 +1,60 @@
+---
+layout: default
+title: JAVA使用httpclient
+categories:
+  - java
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<p style="margin-bottom: 0in" align="left"><font face="Monospace"><font style="font-size: 16px;"><font color="#7F0055"><b>public</b></font><font color="#7F0055"><b>static</b></font><font color="#7F0055"><b>void</b></font><font color="#000000">main(String[]
+arg)</font> <font color="#7F0055"><b>throws</b></font><font color="#000000">ClientProtocolException, IOException
+{</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">PoolingClientConnectionM<wbr>anager cm =</font>
+<font color="#7F0055"><b>new</b></font><font color="#000000">PoolingClientConnectionM<wbr>anager();</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">HttpParams params =</font> <font color="#7F0055"><b>new</b></font><font color="#000000">BasicHttpParams();</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">HttpConnectionParams.</font><font color="#000000"><i>setConnectionTimeout</i></font><font color="#000000">(params, 5000);</font> <font color="#3F7F5F">//</font></font></font> <font face="Monospace"><font style="font-size: 16px;"><span><font color="#3F7F5F">链接</font></span></font></font><font face="Monospace"><font style="font-size: 16px;"><font color="#3F7F5F">5</font></font></font><font face="Monospace"><font style="font-size: 16px;"><span><font color="#3F7F5F">秒超时</font></span></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">HttpConnectionParams.</font><font color="#000000"><i>setSoTimeout</i></font><font color="#000000">(params,
+5000);</font><font color="#3F7F5F">//</font></font></font>
+<font face="Monospace"><font style="font-size: 16px;"><span><font color="#3F7F5F">请求</font></span></font></font><font face="Monospace"><font style="font-size: 16px;"><font color="#3F7F5F">5</font></font></font><font face="Monospace"><font style="font-size: 16px;"><span><font color="#3F7F5F">秒超时</font></span></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">params.setBooleanParameter(</font><font color="#2A00FF">"http.protocol.expect-continue"</font><font color="#000000">,</font> <font color="#7F0055"><b>false</b></font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">HttpClient client =</font> <font color="#7F0055"><b>new</b></font><font color="#000000">DefaultHttpClient(cm, params);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><br></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">String realUrl =</font> <font color="#2A00FF">"http://www.baidu.com/"</font><font color="#000000">;</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">HttpGet get =</font> <font color="#7F0055"><b>new</b></font><font color="#000000">HttpGet(realUrl);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><br></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">get.setHeader(</font><font color="#2A00FF">"Accept"</font><font color="#000000">,</font>
+<font color="#2A00FF">"text/html,application/xhtml+xml,application/xml;"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">get.setHeader(</font><font color="#2A00FF">"Accept-Language"</font><font color="#000000">,</font>
+<font color="#2A00FF">"zh-cn"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">get.setHeader(</font><font color="#2A00FF">"User-Agent"</font><font color="#000000">,</font>
+<font color="#2A00FF">"Mozilla/5.0 (Windows; U; Windows NT 5.1;
+zh-CN; rv:1.9.0.3) Gecko/2008092417
+Firefox/3.0.3"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">get.setHeader(</font><font color="#2A00FF">"Accept-Charset"</font><font color="#000000">,</font>
+<font color="#2A00FF">"UTF-8"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">get.setHeader(</font><font color="#2A00FF">"Keep-Alive"</font><font color="#000000">,</font>
+<font color="#2A00FF">"300"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">get.setHeader(</font><font color="#2A00FF">"Connection"</font><font color="#000000">,</font>
+<font color="#2A00FF">"Keep-Alive"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">get.setHeader(</font><font color="#2A00FF">"Cache-Control"</font><font color="#000000">,</font>
+<font color="#2A00FF">"no-cache"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><br></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">HttpContext context =</font> <font color="#7F0055"><b>new</b></font><font color="#000000">BasicHttpContext();</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">HttpResponse response = client.execute(get,
+context);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><br></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">HttpEntity entity =
+response.getEntity();</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">BufferedReader br =</font> <font color="#7F0055"><b>new</b></font><font color="#000000">BufferedReader(</font><font color="#7F0055"><b>new</b></font><font color="#000000">InputStreamReader(entity.getContent()));</font></font></font><font color="#000000"><font face="Monospace"><font color="#000000">//输出返回正文</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">String result =</font> <font color="#2A00FF">""</font><font color="#000000">;</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">String line =</font> <font color="#7F0055"><b>null</b></font><font color="#000000">;</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font face="Monospace"><font style="font-size: 16px;"><font color="#7F0055"><b>while</b></font><font color="#000000">((line =
+br.readLine()) !=</font> <font color="#7F0055"><b>null</b></font><font color="#000000">){</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">result = result + line;</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">}</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">System.</font><font color="#0000C0"><i>out</i></font><font color="#000000">.println(</font><font color="#2A00FF">"result : "</font>
+<font color="#000000">+ result);//输出返回结果</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">get.releaseConnection();</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font color="#000000"><font face="Monospace"><font style="font-size: 16px;">}</font></font></font></p>							
+		</div>

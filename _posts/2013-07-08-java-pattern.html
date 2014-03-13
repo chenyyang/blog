@@ -1,0 +1,31 @@
+---
+layout: default
+title: java正则使用 
+categories:
+  - java
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			　在使用JAVA中的正则表达式主要有两个类，一个是Pattern类，一个是Matcher类。
+<p>　　使用步骤如下</p>
+<p>　　Pattern p = Pattern.compile(regExp);</p>
+<p>　　Matcher m = p.matcher(string);</p>
+<p>
+　　后面做的是先要调用m.find()函数然后再调用m.group()函数。因为调用了m.find()函数以后才开始查找过程。所以没有调用m.find()直接调用m.group()会产生</p>
+<p>　　Exception in thread "main" java.lang.IllegalStateException: No
+match found异常</p>
+例子：提取string前面的数字<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+String regEx = "^[0-9]*";<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+Pattern p = Pattern.compile(regEx);<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+Matcher m = p.matcher("11111111111112\n");<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+m.find();<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+System.out.println(m.group());<br>
+<br>
+输出：11111111111112<br>							
+		</div>

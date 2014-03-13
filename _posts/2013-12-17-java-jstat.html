@@ -1,0 +1,1171 @@
+---
+layout: default
+title: java命令行工具-jstat的用法
+categories:
+  - java 
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<p>jstat的用法</p>
+<p><br>
+用以判断JVM是否存在内存问题呢？如何判断JVM垃圾回收是否正常？一般的top指令基本上满足不了这样的需求，因为它主要监控的是总体的系统资源，很难定位到<a target="_self"><u><strong>java</strong></u></a>应用程序。</p>
+<p>Jstat 是JDK自带的一个轻量级小工具。全称“Java Virtual Machine statistics
+monitoring
+tool”，它位于java的bin目录下，主要利用JVM内建的指令对Java应用程序的资源和性能进行实时的命令行的监控，包括了对Heap
+size和垃圾回收状况的监控。可见，Jstat是轻量级的、专门针对JVM的工具，非常适用。由于JVM内存设置较大，图中百分比变化不太明显</p>
+<p>一个极强的监视VM内存工具。可以用来监视VM内存内的各种堆和非堆的大小及其内存使用量。</p>
+<p>
+jstat工具特别强大，有众多的可选项，详细查看堆内各个部分的使用量，以及加载类的数量。使用时，需加上查看进程的进程id，和所选参数。</p>
+<p>执行：cd $JAVA_HOME/bin中执行jstat，注意jstat后一定要跟参数。</p>
+<p><br>
+语法结构：</p>
+<p>Usage: jstat -help|-options</p>
+<p>
+&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+jstat -</p>
+[-t] [-h] [[]]
+<p>&nbsp;<wbr><wbr>参数解释：</p>
+<p>Options — 选项，我们一般使用 -gcutil 查看gc情况</p>
+<p>
+vmid&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+— VM的进程号，即当前运行的java进程号</p>
+<p>interval– 间隔时间，单位为毫秒</p>
+<p>count&nbsp;<wbr><wbr>&nbsp;<wbr><wbr> —
+打印次数，如果缺省则打印无数次</p>
+<p>&nbsp;<wbr><wbr></p>
+<p>Jstat是JDK自带的一个轻量级小工具。全称“Java Virtual Machine statistics
+monitoring
+tool”，它位于java的bin目录下，主要利用JVM内建的指令对Java应用程序的资源和性能进行实时的命令行的监控，包括了对Heap
+size和垃圾回收状况的监控。可见，Jstat是轻量级的、专门针对JVM的工具，非常适用。</p>
+<p>
+jstat工具特别强大，有众多的可选项，详细查看堆内各个部分的使用量，以及加载类的数量。使用时，需加上查看进程的进程id，和所选参数。参考格式如下：</p>
+<p>jstat -options&nbsp;<wbr></p>
+<p>可以列出当前JVM版本支持的选项，常见的有</p>
+<ul>
+<li>l&nbsp;<wbr> class (类加载器)&nbsp;<wbr></li>
+<li>l&nbsp;<wbr> compiler (JIT)&nbsp;<wbr></li>
+<li>l&nbsp;<wbr> gc (GC堆状态)&nbsp;<wbr></li>
+<li>l&nbsp;<wbr> gccapacity (各区大小)&nbsp;<wbr></li>
+<li>l&nbsp;<wbr> gccause
+(最近一次GC统计和原因)&nbsp;<wbr></li>
+<li>l&nbsp;<wbr> gcnew (新区统计)</li>
+<li>l&nbsp;<wbr> gcnewcapacity (新区大小)</li>
+<li>l&nbsp;<wbr> gcold (老区统计)</li>
+<li>l&nbsp;<wbr> gcoldcapacity (老区大小)</li>
+<li>l&nbsp;<wbr> gcpermcapacity (永久区大小)</li>
+<li>l&nbsp;<wbr> gcutil (GC统计汇总)</li>
+<li>l&nbsp;<wbr> printcompilation (HotSpot编译统计)</li>
+</ul>
+<p>1、jstat –class : 显示加载class的数量，及所占空间等信息。</p>
+<table border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="background:#DDD9C3" valign="top">
+<p>显示列名</p>
+</td>
+<td style="background:#DDD9C3" valign="top">
+<p>具体描述</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>Loaded</p>
+</td>
+<td valign="top">
+<p>装载的类的数量</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>Bytes</p>
+</td>
+<td valign="top">
+<p>装载类所占用的字节数</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>Unloaded</p>
+</td>
+<td valign="top">
+<p>卸载类的数量</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>Bytes</p>
+</td>
+<td valign="top">
+<p>卸载类的字节数</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>Time</p>
+</td>
+<td valign="top">
+<p>装载和卸载类所花费的时间</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>2、jstat -compiler 显示VM实时编译的数量等信息。</p>
+<table border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="background:#DDD9C3" valign="top">
+<p>显示列名</p>
+</td>
+<td style="background:#DDD9C3" valign="top">
+<p>具体描述</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>Compiled</p>
+</td>
+<td valign="top">
+<p>编译任务执行数量</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>Failed</p>
+</td>
+<td valign="top">
+<p>编译任务执行失败数量</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>Invalid&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>编译任务执行失效数量</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>Time&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>编译任务消耗时间</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>FailedType</p>
+</td>
+<td valign="top">
+<p>最后一个编译失败任务的类型</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>FailedMethod</p>
+</td>
+<td valign="top">
+<p>最后一个编译失败任务所在的类及方法</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>3、jstat -gc : 可以显示gc的信息，查看gc的次数，及时间。</p>
+<table border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="background:#DDD9C3" valign="top">
+<p>显示列名</p>
+</td>
+<td style="background:#DDD9C3" valign="top">
+<p>具体描述</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>S0C&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中第一个survivor（幸存区）的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>S1C&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中第二个survivor（幸存区）的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>S0U&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中第一个survivor（幸存区）目前已使用空间 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+S1U&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中第二个survivor（幸存区）目前已使用空间 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+EC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中Eden（伊甸园）的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+EU&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中Eden（伊甸园）目前已使用空间 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+OC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>Old代的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+OU&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>Old代目前已使用空间 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+PC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>Perm(持久代)的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>PU</p>
+</td>
+<td valign="top">
+<p>Perm(持久代)目前已使用空间 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+YGC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时年轻代中gc次数</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>YGCT&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时年轻代中gc所用时间(s)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>FGC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时old代(全gc)gc次数</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+FGCT&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时old代(全gc)gc所用时间(s)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>GCT</p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时gc用的总时间(s)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>4、<strong>jstat -gccapacity
+:</strong>可以显示，VM内存中三代（young,old,perm）对象的使用和占用大小</p>
+<table border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="background:#DDD9C3" valign="top">
+<p>显示列名</p>
+</td>
+<td style="background:#DDD9C3" valign="top">
+<p>具体描述</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>NGCMN&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代(young)中初始化(最小)的大小(字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+NGCMX&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代(young)的最大容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+NGC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代(young)中当前的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>S0C&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中第一个survivor（幸存区）的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+S1C&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中第二个survivor（幸存区）的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+EC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中Eden（伊甸园）的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+OGCMN&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>old代中初始化(最小)的大小 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+OGCMX&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>old代的最大容量(字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>OGC</p>
+</td>
+<td valign="top">
+<p>old代当前新生成的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+OC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>Old代的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>PGCMN&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>perm代中初始化(最小)的大小 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+PGCMX&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>perm代的最大容量 (字节)&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+PGC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>perm代当前新生成的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+PC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>Perm(持久代)的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>YGC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时年轻代中gc次数</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>FGC</p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时old代(全gc)gc次数</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>5、jstat -gcutil :统计gc信息</p>
+<table border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="background:#DDD9C3" valign="top">
+<p>显示列名</p>
+</td>
+<td style="background:#DDD9C3" valign="top">
+<p>具体描述</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+S0&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中第一个survivor（幸存区）已使用的占当前容量百分比</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+S1&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中第二个survivor（幸存区）已使用的占当前容量百分比</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+E&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中Eden（伊甸园）已使用的占当前容量百分比</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+O&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>old代已使用的占当前容量百分比</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+P&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>perm代已使用的占当前容量百分比</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+YGC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时年轻代中gc次数</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>YGCT&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时年轻代中gc所用时间(s)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>FGC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时old代(全gc)gc次数</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+FGCT&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时old代(全gc)gc所用时间(s)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>GCT</p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时gc用的总时间(s)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>6、jstat -gcnew :年轻代对象的信息。</p>
+<table border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="background:#DDD9C3" valign="top">
+<p>显示列名</p>
+</td>
+<td style="background:#DDD9C3" valign="top">
+<p>具体描述</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>S0C&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中第一个survivor（幸存区）的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>S1C&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中第二个survivor（幸存区）的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>S0U&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中第一个survivor（幸存区）目前已使用空间 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>S1U&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中第二个survivor（幸存区）目前已使用空间 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>TT</p>
+</td>
+<td valign="top">
+<p>持有次数限制</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>MTT&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>最大持有次数限制</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+EC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中Eden（伊甸园）的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+EU&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中Eden（伊甸园）目前已使用空间 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+YGC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时年轻代中gc次数</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>YGCT</p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时年轻代中gc所用时间(s)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>7、jstat -gcnewcapacity: 年轻代对象的信息及其占用量。</p>
+<table border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="background:#DDD9C3" valign="top">
+<p>显示列名</p>
+</td>
+<td style="background:#DDD9C3" valign="top">
+<p>具体描述</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+NGCMN&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代(young)中初始化(最小)的大小(字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+NGCMX&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代(young)的最大容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+NGC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代(young)中当前的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+S0CMX&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中第一个survivor（幸存区）的最大容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+S0C&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中第一个survivor（幸存区）的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+S1CMX&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中第二个survivor（幸存区）的最大容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+S1C&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中第二个survivor（幸存区）的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>ECMX</p>
+</td>
+<td valign="top">
+<p>年轻代中Eden（伊甸园）的最大容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+EC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>年轻代中Eden（伊甸园）的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>YGC</p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时年轻代中gc次数</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>FGC</p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时old代(全gc)gc次数</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>8、jstat -gcold ：old代对象的信息。</p>
+<table border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="background:#DDD9C3" valign="top">
+<p>显示列名</p>
+</td>
+<td style="background:#DDD9C3" valign="top">
+<p>具体描述</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+PC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>Perm(持久代)的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+PU&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>Perm(持久代)目前已使用空间 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+OC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>Old代的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+OU&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>Old代目前已使用空间 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>YGC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时年轻代中gc次数</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>FGC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时old代(全gc)gc次数</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+FGCT&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时old代(全gc)gc所用时间(s)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>GCT</p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时gc用的总时间(s)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>9、stat -gcoldcapacity : old代对象的信息及其占用量。</p>
+<table border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="background:#DDD9C3" valign="top">
+<p>显示列名</p>
+</td>
+<td style="background:#DDD9C3" valign="top">
+<p>具体描述</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+OGCMN&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>old代中初始化(最小)的大小 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+OGCMX&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>old代的最大容量(字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+OGC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>old代当前新生成的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+OC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>Old代的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>YGC&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时年轻代中gc次数</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>FGC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时old代(全gc)gc次数</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+FGCT&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时old代(全gc)gc所用时间(s)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>GCT</p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时gc用的总时间(s)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;<wbr></p>
+<p>10、jstat -gcpermcapacity: perm对象的信息及其占用量。</p>
+<table border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="background:#DDD9C3" valign="top">
+<p>显示列名</p>
+</td>
+<td style="background:#DDD9C3" valign="top">
+<p>具体描述</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+PGCMN&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>perm代中初始化(最小)的大小 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+PGCMX&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>perm代的最大容量 (字节)&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+PGC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>perm代当前新生成的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+PC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>Perm(持久代)的容量 (字节)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>YGC&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时年轻代中gc次数</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>FGC&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时old代(全gc)gc次数</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>
+FGCT&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时old代(全gc)gc所用时间(s)</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>GCT</p>
+</td>
+<td valign="top">
+<p>从应用程序启动到采样时gc用的总时间(s)</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;<wbr></p>
+<p>11、jstat -printcompilation ：当前VM执行的信息。</p>
+<table border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td style="background:#DDD9C3" valign="top">
+<p>显示列名</p>
+</td>
+<td style="background:#DDD9C3" valign="top">
+<p>具体描述</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>Compiled&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>编译任务的数目</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>Size&nbsp;<wbr></p>
+</td>
+<td valign="top">
+<p>方法生成的字节码的大小</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>Type</p>
+</td>
+<td valign="top">
+<p>编译类型</p>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<p>Method</p>
+</td>
+<td valign="top">
+<p>
+类名和方法名用来标识编译的方法。类名使用/做为一个命名空间分隔符。方法名是给定类中的方法。上述格式是由-XX:+PrintComplation选项进行设置的</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;<wbr></p>
+<p><font style="font-size: 16px;" color="#ED1C24"><b>jstat
+-gcutil详解</b></font><br></p>
+<p>S0&nbsp;<wbr><wbr> — Heap上的 Survivor space 0
+区已使用空间的百分比<br>
+S1&nbsp;<wbr><wbr> — Heap上的 Survivor space 1
+区已使用空间的百分比<br>
+E&nbsp;<wbr><wbr>&nbsp;<wbr><wbr> — Heap上的 Eden
+space 区已使用空间的百分比<br>
+O&nbsp;<wbr><wbr>&nbsp;<wbr><wbr> — Heap上的 Old
+space 区已使用空间的百分比<br>
+P&nbsp;<wbr><wbr>&nbsp;<wbr><wbr> — Perm space
+区已使用空间的百分比<br>
+YGC — 从应用程序启动到采样时发生 Young GC 的次数<br>
+YGCT– 从应用程序启动到采样时 Young GC 所用的时间(单位秒)<br>
+FGC — 从应用程序启动到采样时发生 Full GC 的次数<br>
+FGCT– 从应用程序启动到采样时 Full GC 所用的时间(单位秒)<br>
+GCT — 从应用程序启动到采样时用于垃圾回收的总时间(单位秒)</p>
+<p>实例使用1：</p>
+<p>[root@localhost bin]# jstat -gcutil 25444</p>
+<p>&nbsp;<wbr><wbr>
+S0&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+S1&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+E&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+O&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+P&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+YGC&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+YGCT&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+FGC&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+FGCT&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+GCT</p>
+<p>
+&nbsp;<wbr><wbr>11.63&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.00&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+56.46&nbsp;<wbr><wbr> 66.92&nbsp;<wbr><wbr> 98.49
+162&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.248&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+6&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.331&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.579</p>
+<p>&nbsp;<wbr><wbr></p>
+<p>实例使用2：(25444是java的进程号，ps -ef | grep
+java)，每隔一秒显示增加一条数据，指导到达5条</p>
+<p>[root@localhost bin]# jstat -gcutil 25444 1000 5</p>
+<p>&nbsp;<wbr><wbr>
+S0&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+S1&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+E&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+O&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+P&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+YGC&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+YGCT&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+FGC&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+FGCT&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+GCT</p>
+<p>
+&nbsp;<wbr><wbr>73.54&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.00&nbsp;<wbr><wbr> 99.04&nbsp;<wbr><wbr>
+67.52&nbsp;<wbr><wbr>
+98.49&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+166&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.252&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+6&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.331&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.583</p>
+<p>
+&nbsp;<wbr><wbr>73.54&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.00&nbsp;<wbr><wbr> 99.04&nbsp;<wbr><wbr>
+67.52&nbsp;<wbr><wbr>
+98.49&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+166&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.252&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+6&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.331&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.583</p>
+<p>
+&nbsp;<wbr><wbr>73.54&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.00&nbsp;<wbr><wbr> 99.04&nbsp;<wbr><wbr>
+67.52&nbsp;<wbr><wbr>
+98.49&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+166&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.252&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+6&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.331&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.583</p>
+<p>
+&nbsp;<wbr><wbr>73.54&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.00&nbsp;<wbr><wbr> 99.04&nbsp;<wbr><wbr>
+67.52&nbsp;<wbr><wbr>
+98.49&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+166&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.252&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+6&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.331&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.583</p>
+<p>
+&nbsp;<wbr><wbr>73.54&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.00&nbsp;<wbr><wbr> 99.04&nbsp;<wbr><wbr>
+67.52&nbsp;<wbr><wbr>
+98.49&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+166&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.252&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+6&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.331&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>&nbsp;<wbr><wbr>
+0.583</p>							
+		</div>

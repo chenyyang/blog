@@ -1,0 +1,53 @@
+---
+layout: default
+title: dom4j解析xml字符串实例 
+categories:
+  - java
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">Element
+elPacket = <font color="#7F0055"><b>null</b></font><font color="#000000">;</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>try</b></font><font color="#000000">{</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">elPacket
+=
+DocumentHelper.<i>parseText</i>(requesbody).getRootElement();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}
+<font color="#7F0055"><b>catch</b></font><font color="#000000">(DocumentException e) {</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#0000C0"><i>logger</i></font><font color="#000000">.error(</font><font color="#2A00FF">"Failed to unmarshal
+message {}"</font><font color="#000000">, requesbody,
+e);</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">String
+ToUserName = elPacket.elementTextTrim(<font color="#2A00FF">"ToUserName"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">String
+FromUserName = elPacket.elementTextTrim(<font color="#2A00FF">"FromUserName"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">String
+CreateTime = elPacket.elementTextTrim(<font color="#2A00FF">"CreateTime"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;"><br></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">String
+MsgType = elPacket.elementTextTrim(<font color="#2A00FF">"MsgType"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">String
+Content = elPacket.elementTextTrim(<font color="#2A00FF">"Content"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">String
+MsgId = elPacket.elementTextTrim(</font></font><font style="font-size: 16px;" color="#2A00FF"><font face="Monospace">"MsgId"</font></font><font style="font-size: 16px;" color="#000000"><font face="Monospace">);</font></font></p>
+<p style="margin-bottom: 0in" align="left"><br></p>
+”&lt;xml&gt;<br>
+&nbsp;<wbr>&lt;ToUserName&gt;&lt;![CDATA[toUser]]&gt;&lt;/ToUserName&gt;<br>
+
+&nbsp;<wbr>&lt;FromUserName&gt;&lt;![CDATA[fromUser]]&gt;&lt;/FromUserName&gt;<br>
+
+&nbsp;<wbr>&lt;CreateTime&gt;1348831860&lt;/CreateTime&gt;<br>
+
+&nbsp;<wbr>&lt;MsgType&gt;&lt;![CDATA[text]]&gt;&lt;/MsgType&gt;<br>
+
+&nbsp;<wbr>&lt;Content&gt;&lt;![CDATA[this
+is a
+test]]&gt;&lt;/Content&gt;<br>
+
+&nbsp;<wbr>&lt;MsgId&gt;1234567890123456&lt;/MsgId&gt;<br>
+
+&nbsp;<wbr>&lt;/xml&gt;“<br>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">&nbsp;<wbr><br></font></font></p>							
+		</div>

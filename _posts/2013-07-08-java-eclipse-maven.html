@@ -1,0 +1,68 @@
+---
+layout: default
+title: eclipse 下maven插件安装
+categories:
+  - java
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<p style="margin: 0px; padding: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; line-height: 25.1875px; background-color: rgb(255, 255, 255);">
+一、eclipse
+3.6.1下载地址[eclipse-jee-helios-SR1-win32.zip]&nbsp;<wbr><br>
+<a target="_blank" href="http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/heliossr1">http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/heliossr1</a>&nbsp;<wbr><br>
+
+<br>
+二、插件地址&nbsp;<wbr><br>
+1、<strong>gef</strong>&nbsp;<wbr>插件地址：&nbsp;<wbr><br>
+
+<a target="_blank" href="http://download.eclipse.org/tools/gef/updates/interim/">http://download.eclipse.org/tools/gef/updates/interim/</a>&nbsp;<wbr><br>
+
+<br>
+2、<strong>subclipse</strong>&nbsp;<wbr>插件地址：&nbsp;<wbr><br>
+
+<a target="_blank" href="http://subclipse.tigris.org/update_1.6.x">http://subclipse.tigris.org/update_1.6.x</a>&nbsp;<wbr><br>
+
+<br>
+3、<strong>maven2</strong>&nbsp;<wbr>插件地址：&nbsp;<wbr><br>
+
+m2eclipse-core Update Site:&nbsp;<wbr><a target="_blank" href="http://m2eclipse.sonatype.org/sites/m2e">http://m2eclipse.sonatype.org/sites/m2e</a>&nbsp;<wbr><br>
+
+m2eclipse-extras Update Site:&nbsp;<wbr><a target="_blank" href="http://m2eclipse.sonatype.org/sites/m2e-extras">http://m2eclipse.sonatype.org/sites/m2e-extras</a>&nbsp;<wbr><br>
+
+<strong>注意</strong>&nbsp;<wbr>：必须两个插件都安装，不安装<strong>extras</strong>&nbsp;<wbr>插件时，点击“run
+as server”来运行项目时会报错：“the selected did not contain any resources
+that can run on server maven project”&nbsp;<wbr><br>
+<br>
+三、安装时出现问题：&nbsp;<wbr><br>
+直接在线安装<strong>maven2</strong>&nbsp;<wbr>会出现依赖插件找不到的问题，无法安装。必须先安装<strong>gef</strong>&nbsp;<wbr>插件后才能安装<strong>m2eclipse-core</strong>&nbsp;<wbr>插件，然而安装<strong>m2eclipse-extras</strong>&nbsp;<wbr>插件又依赖<strong>subclipse</strong>&nbsp;<wbr>插件。所以，三个插件的正确的安装顺序是：gef插件
+》subclipse插件 》m2eclipse插件。&nbsp;<wbr><br>
+m2eclipse-core插件 ——依赖——＞gef插件&nbsp;<wbr><br>
+m2eclipse-extras插件 ——依赖——＞subclipse插件</p>
+<p style="margin: 0px; padding: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; line-height: 25.1875px; background-color: rgb(255, 255, 255);">
+&nbsp;<wbr></p>
+<p style="margin: 0px; padding: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; line-height: 25.1875px; background-color: rgb(255, 255, 255);">
+安装完成后，启动eclipse,你将还会看到如下提示：</p>
+<p style="margin: 0px; padding: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; line-height: 25.1875px; background-color: rgb(255, 255, 255);">
+安装m2eclipse插件后，重启Eclipse老是提示：</p>
+<p style="margin: 0px; padding: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; line-height: 25.1875px; background-color: rgb(255, 255, 255);">
+<strong><span style="color: rgb(255, 0, 0);">Eclipse is running in
+a JRE, but a JDK is required</span></strong></p>
+<p style="margin: 0px; padding: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; line-height: 25.1875px; background-color: rgb(255, 255, 255);">
+<strong><span style="color: rgb(255, 0, 0);">Some Maven plugins may
+not work when importing projects or updating source
+folders.</span></strong></p>
+<p style="margin: 0px; padding: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; line-height: 25.1875px; background-color: rgb(255, 255, 255);">
+&nbsp;<wbr></p>
+<p style="margin: 0px; padding: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; line-height: 25.1875px; background-color: rgb(255, 255, 255);">
+-vm配置项必须在 –vmargs配置项前，是因为执行到-vmargs配置项已经选择了一个默认的JVM了。</p>
+<p style="margin: 0px; padding: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; line-height: 25.1875px; background-color: rgb(255, 255, 255);">
+所以在–vmargs前面加上这一句：</p>
+<p style="margin: 0px; padding: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; line-height: 25.1875px; background-color: rgb(255, 255, 255);">
+-vm<br>
+D:/Java/jdk1.6.0_10/bin/javaw.exe</p>
+<p style="margin: 0px; padding: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; line-height: 25.1875px; background-color: rgb(255, 255, 255);">
+&nbsp;<wbr></p>
+<p style="margin: 0px; padding: 0px; font-family: Helvetica, Tahoma, Arial, sans-serif; line-height: 25.1875px; background-color: rgb(255, 255, 255);">
+ok,一切完好。。。</p>							
+		</div>

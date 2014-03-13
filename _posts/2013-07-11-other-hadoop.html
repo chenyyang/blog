@@ -1,0 +1,287 @@
+---
+layout: default
+title: hadoop
+categories:
+  - other
+---
+
+<h2>{{ page.title }}</h2>
+hadoop
+http://www.cnblogs.com/xuqiang/category/295606.html
+
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<div>
+<h3><font face="华文楷体">FS Shell</font></h3>
+<p><font face="华文楷体" size="4">调用文件系统(FS)Shell命令应使用
+<strong>bin/hadoop fs</strong> 的形式。 所有的的FS
+shell命令使用URI路径作为参数。URI格式是<em>scheme://authority/path</em> 。对
+HDFS文件系统，scheme是<em>hdfs</em> ，对本地文件系统，scheme是<em>file</em>
+。其中scheme和
+authority参数都是可选的，如果未加指定，就会使用配置中指定的默认scheme。一个HDFS文件或目录比如<em>/parent/child</em>
+可 以表示成<em>hdfs://namenode:namenodeport/parent/child</em>
+，或者更简单的<em>/parent/child</em> （假
+设你配置文件中的默认值是<em>namenode:namenodeport</em> ）。大多数FS
+Shell命令的行为和对应的Unix
+Shell命令类似，不同之处会在下面介绍各命令使用详情时指出。出错信息会输出到<em>stderr</em>
+，其他信息输出到<em>stdout</em> 。</font></p>
+<p><a name="N10036"></a><a name="cat"></a></p>
+<h5><strong><font face="华文楷体" size="4">cat</font></strong></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -cat URI [URI
+…]</font></p>
+<p><font face="华文楷体" size="4">将路径指定文件的内容输出到<em>stdout</em>
+。</font></p>
+<p><font face="华文楷体" size="4">示例：</font></p>
+<ul>
+<li><font face="华文楷体" size="4">hadoop fs -cat
+hdfs://host1:port1/file1 hdfs://host2:port2/file2</font></li>
+<li><font face="华文楷体" size="4">hadoop fs -cat file:///file3
+/user/hadoop/file4</font></li>
+</ul>
+<p><font face="华文楷体" size="4">返回值：<br>
+成功返回0，失败返回-1。</font></p>
+<p><a name="N10068"></a><a name="chgrp"></a></p>
+<h5><font face="华文楷体" size="4"><strong>chgrp</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -chgrp [-R] GROUP URI
+[URI …] Change group association of files. With -R , make the
+change recursively through the directory structure. The user must
+be the owner of files, or else a super-user. Additional information
+is in the</font> <a href="http://hadoop.apache.org/common/docs/r0.18.2/cn/hdfs_permissions_guide.html">
+<font face="华文楷体" size="4">Permissions User Guide</font></a>
+<font face="华文楷体" size="4">. --&gt;</font></p>
+<p><font face="华文楷体" size="4">改变文件所属的组。使用-R
+将使改变在目录结构下递归进行。命令的使用者必须是 文件的所有者或者超级用户。更多的信息请参见</font><a href="http://hadoop.apache.org/common/docs/r0.18.2/cn/hdfs_permissions_guide.html"><font face="华文楷体" size="4">HDFS 权限用户指南</font></a> <font face="华文楷体" size="4">。</font></p>
+<p><a name="N10086"></a><a name="chmod"></a></p>
+<h5><font face="华文楷体" size="4"><strong>chmod</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -chmod [-R] URI [URI
+…]</font></p>
+<p><font face="华文楷体" size="4">改变文件的权限。使用-R
+将使改变在目录结构下递归进行。命令的使用者必须是文 件的所有者或者超级用户。更多的信息请参见</font><a href="http://hadoop.apache.org/common/docs/r0.18.2/cn/hdfs_permissions_guide.html"><font face="华文楷体" size="4">HDFS 权限用户指南</font></a> <font face="华文楷体" size="4">。</font></p>
+<p><a name="N1009D"></a><a name="chown"></a></p>
+<h5><font face="华文楷体" size="4"><strong>chown</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -chown [-R]
+[OWNER][:[GROUP]] URI [URI ]</font></p>
+<p><font face="华文楷体" size="4">改变文件的拥有者。使用-R
+将使改变在目录结构下递归进行。命令的使用者必须是 超级用户。更多的信息请参见</font><a href="http://hadoop.apache.org/common/docs/r0.18.2/cn/hdfs_permissions_guide.html"><font face="华文楷体" size="4">HDFS 权限用户指南</font></a> <font face="华文楷体" size="4">。</font></p>
+<p><a name="N100B4"></a><a name="copyFromLocal"></a></p>
+<h5><font face="华文楷体" size="4"><strong>copyFromLocal</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -copyFromLocal
+URI</font></p>
+<p><font face="华文楷体" size="4">除了限定源路径是一个本地文件外，和</font><a href="http://hadoop.apache.org/common/docs/r0.18.2/cn/hdfs_shell.html#putlink"><font size="4"><font face="华文楷体"><strong>put</strong></font></font></a>
+<font face="华文楷体" size="4">命 令相似。</font></p>
+<p><a name="N100C9"></a><a name="copyToLocal"></a></p>
+<h5><font face="华文楷体" size="4"><strong>copyToLocal</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -copyToLocal
+[-ignorecrc] [-crc] URI</font></p>
+<p><font face="华文楷体" size="4">除了限定目标路径是一个本地文件外，和</font><a href="http://hadoop.apache.org/common/docs/r0.18.2/cn/hdfs_shell.html#getlink"><font size="4"><font face="华文楷体"><strong>get</strong></font></font></a>
+<font face="华文楷体" size="4">命 令类似。</font></p>
+<p><a name="N100DE"></a><a name="cp"></a></p>
+<h5><font face="华文楷体" size="4"><strong>cp</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -cp URI [URI
+…]</font></p>
+<p><font face="华文楷体" size="4">将文件从源路径复制到目标路径。这个命令允许有多个源路径，此时目标路径必须是一个目录。<br>
+示例：</font></p>
+<ul>
+<li><font face="华文楷体" size="4">hadoop fs -cp /user/hadoop/file1
+/user/hadoop/file2</font></li>
+<li><font face="华文楷体" size="4">hadoop fs -cp /user/hadoop/file1
+/user/hadoop/file2 /user/hadoop/dir</font></li>
+</ul>
+<p><font face="华文楷体" size="4">返回值：</font></p>
+<p><font face="华文楷体" size="4">成功返回0，失败返回-1。</font></p>
+<p><a name="N10108"></a><a name="du"></a></p>
+<h5><font face="华文楷体" size="4"><strong>du</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -du URI [URI
+…]</font></p>
+<p><font face="华文楷体" size="4">显示目录中所有文件的大小，或者当只指定一个文件时，显示此文件的大小。<br>
+示例：<br>
+hadoop fs -du /user/hadoop/dir1 /user/hadoop/file1
+hdfs://host:port/user/hadoop/dir1<br>
+返回值：<br>
+成功返回0，失败返回-1。</font></p>
+<p><a name="N10123"></a><a name="dus"></a></p>
+<h5><font face="华文楷体" size="4"><strong>dus</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -dus</font></p>
+<p><font face="华文楷体" size="4">显示文件的大小。</font></p>
+<p><a name="N10133"></a><a name="expunge"></a></p>
+<h5><font face="华文楷体" size="4"><strong>expunge</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -expunge</font></p>
+<p><font face="华文楷体" size="4">清空回收站。请参考</font><a href="http://hadoop.apache.org/common/docs/r0.18.2/cn/hdfs_design.html"><font face="华文楷体" size="4">HDFS 设计</font></a> <font face="华文楷体" size="4">文档以获取更多关于回收站特性的信息。</font></p>
+<p><a name="N10147"></a><a name="get"></a></p>
+<h5><font face="华文楷体" size="4"><strong>get</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -get [-ignorecrc]
+[-crc]</font></p>
+<p><font face="华文楷体" size="4">复制文件到本地文件系统。可用-ignorecrc
+选项复制CRC校验失败的文 件。使用-crc 选项复制文件以及CRC信息。</font></p>
+<p><font face="华文楷体" size="4">示例：</font></p>
+<ul>
+<li><font face="华文楷体" size="4">hadoop fs -get /user/hadoop/file
+localfile</font></li>
+<li><font face="华文楷体" size="4">hadoop fs -get
+hdfs://host:port/user/hadoop/file localfile</font></li>
+</ul>
+<p><font face="华文楷体" size="4">返回值：</font></p>
+<p><font face="华文楷体" size="4">成功返回0，失败返回-1。</font></p>
+<p><a name="N1017B"></a><a name="getmerge"></a></p>
+<h5><font face="华文楷体" size="4"><strong>getmerge</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -getmerge
+[addnl]</font></p>
+<p><font face="华文楷体" size="4">接受一个源目录和一个目标文件作为输入，并且将源目录中所有的文件连接成本地目标文件。addnl 是
+可选的，用于指定在每个文件结尾添加一个换行符。</font></p>
+<p><a name="N1018E"></a><a name="ls"></a></p>
+<h5><font face="华文楷体" size="4"><strong>ls</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -ls</font></p>
+<p><font face="华文楷体" size="4">如果是文件，则按照如下格式返回文件信息：<br>
+文件名 &lt;副本数&gt; 文件大小 修改日期 修改时间 权限 用户ID 组ID<br>
+如果是目录，则返回它直接子文件的一个列表，就像在Unix中一样。目录返回列表的信息如下：<br>
+目录名</font></p>
+<div style="margin-left: 2em"><font face="华文楷体" size="4"><br>
+示例：<br>
+hadoop fs -ls /user/hadoop/file1 /user/hadoop/file2
+hdfs://host:port/user/hadoop/dir1 /nonexistentfile<br>
+返回值：<br>
+成功返回0，失败返回-1。</font>
+<p><a name="N101B1"></a><a name="lsr"></a></p>
+<h5><font face="华文楷体" size="4"><strong>lsr</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -lsr<br>
+ls 命令的递归版本。类似于Unix中的ls -R 。</font></p>
+<p><a name="N101C4"></a><a name="mkdir"></a></p>
+<h5><font face="华文楷体" size="4"><strong>mkdir</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -mkdir</font></p>
+<p><font face="华文楷体" size="4">接受路径指定的uri作为参数，创建这些目录。其行为类似于Unix的mkdir
+-p，它会创建路径中的各级父目录。</font></p>
+<p><font face="华文楷体" size="4">示例：</font></p>
+<ul>
+<li><font face="华文楷体" size="4">hadoop fs -mkdir /user/hadoop/dir1
+/user/hadoop/dir2</font></li>
+<li><font face="华文楷体" size="4">hadoop fs -mkdir
+hdfs://host1:port1/user/hadoop/dir
+hdfs://host2:port2/user/hadoop/dir</font></li>
+</ul>
+<p><font face="华文楷体" size="4">返回值：</font></p>
+<p><font face="华文楷体" size="4">成功返回0，失败返回-1。</font></p>
+<p><a name="N101F1"></a><a name="movefromLocal"></a></p>
+<h5><font face="华文楷体" size="4"><strong>movefromLocal</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：dfs -moveFromLocal</font></p>
+<p><font face="华文楷体" size="4">输出一个”not implemented“信息。</font></p>
+<p><a name="N10201"></a><a name="mv"></a></p>
+<h5><font face="华文楷体" size="4"><strong>mv</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -mv URI [URI
+…]</font></p>
+<p><font face="华文楷体" size="4">将文件从源路径移动到目标路径。这个命令允许有多个源路径，此时目标路径必须是一个目录。不允许在不同的文件系统间移动文件。<br>
+
+示例：</font></p>
+<ul>
+<li><font face="华文楷体" size="4">hadoop fs -mv /user/hadoop/file1
+/user/hadoop/file2</font></li>
+<li><font face="华文楷体" size="4">hadoop fs -mv hdfs://host:port/file1
+hdfs://host:port/file2 hdfs://host:port/file3
+hdfs://host:port/dir1</font></li>
+</ul>
+<p><font face="华文楷体" size="4">返回值：</font></p>
+<p><font face="华文楷体" size="4">成功返回0，失败返回-1。</font></p>
+<p><a name="N1022B"></a><a name="put"></a></p>
+<h5><font face="华文楷体" size="4"><strong>put</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -put ...</font></p>
+<p><font face="华文楷体" size="4">从本地文件系统中复制单个或多个源路径到目标文件系统。也支持从标准输入中读取输入写入目标文件系统。</font></p>
+<ul>
+<li><font face="华文楷体" size="4">hadoop fs -put localfile
+/user/hadoop/hadoopfile</font></li>
+<li><font face="华文楷体" size="4">hadoop fs -put localfile1 localfile2
+/user/hadoop/hadoopdir</font></li>
+<li><font face="华文楷体" size="4">hadoop fs -put localfile
+hdfs://host:port/hadoop/hadoopfile</font></li>
+<li><font face="华文楷体" size="4">hadoop fs -put -
+hdfs://host:port/hadoop/hadoopfile<br>
+从标准输入中读取输入。</font></li>
+</ul>
+<p><font face="华文楷体" size="4">返回值：</font></p>
+<p><font face="华文楷体" size="4">成功返回0，失败返回-1。</font></p>
+<p><a name="N10262"></a><a name="rm"></a></p>
+<h5><font face="华文楷体" size="4"><strong>rm</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -rm URI [URI
+…]</font></p>
+<p><font face="华文楷体" size="4">删除指定的文件。只删除非空目录和文件。请参考rmr命令了解递归删除。<br>
+示例：</font></p>
+<ul>
+<li><font face="华文楷体" size="4">hadoop fs -rm hdfs://host:port/file
+/user/hadoop/emptydir</font></li>
+</ul>
+<p><font face="华文楷体" size="4">返回值：</font></p>
+<p><font face="华文楷体" size="4">成功返回0，失败返回-1。</font></p>
+<p><a name="N10286"></a><a name="rmr"></a></p>
+<h5><font face="华文楷体" size="4"><strong>rmr</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -rmr URI [URI
+…]</font></p>
+<p><font face="华文楷体" size="4">delete的递归版本。<br>
+示例：</font></p>
+<ul>
+<li><font face="华文楷体" size="4">hadoop fs -rmr
+/user/hadoop/dir</font></li>
+<li><font face="华文楷体" size="4">hadoop fs -rmr
+hdfs://host:port/user/hadoop/dir</font></li>
+</ul>
+<p><font face="华文楷体" size="4">返回值：</font></p>
+<p><font face="华文楷体" size="4">成功返回0，失败返回-1。</font></p>
+<p><a name="N102B0"></a><a name="setrep"></a></p>
+<h5><font face="华文楷体" size="4"><strong>setrep</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -setrep
+[-R]</font></p>
+<p><font face="华文楷体" size="4">改变一个文件的副本系数。-R选项用于递归改变目录下所有文件的副本系数。</font></p>
+<p><font face="华文楷体" size="4">示例：</font></p>
+<ul>
+<li><font face="华文楷体" size="4">hadoop fs -setrep -w 3 -R
+/user/hadoop/dir1</font></li>
+</ul>
+<p><font face="华文楷体" size="4">返回值：</font></p>
+<p><font face="华文楷体" size="4">成功返回0，失败返回-1。</font></p>
+<p><a name="N102D5"></a><a name="stat"></a></p>
+<h5><font face="华文楷体" size="4"><strong>stat</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -stat URI [URI
+…]</font></p>
+<p><font face="华文楷体" size="4">返回指定路径的统计信息。</font></p>
+<p><font face="华文楷体" size="4">示例：</font></p>
+<ul>
+<li><font face="华文楷体" size="4">hadoop fs -stat path</font></li>
+</ul>
+<p><font face="华文楷体" size="4">返回值：<br>
+成功返回0，失败返回-1。</font></p>
+<p><a name="N102F8"></a><a name="tail"></a></p>
+<h5><font face="华文楷体" size="4"><strong>tail</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -tail [-f]
+URI</font></p>
+<p><font face="华文楷体" size="4">将文件尾部1K字节的内容输出到stdout。支持-f选项，行为和Unix中一致。</font></p>
+<p><font face="华文楷体" size="4">示例：</font></p>
+<ul>
+<li><font face="华文楷体" size="4">hadoop fs -tail pathname</font></li>
+</ul>
+<p><font face="华文楷体" size="4">返回值：<br>
+成功返回0，失败返回-1。</font></p>
+<p><a name="N1031B"></a><a name="test"></a></p>
+<h5><font face="华文楷体" size="4"><strong>test</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -test -[ezd]
+URI</font></p>
+<p><font face="华文楷体" size="4">选项：<br>
+-e 检查文件是否存在。如果存在则返回0。<br>
+-z 检查文件是否是0字节。如果是则返回0。<br>
+-d 如果路径是个目录，则返回1，否则返回0。</font></p>
+<p><font face="华文楷体" size="4">示例：</font></p>
+<ul>
+<li><font face="华文楷体" size="4">hadoop fs -test -e
+filename</font></li>
+</ul>
+<a name="N1033E"></a><a name="text"></a>
+<h5><font face="华文楷体" size="4"><strong>text</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -text</font></p>
+<p><font face="华文楷体" size="4">将源文件输出为文本格式。允许的格式是zip和TextRecordInputStream。</font></p>
+<p><a name="N10350"></a><a name="touchz"></a></p>
+<h5><font face="华文楷体" size="4"><strong>touchz</strong></font></h5>
+<p><font face="华文楷体" size="4">使用方法：hadoop fs -touchz URI [URI
+…]</font></p>
+<p><font face="华文楷体" size="4">创建一个0字节的空文件。</font></p>
+<p><font face="华文楷体" size="4">示例：</font></p>
+<ul>
+<li><font face="华文楷体" size="4">hadoop -touchz pathname</font></li>
+</ul>
+</div>
+</div>							
+		</div>

@@ -1,0 +1,949 @@
+---
+layout: default
+title: Java Map遍历方式性能比较
+categories:
+  - java
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<div>
+<h1><strong><span style="font-size: 14pt;">1.
+阐述</span></strong></h1>
+<p><span style="font-size: 14px;">　　对于Java中Map的遍历方式，很多文章都推荐使用entrySet，认为
+其比keySet的效率高很多。理由是：entrySet方法一次拿到所有key和value的集合；而keySet拿到的只是key的集合，针对每个
+key，都要去Map中额外查找一次value，从而降低了总体效率。那么实际情况如何呢？</span></p>
+<p><span style="font-size: 14px;">　　为了解遍历性能的真实差距，包括在遍历key+value、遍历key、遍历value等不同场景下的差异，我试着进行了一些对比测试。</span></p>
+<h1><strong><span style="font-size: 14pt;">2.
+对比测试</span></strong></h1>
+<p><span style="font-size: 14px;">　　一开始只进行了简单的测试，但结果却表明keySet的性能更好，这一点让我很是费解，不都说entrySet明显好于keySet吗？为了进一步地进行验证，于是采用了不同的测试数据进行更详细的对比测试。</span></p>
+<h2><strong><span style="font-size: 14pt;">2.1
+测试数据</span></strong></h2>
+<h3><strong><span style="font-size: 14pt;">2.1.1
+HashMap测试数据</span></strong></h3>
+<ul>
+<li><span style="font-size: 14px;">HashMap-1，大小为100万，key和value均为String，key的值为1、2、3……1000000：</span></li>
+</ul>
+<div align="center">
+<table style="background-color: #f0f8ff;" align="center" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p style="text-align: left;" align="left"><span style="font-size: 13px;">Map map = new HashMap();</span></p>
+<p align="left"><span style="font-size: 13px;">String key,
+value;</span></p>
+<p align="left"><span style="font-size: 13px;">for (i = 1; i &lt;=
+num; i++) {</span></p>
+<p align="left"><strong><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+key = "" + i;</span></strong></p>
+<p align="left"><strong><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+value = "value";</span></strong></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+map.put(key, value);</span></p>
+<p style="text-align: left;"><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><span style="font-size: 14px;">HashMap-2，大小为100万，key和value均为String，key的值为50、100、150、200、……、50000000：</span></li>
+</ul>
+<div align="center">
+<table style="height: 219px; background-color: #f0f8ff; width: 717px;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">Map map = new
+HashMap();</span></p>
+<p align="left"><span style="font-size: 13px;">String key,
+value;</span></p>
+<p align="left"><span style="font-size: 13px;">for (i = 1; i &lt;=
+num; i++) {</span></p>
+<p align="left"><strong><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+key = "" + (i * 50);</span></strong></p>
+<p align="left"><strong><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+value = "value";</span></strong></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+map.put(key, value);</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong><span style="font-size: 14pt;">2.1.2
+TreeMap测试数据</span></strong></p>
+<ul>
+<li><span style="font-size: 14px;">TreeMap-1，大小为100万，key和value均为String，key的值为1、2、3……1000000：</span></li>
+</ul>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">Map map = new
+TreeMap();</span></p>
+<p align="left"><span style="font-size: 13px;">String key,
+value;</span></p>
+<p align="left"><span style="font-size: 13px;">for (i = 1; i &lt;=
+num; i++) {</span></p>
+<p align="left"><strong><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+key = "" + i;</span></strong></p>
+<p align="left"><strong><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+value = "value";</span></strong></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+map.put(key, value);</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><span style="font-size: 14px;">TreeMap-2，大小为100万，key和value均为String，key的值为50、100、150、200、……、50000000，更离散：</span></li>
+</ul>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">Map map = new
+TreeMap();</span></p>
+<p align="left"><span style="font-size: 13px;">String key,
+value;</span></p>
+<p align="left"><span style="font-size: 13px;">for (i = 1; i &lt;=
+num; i++) {</span></p>
+<p align="left"><strong><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+key = "" + (i * 50);</span></strong></p>
+<p align="left"><strong><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+value = "value";</span></strong></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+map.put(key, value);</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong><span style="font-size: 14pt;">2.2
+测试场景</span></strong></p>
+<p><span style="font-size: 14px;">　　分别使用keySet、entrySet和values的多种写法测试三种场景：遍历key+value、遍历key、遍历value的场景。</span></p>
+<h3><strong><span style="font-size: 14pt;">2.2.1
+遍历key+value</span></strong></h3>
+<ul>
+<li><span style="font-size: 14px;">keySet遍历key+value（写法1）：</span></li>
+</ul>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">Iterator iter =
+map.keySet().iterator();</span></p>
+<p align="left"><span style="font-size: 13px;">while
+(iter.hasNext()) {</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+key = iter.next();</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+value = map.get(key);</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><span style="font-size: 14px;">keySet遍历key+value（写法2）：</span></li>
+</ul>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">for (String key :
+map.keySet()) {</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+value = map.get(key);</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><span style="font-size: 14px;">entrySet遍历key+value（写法1）：</span></li>
+</ul>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">Iterator&gt; iter =
+map.entrySet().iterator();</span></p>
+<p align="left"><span style="font-size: 13px;">Entry
+entry;</span></p>
+<p align="left"><span style="font-size: 13px;">while
+(iter.hasNext()) {</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+entry = iter.next();</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+key = entry.getKey();</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+value = entry.getValue();</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><span style="font-size: 14px;">&nbsp;<wbr></span><span style="font-size: 14px;">entrySet遍历key+value（写法2）：</span></li>
+</ul>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">for (Entry entry:
+map.entrySet()) {</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+key = entry.getKey();</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+value = entry.getValue();</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3><span style="font-size: 14pt;">2.2.2 遍历key</span></h3>
+<ul>
+<li><span style="font-size: 14px;">keySet遍历key（写法1）：</span></li>
+</ul>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">Iterator iter =
+map.keySet().iterator();</span></p>
+<p align="left"><span style="font-size: 13px;">while
+(iter.hasNext()) {</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+key = iter.next();</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><span style="font-size: 14px;">keySet遍历key（写法2）：</span></li>
+</ul>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">for (String key :
+map.keySet()) {</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><span style="font-size: 14px;">&nbsp;<wbr></span><span style="font-size: 14px;">entrySet遍历key（写法1）：</span></li>
+</ul>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">Iterator&gt; iter =
+map.entrySet().iterator();</span></p>
+<p align="left"><span style="font-size: 13px;">while
+(iter.hasNext()) {</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+key = iter.next().getKey();</span></p>
+<p align="left"><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><span style="font-size: 14px;">entrySet遍历key（写法2）：</span></li>
+</ul>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">for (Entry entry:
+map.entrySet()) {</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+key = entry.getKey();</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong><span style="font-size: 14pt;">2.2.3
+遍历value</span></strong></p>
+<ul>
+<li><span style="font-size: 14px;">keySet遍历value（写法1）：</span></li>
+</ul>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">Iterator iter =
+map.keySet().iterator();</span></p>
+<p align="left"><span style="font-size: 13px;">while
+(iter.hasNext()) {</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+value = map.get(iter.next());</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><span style="font-size: 14px;">keySet遍历value（写法2）：</span></li>
+</ul>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">for (String key :
+map.keySet()) {</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+value = map.get(key);</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><span style="font-size: 14px;">entrySet遍历value（写法1）：</span></li>
+</ul>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">Iterator&gt; iter =
+map.entrySet().iterator();</span></p>
+<p align="left"><span style="font-size: 13px;">while
+(iter.hasNext()) {</span></p>
+<p align="left"><span style="font-size: 13px;">value =
+iter.next().getValue();</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><span style="font-size: 14px;">entrySet遍历value（写法2）：</span></li>
+</ul>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">for (Entry entry:
+map.entrySet()) {</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+value = entry.getValue();</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><span style="font-size: 14px;">values遍历value（写法1）：</span></li>
+</ul>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">Iterator iter =
+map.values().iterator();</span></p>
+<p align="left"><span style="font-size: 13px;">while
+(iter.hasNext()) {</span></p>
+<p align="left"><span style="font-size: 13px;">value =
+iter.next();</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><span style="font-size: 14px;">values遍历value（写法2）：</span></li>
+</ul>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">for (String value :
+map.values()) {</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><span style="font-size: 14pt;"><strong>2.3
+测试结果</strong></span></p>
+<h3><span style="font-size: 14pt;"><strong>2.3.1
+HashMap测试结果</strong></span></h3>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="308">
+<p align="center"><span style="font-size: 14px;">单位：毫秒</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">HashMap-1</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">HashMap-2</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">keySet遍历key+value（写法1）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">39</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">93</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">keySet遍历key+value（写法2）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">38</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">87</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">entrySet遍历key+value（写法1）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">43</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">86</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">entrySet遍历key+value（写法2）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">43</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">85</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><span style="font-size: 14px;">&nbsp;<wbr></span></p>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="308">
+<p align="center"><span style="font-size: 14px;">单位：毫秒</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">HashMap-1</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">HashMap-2</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">keySet遍历key（写法1）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">27</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">65</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">keySet遍历key（写法2）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">26</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">64</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">entrySet遍历key（写法1）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">35</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">75</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">entrySet遍历key（写法2）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">34</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">74</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><span style="font-size: 14px;">&nbsp;<wbr></span></p>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="308">
+<p align="center"><span style="font-size: 14px;">单位：毫秒</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">HashMap-1</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">HashMap-2</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">keySet遍历value（写法1）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">38</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">87</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">keySet遍历value（写法2）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">37</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">87</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">entrySet遍历value（写法1）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">34</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">61</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">entrySet遍历value（写法2）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">32</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">62</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">values遍历value（写法1）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">26</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">48</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">values遍历value（写法2）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">26</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">48</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong><span style="font-size: 14pt;">2.3.2
+TreeMap测试结果</span></strong></p>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="308">
+<p align="center"><span style="font-size: 14px;">单位：毫秒</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">TreeMap-1</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">TreeMap-2</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">keySet遍历key+value（写法1）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">430</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">451</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">keySet遍历key+value（写法2）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">429</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">450</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">entrySet遍历key+value（写法1）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">77</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">84</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">entrySet遍历key+value（写法2）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">70</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">68</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><span style="font-size: 14px;">&nbsp;<wbr></span></p>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="308">
+<p align="center"><span style="font-size: 14px;">单位：毫秒</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">TreeMap-1</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">TreeMap-2</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">keySet遍历key（写法1）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">50</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">49</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">keySet遍历key（写法2）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">49</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">48</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">entrySet遍历key（写法1）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">66</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">64</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">entrySet遍历key（写法2）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">65</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">63</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><span style="font-size: 14px;">&nbsp;<wbr></span></p>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="308">
+<p align="center"><span style="font-size: 14px;">单位：毫秒</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">TreeMap-1</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">TreeMap-2</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">keySet遍历value（写法1）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">432</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">448</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">keySet遍历value（写法2）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">430</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">448</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">entrySet遍历value（写法1）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">62</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">61</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">entrySet遍历value（写法2）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">62</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">61</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">values遍历value（写法1）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">46</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">46</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">values遍历value（写法2）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">45</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">46</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong><span style="font-size: 14pt;">3. 结论</span></strong></p>
+<h2><strong><span style="font-size: 14pt;">3.1
+如果你使用HashMap</span></strong></h2>
+<ol>
+<li><span style="font-size: 14px;">同时遍历key和value时，keySet与entrySet方法的性能差异
+取决于key的具体情况，如复杂度（复杂对象）、离散度、冲突率等。换言之，取决于HashMap查找value的开销。entrySet一次性取出所有
+key和value的操作是有性能开销的，当这个损失小于HashMap查找value的开销时，entrySet的性能优势就会体现出来。例如上述对比
+测试中，当key是最简单的数值字符串时，keySet可能反而会更高效，耗时比entrySet少10%。总体来说还是推荐使用entrySet。因为
+当key很简单时，其性能或许会略低于keySet，但却是可控的；而随着key的复杂化，entrySet的优势将会明显体现出来。当然，我们可以根据
+实际情况进行选择</span></li>
+<li><span style="font-size: 14px;">只遍历key时，keySet方法更为合适，因为entrySet将无用的value也给取出来了，浪费了性能和空间。在上述测试结果中，keySet比entrySet方法耗时少23%。</span></li>
+<li><span style="font-size: 14px;">只遍历value时，使用vlaues方法是最佳选择，entrySet会略好于keySet方法。</span></li>
+<li><span style="font-size: 14px;">在不同的遍历写法中，推荐使用如下写法，其效率略高一些：</span></li>
+</ol>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">for (String key :
+map.keySet()) {</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+value = map.get(key);</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><span style="font-size: 14px;">&nbsp;<wbr></span></p>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">for (Entry entry:
+map.entrySet()) {</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+key = entry.getKey();</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+value = entry.getValue();</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><span style="font-size: 14px;">&nbsp;<wbr></span></p>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">for (String value :
+map.values()) {</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><span style="font-size: 14pt;"><strong>3.2
+如果你使用TreeMap</strong></span></p>
+<ol>
+<li><span style="font-size: 14px;">同时遍历key和value时，与HashMap不同，entrySet的性能
+远远高于keySet。这是由TreeMap的查询效率决定的，也就是说，TreeMap查找value的开销较大，明显高于entrySet一次性取出
+所有key和value的开销。因此，遍历TreeMap时强烈推荐使用entrySet方法。</span></li>
+<li><span style="font-size: 14px;">只遍历key时，keySet方法更为合适，因为entrySet将无用的value也给取出来了，浪费了性能和空间。在上述测试结果中，keySet比entrySet方法耗时少24%。</span></li>
+<li><span style="font-size: 14px;">只遍历value时，使用vlaues方法是最佳选择，entrySet也明显优于keySet方法。</span></li>
+<li><span style="font-size: 14px;">在不同的遍历写法中，推荐使用如下写法，其效率略高一些：</span></li>
+</ol>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">for (String key :
+map.keySet()) {</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+value = map.get(key);</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><span style="font-size: 14px;">&nbsp;<wbr></span></p>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">for (Entry entry:
+map.entrySet()) {</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+key = entry.getKey();</span></p>
+<p align="left"><span style="font-size: 13px;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+value = entry.getValue();</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><span style="font-size: 14px;">&nbsp;<wbr></span></p>
+<div align="center">
+<table style="background-color: #f0f8ff;" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="710">
+<p align="left"><span style="font-size: 13px;">for (String value :
+map.values()) {</span></p>
+<p><span style="font-size: 13px;">}</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><span style="font-size: 14px;">&nbsp;<wbr>转自：http://www.cnblogs.com/fczjuever/archive/2013/04/07/3005997.html</span></p>
+</div>							
+		</div>

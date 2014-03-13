@@ -1,0 +1,147 @@
+---
+layout: default
+title: scribe配置
+categories:
+  - java
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<div style="text-indent:2em;">Scribe是<a target="_blank" href="http://baike.baidu.com/view/409608.htm">Facebook</a>开源的日志收集系统，在Facebook内部已经得到大量的应用。它能够从各种日志源上收集日志，存储到一个中央<a target="_blank" href="http://baike.baidu.com/view/51839.htm">存储系统</a>（可以是<a target="_blank" href="http://baike.baidu.com/view/44349.htm">NFS</a>，<a target="_blank" href="http://baike.baidu.com/view/771589.htm">分布式文件系统</a>等）上，以便于进行集中统计分析处理。<br>
+
+<br>
+<font color="#ED1C24">scribed.conf
+是启动的配置文件&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr><br>
+
+./scribed scribed.conf可以启动scribed</font><br>
+<br>
+<div style="text-indent:2em;"><b>CentOS 6.x binary:</b></div>
+<div style="text-indent:2em;"><br></div>
+<div style="text-indent:2em;">wget
+http://lg-hadoop-build03.bj/share/infra/scribe/agent/centos-6.x/scribed</div>
+<div style="text-indent:2em;"><br></div>
+<div style="text-indent:2em;"><b>CentOS 5.x binary:</b></div>
+<div style="text-indent:2em;"><br></div>
+<div style="text-indent:2em;">wget
+http://lg-hadoop-build03.bj/share/infra/scribe/agent/centos-5.x/scribed</div>
+<div style="text-indent:2em;"><br></div>
+<div style="text-indent:2em;"><b>配置：</b></div>
+<div style="text-indent:2em;"><br></div>
+<div style="text-indent:2em;">wget
+http://lg-hadoop-build03.bj/share/infra/scribe/agent/scribed.conf</div>
+<div style="text-indent:2em;"><br></div>
+<div style="text-indent:2em;"><span style="text-indent: 2em;">主要是port和file_path：secondary
+store的file_path需要指向一个剩余空间足够大的卷。</span></div>
+<div style="text-indent:2em;"><b>启动local scribe agent</b></div>
+<div style="text-indent:2em;"><br></div>
+<div style="text-indent:2em;">./scribed -c scribed.conf</div>
+<div><br></div>
+scribed.conf配置<br>
+<br>
+<font color="#ED1C24"><b>port=1463</b></font>&nbsp;<wbr><br>
+<b>##port是Scribe启动的时候监听的端口，如果将日志达到这个机器的这个端口便会被Scribe收集到。</b><br>
+max_queue_size=1000000000<br>
+max_msg_per_second=2000000<br>
+check_interval=3<br>
+<br>
+# DEFAULT<br>
+<font color="#ED1C24"><b>&nbsp;<wbr></b></font>&nbsp;<wbr>&nbsp;<wbr><br>
+
+<b>##里面配置的是收集到的日志的存放。可以放在本地，也可以打到别的中央存储日志的机器。</b><br>
+category=default<br>
+<font color="#ED1C24"><b>type=multi</b></font><br>
+<br>
+## type&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+收集到的log的存储方式<br>
+<ol>
+<li>file&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+存储在本地file<br></li>
+<li>
+buffer&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+有缓存的存储，如果第一个没有发送除去则发送中的方式</li>
+<li>network&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+发送到别的机器<br></li>
+<li>
+bucket&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+将log的哈系值发送到多个文件<br></li>
+<li>thriftfile&nbsp;<wbr>&nbsp;<wbr>
+将log的哈系值发送到thrift file<br></li>
+<li>null&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+不需要处理的<br></li>
+<li>multi&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+发送到后面配置的多个文件<br></li>
+</ol>
+<br>
+target_write_size=20480<br>
+max_write_interval=1<br>
+buffer_send_rate=2<br>
+retry_interval=30<br>
+retry_interval_range=10<br>
+rotate_period=daily<br>
+rotate_hour=0<br>
+rotate_minute=0<br>
+<br>
+<br>
+<font color="#ED1C24"><b>type=buffer</b></font><br>
+<br>
+<font color="#ED1C24"><b>type=file</b></font><br>
+fs_type=std<br>
+<font color="#ED1C24"><b>file_path=/data/scribe</b></font><br>
+<b>##存储的位置</b><br>
+base_filename=thisisoverwritten<br>
+max_size=1000000000<br>
+add_newlines=1<br>
+rotate_period=daily<br>
+rotate_hour=0<br>
+rotate_minute=0<br>
+<br>
+<br>
+<br>
+<font color="#ED1C24"><b>type=file</b></font><br>
+fs_type=std<br>
+<font color="#ED1C24"><b>file_path=/tmp</b></font><br>
+base_filename=thisisoverwritten<br>
+max_size=3000000<br>
+<br>
+<br>
+<br>
+<br>
+<font color="#ED1C24"><b>type=buffer</b></font><br>
+retry_interval=30<br>
+retry_interval_range=10<br>
+<br>
+<font color="#ED1C24"><b>type=buffer</b></font><br>
+retry_interval=30<br>
+retry_interval_range=10<br>
+replay_buffer=no<br>
+<br>
+<br>
+<font color="#ED1C24"><b>type=network</b></font><br>
+<font color="#ED1C24"><b>remote_host=10.237.35.101<br>
+remote_port=1463</b></font><br>
+<b>##发送的机器的ip和端口，一般这个机器也需要启动一个scribe并监听1463端口</b><br>
+compressed_transport=yes<br>
+<br>
+<br>
+<br>
+<font color="#ED1C24"><b>type=network</b></font><br>
+<font color="#ED1C24"><b>remote_host=#.#.#.#<br>
+remote_port=1463</b></font><br>
+compressed_transport=yes<br>
+<br>
+<br>
+<br>
+<br>
+max_size=100000000<br>
+<font color="#ED1C24"><b>type=file</b></font><br>
+fs_type=std<br>
+<font color="#ED1C24"><b>file_path=/data/tmp/lg-hadoop</b></font><br>
+<br>
+<br>
+<br>
+<br>
+详细的配置：<br>
+https://github.com/facebook/scribe/wiki/Scribe-Configuration<br>
+<br>
+<br></div>							
+		</div>

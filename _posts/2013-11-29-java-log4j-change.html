@@ -1,0 +1,36 @@
+---
+layout: default
+title: log动态修改日志级别 
+categories:
+  - java
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>1.log4j<br></b></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>public</b></font><font color="#7F0055"><b>static</b></font><font color="#7F0055"><b>void</b></font><font color="#000000">main(String[]
+args)</font> <font color="#7F0055"><b>throws</b></font><font color="#000000">InterruptedException {</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#0000C0"><i>logger</i></font><font color="#000000">.debug(</font><font color="#2A00FF">"***DEBUG"</font><font color="#000000">);</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#0000C0"><i>logger</i></font><font color="#000000">.info(</font><font color="#2A00FF">"***info"</font><font color="#000000">);</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#0000C0"><i>logger</i></font><font color="#000000">.warn(</font><font color="#2A00FF">"***WARN"</font><font color="#000000">);</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#0000C0"><i>logger</i></font><font color="#000000">.error(</font><font color="#2A00FF">"***ERROR"</font><font color="#000000">);</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">org.apache.log4j.Logger logger =
+org.apache.log4j.LogManager</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">.<font color="#000000"><i>getLogger</i></font><font color="#000000">(</font><font color="#2A00FF">"com.xiaomi.vip.controllers.vipadmin.DeveloperInfoController.java"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">Level
+level = Level.<font color="#000000"><i>toLevel</i></font><font color="#000000">(</font><font color="#2A00FF">"INFO"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">logger.setLevel(level);</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">logger.debug(<font color="#2A00FF">"***DEBUG"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">logger.info(<font color="#2A00FF">"***info"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">logger.warn(<font color="#2A00FF">"***WARN"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">logger.error(<font color="#2A00FF">"***ERROR"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;"><br></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">level =
+Level.<font color="#000000"><i>toLevel</i></font><font color="#000000">(</font><font color="#2A00FF">"WARN"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">logger.setLevel(level);</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">logger.debug(<font color="#2A00FF">"***DEBUG"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">logger.info(<font color="#2A00FF">"***info"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">logger.warn(<font color="#2A00FF">"***WARN"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">logger.error(<font color="#2A00FF">"***ERROR"</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>							
+		</div>

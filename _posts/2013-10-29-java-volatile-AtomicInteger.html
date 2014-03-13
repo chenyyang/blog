@@ -1,0 +1,137 @@
+---
+layout: default
+title: java中volatile和AtomicInteger
+categories:
+  - java 
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>一：AtomicInteger<br></b></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>public</b></font><font color="#7F0055"><b>class</b></font><font color="#000000">ContentType
+{</font></font></p>
+<p style="margin-bottom: 0in" align="left">&nbsp;<wbr></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>public</b></font><font color="#7F0055"><b>static</b></font><font color="#000000">AtomicInteger</font> <font color="#0000C0"><i>ai</i></font><font color="#000000">=</font>
+<font color="#7F0055"><b>new</b></font><font color="#000000">AtomicInteger(0);</font></font></p>
+<p style="margin-bottom: 0in" align="left">&nbsp;<wbr></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>public</b></font><font color="#7F0055"><b>static</b></font><font color="#7F0055"><b>void</b></font><font color="#000000">main(String[]
+args)</font> <font color="#7F0055"><b>throws</b></font><font color="#000000">InterruptedException {</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>final</b></font><font color="#000000">CountDownLatch</font> <font color="#000000"><u>latch</u></font><font color="#000000">=</font>
+<font color="#7F0055"><b>new</b></font><font color="#000000">CountDownLatch(1000);</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>for</b></font><font color="#000000">(</font><font color="#7F0055"><b>int</b></font><font color="#000000">i = 0; i
+&lt; 1000; i++) {</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">Thread
+thread = <font color="#7F0055"><b>new</b></font><font color="#000000">Thread() {</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#646464">@Override</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>public</b></font><font color="#7F0055"><b>void</b></font><font color="#000000">run()
+{</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#0000C0"><i>ai</i></font><font color="#000000">.incrementAndGet();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">System.<font color="#0000C0"><i>out</i></font><font color="#000000">.println(</font><font color="#2A00FF">"-------"</font><font color="#000000">+</font>
+<font color="#0000C0"><i>ai</i></font><font color="#000000">.get());</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">latch.countDown();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">};</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">thread.setDaemon(<font color="#7F0055"><b>true</b></font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">thread.start();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">Thread
+thread = <font color="#7F0055"><b>new</b></font><font color="#000000">Thread() {</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#646464">@Override</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>public</b></font><font color="#7F0055"><b>void</b></font><font color="#000000">run()
+{</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>while</b></font><font color="#000000">(</font><font color="#7F0055"><b>true</b></font><font color="#000000">)
+{</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#0000C0"><i>ai</i></font><font color="#000000">.incrementAndGet();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">System.<font color="#0000C0"><i>out</i></font><font color="#000000">.println(</font><font color="#2A00FF">"---</font></font></font><font style="font-size: 16px;" face="Monospace"><span><font color="#2A00FF">循环</font></span></font><font style="font-size: 16px;" face="Monospace"><font color="#2A00FF">----"</font><font color="#000000">+</font> <font color="#0000C0"><i>ai</i></font><font color="#000000">.get());</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">//
+latch.countDown();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">};</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">//
+thread.setDaemon(true);</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">thread.start();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">latch.await();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">// while
+(true) {</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;"><br></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">System.<font color="#0000C0"><i>out</i></font><font color="#000000">.println(</font><font color="#2A00FF">"ai : "</font>
+<font color="#000000">+</font> <font color="#0000C0"><i>ai</i></font><font color="#000000">.get());</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">//
+Thread.sleep(100);</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">//
+}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><br></p>
+<p style="margin-bottom: 0in" align="left"><br>
+<font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">latch.await();</font></font> <span style="color: rgb(0, 0, 0); font-family: sans-serif; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); font-size: medium; display: inline !important; float: none;">
+使当前线程在锁存器倒计数至零之前一直等待，除非线程被</span><a href="../../../java/lang/Thread.html#interrupt()">中断</a><span style="color: rgb(0, 0, 0); font-family: sans-serif; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); font-size: medium; display: inline !important; float: none;">。</span><span style="color: rgb(0, 0, 0); font-family: sans-serif; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); font-size: medium; display: inline !important; float: none;">用来保证for循环执行结束以后打印结果。</span></p>
+<p style="margin-bottom: 0in" align="left"><span style="color: rgb(0, 0, 0); font-family: sans-serif; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; background-color: rgb(255, 255, 255); font-size: medium; display: inline !important; float: none;">
+AtomicInteger操作是原子性的</span></p>
+<p style="margin-bottom: 0in" align="left"><br></p>
+<p style="margin-bottom: 0in" align="left"><br></p>
+<p style="margin-bottom: 0in" align="left"><br>
+<font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>二：volatile</b></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>public</b></font><font color="#7F0055"><b>class</b></font><font color="#000000">Counter
+{</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>public</b></font><font color="#7F0055"><b>static</b></font><font color="#7F0055"><b>int</b></font><font color="#0000C0"><i>count</i></font><font color="#000000">=
+0;</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>public</b></font><font color="#7F0055"><b>static</b></font><font color="#7F0055"><b>void</b></font><font color="#000000">inc()
+{</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">//</font></font> <font style="font-size: 16px;" face="Monospace"><span><font color="#3F7F5F">这里延迟</font></span></font><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">1</font></font><font style="font-size: 16px;" face="Monospace"><span><font color="#3F7F5F">毫秒，使得结果明显</font></span></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>try</b></font><font color="#000000">{</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">Thread.<i>sleep</i>(1);</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}
+<font color="#7F0055"><b>catch</b></font><font color="#000000">(InterruptedException e) {</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#0000C0"><i>count</i></font><font color="#000000">++;</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>public</b></font><font color="#7F0055"><b>static</b></font><font color="#7F0055"><b>void</b></font><font color="#000000">main(String[]
+args)</font> <font color="#7F0055"><b>throws</b></font><font color="#000000">InterruptedException {</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">//</font></font> <font style="font-size: 16px;" face="Monospace"><span><font color="#3F7F5F">同时启动</font></span></font><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">1000</font></font><font style="font-size: 16px;" face="Monospace"><span><font color="#3F7F5F">个线程，去进行</font></span></font><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">i++</font></font><font style="font-size: 16px;" face="Monospace"><span><font color="#3F7F5F">计算，看看实际结果</font></span></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>final</b></font><font color="#000000">CountDownLatch
+latch =</font> <font color="#7F0055"><b>new</b></font><font color="#000000">CountDownLatch(1000);</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>for</b></font><font color="#000000">(</font><font color="#7F0055"><b>int</b></font><font color="#000000">i = 0; i
+&lt; 1000; i++) {</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>new</b></font><font color="#000000">Thread(</font><font color="#7F0055"><b>new</b></font><font color="#000000">Runnable()
+{</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#646464">@Override</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>public</b></font><font color="#7F0055"><b>void</b></font><font color="#000000">run()
+{</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">latch.countDown();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>try</b></font><font color="#000000">{</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">latch.await();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}
+<font color="#7F0055"><b>catch</b></font><font color="#000000">(InterruptedException e) {</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">//</font>
+<font color="#7F9FBF"><b>TODO</b></font><font color="#3F7F5F">Auto-generated catch block</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">e.printStackTrace();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">Counter.<i>inc</i>();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}).start();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">//</font></font> <font style="font-size: 16px;" face="Monospace"><span><font color="#3F7F5F">这里每次运行的值都有可能不同</font></span></font><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">,</font></font><font style="font-size: 16px;" face="Monospace"><span><font color="#3F7F5F">可能为</font></span></font><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">1000</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>while</b></font><font color="#000000">(</font><font color="#7F0055"><b>true</b></font><font color="#000000">)
+{</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">System.<font color="#0000C0"><i>out</i></font><font color="#000000">.println(</font><font color="#2A00FF">"</font></font></font><font style="font-size: 16px;" face="Monospace"><span><font color="#2A00FF">运行结果</font></span></font><font style="font-size: 16px;" face="Monospace"><font color="#2A00FF">:Counter.count="</font><font color="#000000">+
+Counter.</font><font color="#0000C0"><i>count</i></font><font color="#000000">);</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">Thread.<i>sleep</i>(100);</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#000000">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><br></p>
+<p style="margin-bottom: 0in" align="left"><br></p>
+<p>运行结果:Counter.count=992</p>
+<p>运行结果还是没有我们期望的1000，下面我们分析一下原因</p>
+<p>&nbsp;<wbr></p>
+<p>在 java
+垃圾回收整理一文中，描述了jvm运行时刻内存的分配。其中有一个内存区域是jvm虚拟机栈，每一个线程运行时都有一个线程栈，</p>
+<p>
+线程栈保存了线程运行时候变量值信息。当线程访问某一个对象时候值的时候，首先通过对象的引用找到对应在堆内存的变量的值，然后把堆内存</p>
+<p>
+变量的具体值load到线程本地内存中，建立一个变量副本，之后线程就不再和对象在堆内存变量值有任何关系，而是直接修改副本变量的值，</p>
+在修改完之后的某一个时刻（线程退出之前），自动把线程变量副本的值回写到对象在堆中变量。这样在堆中的对象的值就产生变化了。
+<p style="margin-bottom: 0in" align="left">&nbsp;<wbr></p>							
+		</div>

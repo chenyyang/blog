@@ -1,0 +1,121 @@
+---
+layout: default
+title: google Gson 
+categories:
+  - java
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			地址：https://sites.google.com/site/gson/gson-user-guide#TOC-Overview<br>
+
+<br>
+经过比较，gson和其他现有java
+json类库最大的不同时gson需要序列化得实体类不需要使用annotation来标识需要序列化得字段，同时gson又可以通过使用annotation来灵活配置需要序列化的字段。<br>
+
+<br>
+下面是一个简单的例子：<br>
+<br>
+public class Person {<br>
+<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> private
+String name;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> private int
+age;<br>
+<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> public
+String getName() {<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+return name;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> }<br>
+<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> public void
+setName(String name) {<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+this.name = name;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> }<br>
+<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> public int
+getAge() {<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+return age;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> }<br>
+<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> public void
+setAge(int age) {<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+this.age = age;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> }<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+@Override<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> public
+String toString()<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> {<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+return name + ":" +age;<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> }<br>
+}<br>
+<br>
+实体很简单，两个字段，当然实体中的字段也可以是List或者Set类型的。<br>
+<br>
+<br>
+<br>
+Gson gson = new Gson();<br>
+List persons = new ArrayList();<br>
+for (int i = 0; i &lt; 10; i++) {<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+Person p = new Person();<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+p.setName("name" + i);<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+p.setAge(i * 5);<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+persons.add(p);<br>
+}<br>
+String str = gson.toJson(persons);<br>
+<br>
+上面的代码重点是Gson对象，它提供了toJason()方法将对象转换成Json字符串，上面代码的str对象值为：<br>
+<br>
+[{"name":"name0","age":0},{"name":"name1","age":5},{"name":"name2","age":10},{"name":"name3","age":15},{"name":"name4","age":20},{"name":"name5","age":25},{"name":"name6","age":30},{"name":"name7","age":35},{"name":"name8","age":40},{"name":"name9","age":45}]<br>
+
+<br>
+很标准的json数据，很简单吧，呵呵。<br>
+<br>
+下面来看看gson的反序列化，Gson提供了fromJson()方法来实现从Json相关对象到java实体的方法。<br>
+<br>
+在日常应用中，我们一般都会碰到两种情况，转成单一实体对象和转换成对象列表或者其他结构。<br>
+<br>
+先来看第一种：<br>
+<br>
+比如json字符串为：[{"name":"name0","age":0}]<br>
+<br>
+代码:<br>
+<br>
+Person person = gson.fromJson(str, Person.class);<br>
+提供两个参数，分别是json字符串以及需要转换对象的类型。<br>
+<br>
+第二种，转换成列表类型：<br>
+<br>
+代码:<br>
+<br>
+List ps = gson.fromJson(str, new
+TypeToken&gt;(){}.getType());<br>
+for(int i = 0; i &lt; ps.size() ; i++)<br>
+{<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+Person p = ps.get(i);<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+System.out.println(p.toString());<br>
+}<br>
+可以看到上面的代码使用了TypeToken，它是gson提供的数据类型转换器，可以支持各种数据集合类型转换。<br>
+<br>
+Gson的基本使用就是这么多，至于annotation方面可以参考gson的官方文档，希望能对初学java和gson的同学有所帮助。<br>
+
+<br>
+原文：http://www.cnblogs.com/chenlhuaf/archive/2011/05/01/gson_test.html<br>							
+		</div>

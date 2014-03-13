@@ -1,0 +1,61 @@
+---
+layout: default
+title: Arrays.asList坑 
+categories:
+  - java
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>public</b></font><font color="#7F0055"><b>static</b></font><font color="#7F0055"><b>void</b></font><font color="#000000">main(String[]
+arg) {</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">String[]
+array = <font color="#7F0055"><b>new</b></font><font color="#000000">String(</font><font color="#2A00FF">"1,2,3,4,5"</font><font color="#000000">).split(</font><font color="#2A00FF">","</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace"><u>List</u> list =
+Arrays.<i>asList</i>(array);//返回的list是Array自己定义的一个内部类，只覆盖了部分方法，大部分修改方法没有重写，导致不能用add
+remove等。<br></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">System.<font color="#0000C0"><i>out</i></font><font color="#000000">.println(list);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#000000"><u>list.set(4,</u></font> <font color="#2A00FF"><u>"7"</u></font><font color="#000000"><u>)</u></font><font color="#000000">;</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">//
+list.add("7");&nbsp;<wbr><br></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F">//
+list.remove(0);</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">System.<font color="#0000C0"><i>out</i></font><font color="#000000">.println(list);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><br></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#000000">ArrayList</font></font>内部类定义：<br></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>private</b></font><font color="#7F0055"><b>static</b></font><font color="#7F0055"><b>class</b></font><font color="#000000">ArrayList</font>
+<font color="#7F0055"><b>extends</b></font><font color="#000000">AbstractList</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>implements</b></font><font color="#000000">RandomAccess, java.io.Serializable</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">{</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>private</b></font><font color="#7F0055"><b>static</b></font><font color="#7F0055"><b>final</b></font><font color="#7F0055"><b>long</b></font><font color="#0000C0"><i>serialVersionUID</i></font><font color="#000000">=
+-2764017481108945198L;</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>private</b></font><font color="#7F0055"><b>final</b></font><font color="#000000">E[]</font>
+<font color="#0000C0">a</font><font color="#000000">;</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;"><br></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">ArrayList(E[] array) {</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>if</b></font><font color="#000000">(array==</font><font color="#7F0055"><b>null</b></font><font color="#000000">)</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>throw</b></font><font color="#7F0055"><b>new</b></font><font color="#000000">NullPointerException();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#0000C0">a</font><font color="#000000">= array;</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;"><br></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>public</b></font><font color="#7F0055"><b>int</b></font><font color="#000000">size()
+{</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>return</b></font><font color="#0000C0">a</font><font color="#000000">.</font><font color="#0000C0">length</font><font color="#000000">;</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;"><br></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>public</b></font><font color="#000000">Object[]
+toArray() {</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>return</b></font><font color="#0000C0">a</font><font color="#000000">.clone();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;"><br></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>public</b></font> <font color="#000000">T[]
+toArray(T[] a) {</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>int</b></font><font color="#000000">size =
+size();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>if</b></font><font color="#000000">(a.</font><font color="#0000C0">length</font>
+<font color="#000000">&lt;
+size)</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>return</b></font><font color="#000000">Arrays.</font><font color="#000000"><i>copyOf</i></font><font color="#000000">(</font><font color="#7F0055"><b>this</b></font><font color="#000000">.</font><font color="#0000C0">a</font><font color="#000000">, size,</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">(Class							
+		</font></font></p></div>

@@ -1,0 +1,157 @@
+---
+layout: default
+title: supervisord进程管理工具
+categories:
+  - other
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<p>Supervisord是用Python实现的一款非常实用的进程管理工具，在批量服务化管理时特别有效。</p>
+<p><strong>环境</strong></p>
+<p>centos<br>
+python2.4</p>
+<p><strong>安装</strong></p>
+<p>wget
+http://pypi.python.org/packages/source/s/supervisor/supervisor-3.0a10.tar.gz#md5=99c6fbd45bade87301296b7a<wbr>597fb68e</p>
+<p>tar zxvf supervisor-3.0a10.tar.gz<br>
+cd supervisor-3.0a10<br>
+python setup.py install<br>
+如果上述遇到问题，请按如下操作。</p>
+<p><strong>依赖setuptools安装</strong></p>
+<p>wget
+http://pypi.python.org/packages/2.4/s/setuptools/setuptools-0.6c11-py2.4.egg#md5=bd639f9b0eac4c42497034de<wbr>c2ec0c2b<br>
+
+sh setuptools-0.6c11-py2.4.egg</p>
+<p><strong>产生基础配置文件</strong></p>
+<p>echo_supervisord_conf &gt; /etc/supervisord.conf</p>
+<p><strong>配置</strong></p>
+<p>[inet_http_server]前面的分号去掉;<br>
+定义port=192.168.1.1:8888</p>
+<p><strong>启动</strong></p>
+<p>supervisord -c /etc/supervisord.conf</p>
+<p><strong>查看</strong></p>
+<p>浏览器打开 http://192.168.1.1:8888<br>
+<strong><br>
+深入配置</strong></p>
+<blockquote>
+<p>[program:service]<br>
+command=sh /opt/soft/service/run.sh ; the program (relative uses
+PATH, can take args)<br>
+process_name=%(program_name)s ; process_name expr (default
+%(program_name)s)<br>
+numprocs=1 ; number of processes copies to start (def 1)<br>
+directory=/opt/soft/service/ ; directory to cwd to before exec (def
+no cwd)<br>
+autostart=true ; start at supervisord start (default: true)<br>
+autorestart=true ; retstart at unexpected quit (default:
+true)<br>
+stopsignal=QUIT ; signal used to kill process (default TERM)<br>
+stopwaitsecs=10 ; max num secs to wait b4 SIGKILL (default 10)</p>
+</blockquote>
+<p>以上配置了一个shell脚本的启动和stop过程。<br>
+一般java程序都喜欢在一个shell脚本内初始化classpath，再执行java main。<br>
+直接在shell中run java会出现stop失败的情况，在启动前添加 exec即可。</p>
+<blockquote>
+<p>#!/bin/sh<br>
+export CLASSPATH=.<br>
+for jarpath in `ls library/*.jar`<br>
+do<br>
+CLASSPATH=$CLASSPATH:$jarpath<br>
+done<br>
+export CLASSPATH=$CLASSPATH<br>
+exec java com.chen.main;</p>
+</blockquote>
+<p><strong><br>
+帮助</strong></p>
+<blockquote>
+<p>supervisord，初始启动Supervisord，启动、管理配置中设置的进程。<br>
+supervisorctl stop
+programxxx，停止某一个进程(programxxx)，programxxx为[program:chatdemon]里配置的值，这个示例就是chatdemon。<br>
+
+supervisorctl start programxxx，启动某个进程<br>
+supervisorctl restart programxxx，重启某个进程<br>
+supervisorctl stop
+all，停止全部进程，注：start、restart、stop都不会载入最新的配置文件。<br>
+supervisorctl reload，载入最新的配置文件，并按新的配置启动、管理所有进程。<br>
+supervisorctl reread，当一个服务由自动启动修改为手动启动时执行一下就ok</p>
+</blockquote>
+<p><strong>如何添加进程不启动所有的服务进程</strong></p>
+<blockquote>
+<p>1）修改/etc/supervisord.conf<br>
+2）supervisorctl reread<br>
+3）supervisorctl add xxservice</p>
+</blockquote>
+<p><strong>如何删除进程不启动所有的服务进程</strong></p>
+<blockquote>
+<p>1）修改/etc/supervisord.conf<br>
+2）supervisorctl reread<br>
+3）supervisorctl update</p>
+</blockquote>
+<p>http://smarden.org/runit/runscripts.html 一些可参考的启动配置</p>
+<p><strong>supervisord开机自启动</strong><br>
+chkconfig --add supervisord #加为服务<br>
+运行ntsysv，选中supervisord启动系统时跟着启动。<br>
+[/etc/rc.d/init.d/supervisord]</p>
+<blockquote>
+<p>#!/bin/sh<br>
+#<br>
+# /etc/rc.d/init.d/supervisord<br>
+#<br>
+# Supervisor is a client/server system that<br>
+# allows its users to monitor and control a<br>
+# number of processes on UNIX-like operating<br>
+# systems.<br>
+#<br>
+# chkconfig: - 64 36<br>
+# description: Supervisor Server<br>
+# processname: supervisord</p>
+<p># Source init functions<br>
+. /etc/rc.d/init.d/functions</p>
+<p>prog="supervisord"</p>
+<p>prefix="/usr/"<br>
+exec_prefix="${prefix}"<br>
+prog_bin="${exec_prefix}/bin/supervisord"<br>
+PIDFILE="/var/run/$prog.pid"</p>
+<p>start()<br>
+{<br>
+echo -n $"Starting $prog: "<br>
+daemon $prog_bin --pidfile $PIDFILE<br>
+[ -f $PIDFILE ] &amp;&amp; success $"$prog
+startup" || failure $"$prog startup"<br>
+echo<br>
+}</p>
+<p>stop()<br>
+{<br>
+echo -n $"Shutting down $prog: "<br>
+[ -f $PIDFILE ] &amp;&amp; killproc $prog
+|| success $"$prog shutdown"<br>
+echo<br>
+}</p>
+<p>case "$1" in</p>
+<p>start)<br>
+start<br>
+;;</p>
+<p>stop)<br>
+stop<br>
+;;</p>
+<p>status)<br>
+status $prog<br>
+;;</p>
+<p>restart)<br>
+stop<br>
+start<br>
+;;</p>
+<p>*)<br>
+echo "Usage: $0 {start|stop|restart|status}"<br>
+;;</p>
+<p>esac</p>
+</blockquote>
+<p><strong>注意</strong><br>
+不带参数运行supervisord是以daemon方式运行。<br>
+把supervisord加入到开机启动项里就可以完成监控进程的功能了。<br>
+当supervisord以非daemon方式运行时，杀掉supervisord后，被监控的进程也退出了。<br>
+而以daemon方式运行，杀掉supervisord对被监控进程无影响。</p>
+<p><br></p>
+<p>转载自<a href="http://www.54chen.com">五四陈科学院</a>[<a href="http://www.54chen.com">http://www.54chen.com</a>]</p>							
+		</div>

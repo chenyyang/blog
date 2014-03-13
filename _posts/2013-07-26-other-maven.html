@@ -1,0 +1,111 @@
+---
+layout: default
+title: maven杂记
+categories:
+  - other
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			1.坐标:groupId，artifactId， version，packaging（classifier）<br>
+<br>
+2.maven -U :强制update SNAPSHOT的依赖包，默认情况下SNAPSHOT的包一天更新一次<br>
+<br>
+3.mvn dependency:list 可以看到当前项目已解析的依赖<br>
+&nbsp;<wbr>&nbsp;<wbr> mvn
+dependency:tree&nbsp;<wbr> 看到依赖树<br>
+&nbsp;<wbr>&nbsp;<wbr> mvn dependency:analyse
+查看依赖的工具<br>
+<br>
+&nbsp;<wbr> 这些命令实际上是运行了maven的plugin<br>
+<br>
+4.maven的编译依赖范围:<br>
+&nbsp;<wbr>&nbsp;<wbr>
+compile:默认使用该依赖，对编译，测试，运行三种classpath 都有效<br>
+&nbsp;<wbr>&nbsp;<wbr> test: 只对测试时有效，如junit<br>
+&nbsp;<wbr>&nbsp;<wbr>
+provided:在运行时无效，对编译和测试有效，如servlet-api<br>
+&nbsp;<wbr>&nbsp;<wbr>
+runtime:如JDBC，对测试和运行有效，在编译时无效<br>
+<br>
+5.生命周期，生命周期是由package决定的。<br>
+&nbsp;<wbr>&nbsp;<wbr> <span style="font-family: 'courier new', courier; font-size: 14px;">Maven2拥有三套独立的生命周期，Maven的命令也是基于这些生命周期来说的。</span><br>
+
+<span style="font-family: 'courier new', courier; font-size: 14px;">（1）.clean：清理先前构建的构件，又分为下面三个下阶段：</span><br>
+
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　a.pre-clean
+执行一些清理前需要完成的工作。</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　b.clean
+清理上一次构建生成的文件</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　c.post-clean
+执行一些清理后需要完成的工作</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">（2）.default：定义了真正构建时所需要的所有步骤，它是这三个中最核心的部分，包含的阶段如下：</span><br>
+
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　a.validate
+验证项目是正确的并且所有必需的信息都是可用的</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　b.initialize
+初始化构建状态</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　c.generate-sources
+产生所有的用来编译的源代码</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　d.process-sources
+处理源代码</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　e.generate-resources
+产生包含在package中的资源</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　f.process-resources
+复制和处理资源到目标目录，为打包做好准备</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　g.compile
+编译项目的主源代码</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　h.process-classes
+对编译器产生的文件进行后期处理</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　i.generate-test-sources
+产生所有用来编译的测试源代码</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　j.process-test-sources
+处理测试源代码</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　k.generate-test-resources
+创建测试所需要的资源</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　l.process-test-resources
+复制和处理资源到测试目标目录</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　m.compile
+编译测试源代码到目标目录</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　n.process-test-classes
+对编译测试源代码产生的文件进行后期处理</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　o.test
+使用适当的单元测试框架运行测试，这些测试代码不应该被打包或者部署</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　p.prepare-package
+执行所有需要执行的操作为打包做准备，这往往会产生一个还未打包的处理过的包版本</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　q.package
+使用设置的方式对编译过的文件进行打包</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　r.pre-integration-test
+执行一些集成测试执行前必须的操作</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　s.integration-test
+处理和部署包到集成测试环境中，进行测试</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　t.post-integration-test
+对集成测试进行后期处理</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　u.verify
+执行所有检查确保包是正确的和符合质量要求的</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　v.install
+安装包到本地仓库，为其他本地的项目提供依赖i</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　w.deploy
+发布包，拷贝最后的包到远程仓库中，为其他的开发任何项目提供使用d</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">（3）.site：建立和发布项目站点</span><br>
+
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　a.pre-site
+前期准备</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　b.site
+产生项目的站点文档</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　c.post-site
+后期处理</span><br>
+<span style="font-family: 'courier new', courier; font-size: 14px;">　　d.site-deploy
+部署站点到服务器<br>
+<br>
+6.聚合和继承<br>
+&nbsp;<wbr>&nbsp;<wbr>
+在parent的目录中dependencyManager可以管理子项目对这个依赖的版本，统一版本用。<br>
+&nbsp;<wbr>&nbsp;<wbr>
+所有的pom文件都继承一个superpom的文件，相当于java的Object。里面记录的是对maven一些规范约定。<br>
+<br>
+7.gredle=maven<br>
+&nbsp;<wbr>&nbsp;<wbr></span> <span style="font-family: 'courier new', courier; font-size: 14px;">gredle是新出的一个项目管理工具。<br>
+
+<br></span>							
+		</div>

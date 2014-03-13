@@ -1,0 +1,37 @@
+---
+layout: default
+title: java版MD5和SHA加密
+categories:
+  - java
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>1.SHA加密（java）<br></b></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>public</b></font><font color="#7F0055"><b>static</b></font><font color="#7F0055"><b>void</b></font><font color="#000000">main(String[]
+arg)</font> <font color="#7F0055"><b>throws</b></font><font color="#000000">&nbsp;<wbr> NoSuchAlgorithmException<wbr>,
+UnsupportedEncodingExcep<wbr>tion {</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">MessageDigest m = MessageDigest.<font color="#000000"><i>getInstance</i></font><font color="#000000">(</font><font color="#2A00FF">"sha-1"</font><font color="#000000">);//MD5</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">m.update(<font color="#2A00FF">"Hello"</font><font color="#000000">.getBytes(</font><font color="#2A00FF">"UTF8"</font><font color="#000000">));</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>byte</b></font><font color="#000000">s[] =
+m.digest();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">System.<font color="#0000C0"><i>out</i></font><font color="#000000">.println(</font><font color="#2A00FF">"result : "</font>
+<font color="#000000">+</font> <font color="#000000"><i>hex</i></font><font color="#000000">(s)</font><font color="#000000">);</font></font></font></p>
+<p style="margin-bottom: 0in" align="left">&nbsp;<wbr></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;">//转化为40 字符十六进制数<br></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>private</b></font><font color="#7F0055"><b>static</b></font><font color="#000000">String
+hex(</font><font color="#7F0055"><b>byte</b></font><font color="#000000">[] arr) {</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">StringBuffer sb = <font color="#7F0055"><b>new</b></font><font color="#000000">StringBuffer();</font></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>for</b></font><font color="#000000">(</font><font color="#7F0055"><b>int</b></font><font color="#000000">i = 0; i &lt;
+arr.</font><font color="#0000C0">length</font><font color="#000000">; ++i) {</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">sb.append(Integer.<i>toHexString</i>((arr[i] &amp;
+0xFF) | 0x100).substring(1, 3));</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>return</b></font><font color="#000000">sb.toString();</font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
+<p style="margin-bottom: 0in" align="left"><br></p>
+<p style="margin-bottom: 0in" align="left"><br>
+<font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>2.SHA加密（PHP）</b></font></font></p>
+<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>							
+		</b></font></font></p></div>
