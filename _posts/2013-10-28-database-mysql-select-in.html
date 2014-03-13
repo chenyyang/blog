@@ -1,0 +1,47 @@
+---
+layout: default
+title: mysql select in方法
+categories:
+  - database
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<font style="font-size: 16px;"><b>1. 表结构：</b></font><br>
+<a href="http://photo.blog.sina.com.cn/showpic.html#blogid=95c4d0f40101j1l7&amp;url=http://album.sina.com.cn/pic/002K331yty6DMkXEOeqb6" target="_blank"><img src="http://s7.sinaimg.cn/mw690/002K331yty6DMkXEOeqb6&amp;690" real_src="http://s7.sinaimg.cn/mw690/002K331yty6DMkXEOeqb6&amp;690" height="150" width="609" name="image_operate_52591382951354904" alt="mysql&nbsp;&lt;wbr&gt;select&nbsp;&lt;wbr&gt;in方法" title="mysql&nbsp;&lt;wbr&gt;select&nbsp;&lt;wbr&gt;in方法" action-data="http%3A%2F%2Fs7.sinaimg.cn%2Fmw690%2F002K331yty6DMkXEOeqb6%26690" action-type="show-slide"></a><br>
+<br>
+<br>
+<font style="font-size: 16px;"><b>2. 表数据：</b></font><br>
+<a href="http://photo.blog.sina.com.cn/showpic.html#blogid=95c4d0f40101j1l7&amp;url=http://album.sina.com.cn/pic/002K331yty6DMkSNcwoe0" target="_blank"><img src="http://s1.sinaimg.cn/mw690/002K331yty6DMkSNcwoe0&amp;690" real_src="http://s1.sinaimg.cn/mw690/002K331yty6DMkSNcwoe0&amp;690" height="327" width="348" name="image_operate_78591382951411135" alt="mysql&nbsp;&lt;wbr&gt;select&nbsp;&lt;wbr&gt;in方法" title="mysql&nbsp;&lt;wbr&gt;select&nbsp;&lt;wbr&gt;in方法"></a><br>
+<br>
+<font style="font-size: 16px;"><b>3. 查询方法一：<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+select* from test where instr((select&nbsp;<wbr>
+group_concat(sub_msgs) from test where
+sub_msgs!=""),id)&gt;0;<br>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr></b></font> <font style="font-size: 16px;"><b><font style="font-size: 16px;"><b>instr</b></font>
+，</b></font>返回子串substr在字符串str中的第一个出现的位置。<br>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> <b>GROUP_CONCAT<span style="color: rgb(102, 204, 102);">(</span>courses_id SEPARATOR
+<span style="color: rgb(255, 0, 0);">'|||'</span></b><span style="color: rgb(102, 204, 102);">)，默认用英文逗号分割，</span><b>SEPARATOR色值分割符</b>
+<font style="font-size: 16px;"><b><br></b></font><a href="http://photo.blog.sina.com.cn/showpic.html#blogid=95c4d0f40101j1l7&amp;url=http://album.sina.com.cn/pic/002K331yty6DMkTfHqI1c" target="_blank"><img src="http://s13.sinaimg.cn/mw690/002K331yty6DMkTfHqI1c&amp;690" real_src="http://s13.sinaimg.cn/mw690/002K331yty6DMkTfHqI1c&amp;690" height="174" width="722" name="image_operate_20991382951600454" alt="mysql&nbsp;&lt;wbr&gt;select&nbsp;&lt;wbr&gt;in方法" title="mysql&nbsp;&lt;wbr&gt;select&nbsp;&lt;wbr&gt;in方法"></a><br>
+<br>
+<font style="font-size: 16px;"><b>4. 查询方法二：<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr> select* from test where
+FIND_IN_SET(id,(select&nbsp;<wbr> group_concat(sub_msgs)
+from test where sub_msgs!=""));<br>
+&nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr></b></font> <font style="font-size: 16px;"><b><font style="font-size: 16px;"><b>FIND_IN_SET，</b></font></b></font><font style="font-size: 16px;"><font style="font-size: 16px;">假如字符串str
+在由N 子链组成的字符串列表strlist 中，则返回值的范围在 1 到 N 之间。<br>
+一个字符串列表就是一个由一些被‘,’符号分开的子链组成的字符串。如果第一个参数是一个常数字符串，而第二个是type
+SET列，则&nbsp;<wbr>&nbsp;<wbr> FIND_IN_SET()
+函数被优化，使用比特计算。<br>
+如果str不在strlist 或strlist 为空字符串，则返回值为 0 。如任意一个参数为NULL，则返回值为
+NULL。这个函数在第一个参数包含一个逗号(‘,’)时将无法正常运行&nbsp;<wbr></font>
+<b>&nbsp;<wbr><br></b></font> <a href="http://photo.blog.sina.com.cn/showpic.html#blogid=95c4d0f40101j1l7&amp;url=http://album.sina.com.cn/pic/002K331yty6DMkTelLPe9" target="_blank"><img src="http://s10.sinaimg.cn/mw690/002K331yty6DMkTelLPe9&amp;690" real_src="http://s10.sinaimg.cn/mw690/002K331yty6DMkTelLPe9&amp;690" height="141" width="719" name="image_operate_21961382951397007" alt="mysql&nbsp;&lt;wbr&gt;select&nbsp;&lt;wbr&gt;in方法" title="mysql&nbsp;&lt;wbr&gt;select&nbsp;&lt;wbr&gt;in方法"></a><br>
+<br>
+<font style="font-size: 16px;"><b>4.
+总结：第一种方法可能出现错误数据，因为只是比较后面的数据是否在前面出现过，例如，“1”在“11”中出现过。</b></font><br>							
+		</div>

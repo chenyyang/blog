@@ -1,0 +1,31 @@
+---
+layout: default
+title: git同步分支 
+categories:
+  - gitsvn
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<font color="#00B7EF"><b>同步远程分支（直接）：</b></font><br>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span><span style="line-height: 21px;">&nbsp;<wbr></span>git pull origin [分支名]
+：git pull origin master
+(将master分支的代码获取下来并merge到当前分支上，但不push，如果有冲突会提示冲突)</div>
+<div><b style="color: rgb(0, 183, 239);">同步远程分支（先查看后提交）：</b></div>
+<div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span><span style="line-height: 21px;">&nbsp;<wbr></span>git fetch origin
+master （从远程分支上下载代码）</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span><span style="line-height: 21px;">&nbsp;<wbr></span>git log -p
+test..origin/master&nbsp;<wbr><span style="line-height: 21px;">（本地test分支和远程master分支进行比较，查看之间提交了什么修改）</span></div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span><span style="line-height: 21px;">&nbsp;<wbr></span>git merge
+origin/master<span style="line-height: 21px;">（远程master分支进行merge到</span><span style="line-height: 21px;">本地test分支</span><span style="line-height: 21px;">）</span></div>
+</div>							
+		</div>

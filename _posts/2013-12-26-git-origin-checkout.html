@@ -1,0 +1,28 @@
+---
+layout: default
+title: git远程分支检出失败
+categories:
+  - gitsvn
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<pre style="margin-top:0px; margin-bottom:10px; padding:5px; border:0px; font-size:14px; vertical-align:baseline; background-color:rgb(238,238,238); font-family:Consolas,Menlo,Monaco,'Lucida Console','Liberation Mono','DejaVu sans Mono','Bitstream Vera sans Mono','Courier new',monospace,serif; overflow:auto; width:auto; max-height:600px; line-height:18px">
+fatal: git checkout: updating paths is incompatible with switching branches.<br>
+Did you intend to checkout 'origin/chenyang' which can not be resolved as commit?<br>
+<br>
+可使用一下命令：
+</pre>
+<pre style="margin-top:0px; margin-bottom:10px; padding:5px; border:0px; font-size:14px; vertical-align:baseline; background-color:rgb(238,238,238); font-family:Consolas,Menlo,Monaco,'Lucida Console','Liberation Mono','DejaVu sans Mono','Bitstream Vera sans Mono','Courier new',monospace,serif; overflow:auto; width:auto; max-height:600px; line-height:18px">
+</pre>
+<pre style="margin-top:0px; margin-bottom:10px; padding:5px; border:0px; font-size:14px; vertical-align:baseline; background-color:rgb(238,238,238); font-family:Consolas,Menlo,Monaco,'Lucida Console','Liberation Mono','DejaVu sans Mono','Bitstream Vera sans Mono','Courier new',monospace,serif; overflow:auto; width:auto; max-height:600px; line-height:18px">
+<code style="margin:0px; padding:0px; border:0px; vertical-align:baseline; font-family:Consolas,Menlo,Monaco,'Lucida Console','Liberation Mono','DejaVu sans Mono','Bitstream Vera sans Mono','Courier new',monospace,serif">git remote show origin</code>
+</pre>
+<pre style="margin-top:0px; margin-bottom:10px; padding:5px; border:0px; font-size:14px; vertical-align:baseline; background-color:rgb(238,238,238); font-family:Consolas,Menlo,Monaco,'Lucida Console','Liberation Mono','DejaVu sans Mono','Bitstream Vera sans Mono','Courier new',monospace,serif; overflow:auto; width:auto; max-height:600px; line-height:18px">
+<code style="margin:0px; padding:0px; border:0px; vertical-align:baseline; font-family:Consolas,Menlo,Monaco,'Lucida Console','Liberation Mono','DejaVu sans Mono','Bitstream Vera sans Mono','Courier new',monospace,serif">git remote update
+git fetch</code>
+</pre>
+<pre>然后再使用：<br>
+git checkout -b XXXX origin/XXX<br>
+</pre>							
+		</div>

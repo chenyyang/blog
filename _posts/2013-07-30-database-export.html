@@ -1,0 +1,18 @@
+---
+layout: default
+title: 数据库导出
+categories:
+  - database
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			mysql -u用户名 -p密码 -hIP 数据库 -e "执行命令 " &gt;
+/opt/vip.csv;&nbsp;<wbr> 重定向<br>
+<br>
+登入数据库<br>
+select * from表名 where 条件 into outfile
+'/tmp/apps.csv'&nbsp;<wbr> FIELDS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '"' LINES TERMINATED BY '\n';<br>
+用逗号分割，回车换行<br>							
+		</div>

@@ -1,0 +1,27 @@
+---
+layout: default
+title: git合并多次提交
+categories:
+  - gitsvn
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<p>假设要合并最后的2个提交，可以按如下命令进行：</p>
+<p>1. git rebase –i HEAD~2</p>
+<blockquote>
+<p>运行完该命令，会出现如下所示内容：</p>
+</blockquote>
+<blockquote>
+<p><span style="color: #000000;"><a href="http://images.cnblogs.com/cnblogs_com/wujianlundao/201207/20120730211331315.png">
+<img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="1" src="http://images.cnblogs.com/cnblogs_com/wujianlundao/201207/201207302113323728.png" real_src="http://images.cnblogs.com/cnblogs_com/wujianlundao/201207/201207302113323728.png" alt="1" border="0" height="126" width="244"></a></span></p>
+</blockquote>
+<p>2. 将第二个pick修改为squash或者s，然后输入":wq”退出。</p>
+<p>3. 这时git会自动第二个提交合并到第一个中去。并提示输入新的message（就是我们常说的comments），如下：</p>
+<blockquote>
+<p><a href="http://images.cnblogs.com/cnblogs_com/wujianlundao/201207/201207302113329858.png">
+<img style="background-image: none; padding-left: 0px; padding-right: 0px; display: inline; padding-top: 0px; border: 0px;" title="2" src="http://images.cnblogs.com/cnblogs_com/wujianlundao/201207/201207302113338811.png" real_src="http://images.cnblogs.com/cnblogs_com/wujianlundao/201207/201207302113338811.png" alt="2" border="0" height="87" width="244"></a></p>
+</blockquote>
+<p>4. 编辑输入新的message，然后输入":wq"退出</p>
+<p>5. 此时本地的（HEAD中）最后两次提交已经被合并为一个。git log可以查看。</p>							
+		</div>
