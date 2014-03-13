@@ -1,0 +1,46 @@
+---
+layout: default
+title: linux查看磁盘空间
+categories:
+  - linux
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			如果要查看磁盘还剩多少空间，当然是用df的命令了。
+<div>[root@localhost ~]# df -h&nbsp;<wbr></div>
+<div>文件<a href="http://www.2cto.com/os/" target="_blank">系统</a> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr>容量 已用 可用 已用%
+挂载点&nbsp;<wbr></div>
+<div>/dev/sda2 &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr>14G &nbsp;<wbr> 11G
+2.6G 82% /&nbsp;<wbr></div>
+<div>/dev/sda1 &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr>99M &nbsp;<wbr> 14M
+&nbsp;<wbr> 81M 14% /boot&nbsp;<wbr></div>
+<div>tmpfs &nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> 442M 275M 168M 63%
+/dev/shm&nbsp;<wbr></div>
+<div>/dev/mapper/vg_test-lv_test&nbsp;<wbr></div>
+<div>&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>24M 1.3M
+&nbsp;<wbr> 21M &nbsp;<wbr> 6%
+/mnt/lvm&nbsp;<wbr></div>
+<div>[root@localhost ~]#</div>
+<div>当然你可能并不关系磁盘还剩余多少空间，你是需要知道当前的文件夹下的磁盘使用情况：</div>
+<div>[root@localhost ~]# du --max-depth=1 -h<br>
+16K&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+./lost+found<br>
+109G&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+./soft<br>
+12K&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+./scripts<br>
+109G&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> .<br>
+<br></div>							
+		</div>

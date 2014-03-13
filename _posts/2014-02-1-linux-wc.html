@@ -1,0 +1,52 @@
+---
+layout: default
+title: wc
+categories:
+  - linux
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<p style="text-indent:21.0000pt; margin-bottom:0pt; margin-top:0pt;">
+<span style="mso-spacerun:'yes'; font-size:10.5000pt; font-family:'宋体';">Linux系统中的wc</span><span style="text-indent: 21pt;">(Word
+Count)</span><span style="font-family: 宋体; font-size: 10.5pt; text-indent: 21pt;">命令的功能为统计指定文件中的字节数、字数、行数，并将统计结果显示输出。</span></p>
+<p style="text-indent:21.0000pt; margin-bottom:0pt; margin-top:0pt;">
+<span style="mso-spacerun:'yes'; font-weight:bold; font-size:10.5000pt; font-family:'Times new roman';">
+1．</span><span style="mso-spacerun:'yes'; font-weight:bold; font-size:10.5000pt; font-family:'宋体';">命令格式：</span></p>
+<p style="margin-left:21.0000pt; text-indent:21.0000pt; margin-bottom:0pt; margin-top:0pt;">
+<span style="mso-spacerun:'yes'; font-size:10.5000pt; font-family:'宋体';">wc&nbsp;<wbr>[选项]文件...</span></p>
+<p style="text-indent:21.0000pt; margin-bottom:0pt; margin-top:0pt;">
+<span style="mso-spacerun:'yes'; font-weight:bold; font-size:10.5000pt; font-family:'Times new roman';">
+2．</span><span style="mso-spacerun:'yes'; font-weight:bold; font-size:10.5000pt; font-family:'宋体';">命令功能：</span></p>
+<p style="margin-left:21.0000pt; text-indent:21.0000pt; margin-bottom:0pt; margin-top:0pt;">
+<span style="mso-spacerun:'yes'; font-size:10.5000pt; font-family:'宋体';">统计指定文件中的字节数、字数、行数，并将统计结果显示输出。该命令统计指定文件中的字节数、字数、行数。如果没有给出文件名，则从标准输入读取。wc同时也给出所指定文件的总统计数。</span></p>
+<p style="text-indent:21.0000pt; margin-bottom:0pt; margin-top:0pt;">
+<span style="mso-spacerun:'yes'; font-weight:bold; font-size:10.5000pt; font-family:'Times new roman';">
+3．</span><span style="mso-spacerun:'yes'; font-weight:bold; font-size:10.5000pt; font-family:'宋体';">命令参数：</span></p>
+<p style="margin-left:21.0000pt; text-indent:21.0000pt; margin-bottom:0pt; margin-top:0pt;">
+<span style="mso-spacerun:'yes'; font-size:10.5000pt; font-family:'宋体';">-c&nbsp;<wbr>统计字节数。</span></p>
+<p style="margin-left:21.0000pt; text-indent:21.0000pt; margin-bottom:0pt; margin-top:0pt;">
+<span style="mso-spacerun:'yes'; font-size:10.5000pt; font-family:'宋体';">-l&nbsp;<wbr>统计行数。</span></p>
+<p style="margin-left:21.0000pt; text-indent:21.0000pt; margin-bottom:0pt; margin-top:0pt;">
+<span style="mso-spacerun:'yes'; font-size:10.5000pt; font-family:'宋体';">-m&nbsp;<wbr>统计字符数。这个标志不能与&nbsp;<wbr>-c&nbsp;<wbr>标志一起使用。</span></p>
+<p style="margin-left:21.0000pt; text-indent:21.0000pt; margin-bottom:0pt; margin-top:0pt;">
+<span style="mso-spacerun:'yes'; font-size:10.5000pt; font-family:'宋体';">-w&nbsp;<wbr>统计字数。一个字被定义为由空白、跳格或换行字符分隔的字符串。</span></p>
+<p style="margin-left:21.0000pt; text-indent:21.0000pt; margin-bottom:0pt; margin-top:0pt;">
+<span style="mso-spacerun:'yes'; font-size:10.5000pt; font-family:'宋体';">-L&nbsp;<wbr>打印最长行的长度。</span></p>
+<p style="margin-left:21.0000pt; text-indent:21.0000pt; margin-bottom:0pt; margin-top:0pt;">
+<span style="mso-spacerun:'yes'; font-size:10.5000pt; font-family:'宋体';">-help&nbsp;<wbr>显示帮助信息</span></p>
+<p style="margin-left:21.0000pt; text-indent:21.0000pt; margin-bottom:0pt; margin-top:0pt;">
+<span style="mso-spacerun:'yes'; font-size:10.5000pt; font-family:'宋体';">--version&nbsp;<wbr>显示版本信息</span></p>
+<p style="text-indent:21.0000pt; margin-bottom:0pt; margin-top:0pt; text-autospace:ideograph-other; background:#f5f5f5;">
+<span style="font-size: 9pt; font-family: 'Courier new'; background-position: initial initial; background-repeat: initial initial;">
+<br></span></p>
+<p style="text-indent:21.0000pt; margin-bottom:0pt; margin-top:0pt; text-autospace:ideograph-other; background:#f5f5f5;">
+<span style="font-size: 9pt; font-family: 'Courier new'; background-position: initial initial; background-repeat: initial initial;">
+[root@localhost&nbsp;<wbr>test]</span><span style="color: #008000; font-size: 9pt; font-family: 'Courier new'; background-position: initial initial; background-repeat: initial initial;">#</span>&nbsp;<wbr><span style="color: #008000; font-size: 9pt; font-family: 'Courier new'; background-position: initial initial; background-repeat: initial initial;">wc&nbsp;<wbr>-l&nbsp;<wbr>test.txt&nbsp;<wbr></span></p>
+<p style="text-indent:21.0000pt; margin-bottom:0pt; margin-top:0pt; text-autospace:ideograph-other; background:#f5f5f5;">
+<span style="font-size: 9pt; font-family: 'Courier new'; background-position: initial initial; background-repeat: initial initial;">
+7&nbsp;<wbr></span><span style="font-size: 9pt; font-family: 'Courier new'; background-position: initial initial; background-repeat: initial initial;">test.txt</span></p>
+<p style="text-indent:21.0000pt; margin-bottom:0pt; margin-top:0pt; text-autospace:ideograph-other; background:#f5f5f5;">
+<span style="font-size: 9pt; font-family: 'Courier new'; background-position: initial initial; background-repeat: initial initial;">
+[root</span><span style="font-size: 9pt; font-family: 'Courier new'; background-position: initial initial; background-repeat: initial initial;">@localhost&nbsp;<wbr>test]</span><span style="color: #008000; font-size: 9pt; font-family: 'Courier new'; background-position: initial initial; background-repeat: initial initial;">#</span>&nbsp;<wbr><span style="color: #008000; font-size: 9pt; font-family: 'Courier new'; background-position: initial initial; background-repeat: initial initial;">cat&nbsp;<wbr>test.txt&nbsp;<wbr>|wc&nbsp;<wbr>-l</span></p>							
+		</div>

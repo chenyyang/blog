@@ -1,0 +1,50 @@
+---
+layout: default
+title: crontab linux的定时任务 
+categories:
+  - database
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			基本格式 :<br>
+*　　*　　*　　*　　*　　command<br>
+分　时　日　月　周　命令<br>
+第1列表示分钟1～59 每分钟用*或者 */1表示<br>
+第2列表示小时1～23（0表示0点）<br>
+第3列表示日期1～31<br>
+第4列表示月份1～12<br>
+第5列标识号星期0～6（0表示星期天）<br>
+第6列要运行的命令<br>
+crontab文件的一些例子：<br>
+30 21 * * * /usr/local/etc/rc.d/lighttpd restart<br>
+上面的例子表示每晚的21:30重启apache。<br>
+45 4 1,10,22 * * /usr/local/etc/rc.d/lighttpd restart<br>
+上面的例子表示每月1、10、22日的4 : 45重启apache。<br>
+10 1 * * 6,0 /usr/local/etc/rc.d/lighttpd restart<br>
+上面的例子表示每周六、周日的1 : 10重启apache。<br>
+0,30 18-23 * * * /usr/local/etc/rc.d/lighttpd restart<br>
+上面的例子表示在每天18 : 00至23 : 00之间每隔30分钟重启apache。<br>
+0 23 * * 6 /usr/local/etc/rc.d/lighttpd restart<br>
+上面的例子表示每星期六的11 : 00 pm重启apache。<br>
+* */1 * * * /usr/local/etc/rc.d/lighttpd restart<br>
+每一小时重启apache<br>
+* 23-7/1 * * * /usr/local/etc/rc.d/lighttpd restart<br>
+晚上11点到早上7点之间，每隔一小时重启apache<br>
+0 11 4 * mon-wed /usr/local/etc/rc.d/lighttpd restart<br>
+每月的4号与每周一到周三的11点重启apache<br>
+0 4 1 jan * /usr/local/etc/rc.d/lighttpd restart<br>
+<br>
+<br>
+<p><span style="font-size: 10pt;">名称 : crontab</span></p>
+<p><span style="font-size: 10pt;">使用权限 : 所有使用者</span></p>
+<p><span style="font-size: 10pt;">使用方式 :</span></p>
+<p><span style="font-size: 10pt;">crontab file [-u
+user]-用指定的文件替代目前的crontab。</span></p>
+<p><span style="font-size: 10pt;">crontab-[-u
+user]-用标准输入替代目前的crontab.</span></p>
+<p><span style="font-size: 10pt;">crontab-l[user]-列出用户目前的crontab.</span></p>
+<p><span style="font-size: 10pt;">crontab-e[user]-编辑用户目前的crontab.使用VI编辑</span></p>
+<p><span style="font-size: 10pt;">crontab-d[user]-删除用户目前的crontab.</span></p>
+<br>							
+		</div>

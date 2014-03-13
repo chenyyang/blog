@@ -1,0 +1,64 @@
+---
+layout: default
+title: java命令行工具-JPS
+categories:
+  - linux
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			JPS(Java Virtual Machine Process Status
+Tool)是JDK1.5提供的一个显示当前所有java进程pid的命令，简单实用，非常适合在linux/unix平台上简单察看当前java进程的一些简单情况。<br>
+
+<br>
+我想很多人都是用过unix系统里的ps命令，这个命令主要是用来显示当前系统的进程情况，有哪些进程，及其 id。
+jps也是一样，它的作用是显示当前系统的java进程情况，及其id号。我们可以通过它来查看我们到底启动了几个java进程（<span style="color:#ff00; font-weight:bold">因为每一个java程序都会独占一个java虚拟机实例</span>），和他们的进程号（为下面几个程序做准备），并可通过opt来查看这些进程的详细启动参数。<br>
+
+<br>
+<span style="color:#ff00; font-weight:bold">使用方法：</span>在当前命令行下输入jps
+(需要JAVA_HOME，jps路径为$JAVA_HOME/bin/jps) 。<br>
+<br>
+$&gt; jps<br>
+23991 Jps<br>
+23789 BossMain<br>
+23651 Resin<br>
+<br>
+<br>
+<span style="color:#ff00; font-weight:bold">比较常用的参数：</span><br>
+(1) -q ：只显示pid，不显示class名称，jar文件名和传递给 main 方法的参数<br>
+$&gt;&nbsp;<wbr>
+<div><wbr> jps -q<br>
+28680<br>
+23789<br>
+23651<br>
+<br>
+(2) -m ：输出传递给 main 方法的参数，在嵌入式jvm上可能是null<br>
+$&gt; jps -m<br>
+28715 Jps -m<br>
+23789 BossMain<br>
+23651 Resin -socketwait 32768
+-stdout/data/aoxj/resin/log/stdout.log
+-stderr/data/aoxj/resin/log/stderr.log<br>
+<br>
+(3) -l ：输出应用程序main class的完整package名或者应用程序的jar文件完整路径名<br>
+$&gt; jps -l<br>
+28729 sun.tools.jps.Jps<br>
+23789 com.asiainfo.aimc.bossbi.BossMain<br>
+23651 com.caucho.server.resin.Resin<br>
+<br>
+(4) -v ：输出传递给JVM的参数<br>
+$&gt; jps -v<br>
+23789 BossMain<br>
+28802
+Jps-Denv.class.path=/data/aoxj/bossbi/twsecurity/java/trustwork140.jar:/data/aoxj/bossbi/twsecurity/java/:/data/aoxj/bossbi/twsecurity/java/twcmcc.jar:/data/aoxj/jdk15/lib/rt.jar:/data/aoxj/jdk15/lib/tools.jar-Dapplication.home=/data/aoxj/jdk15
+-Xms8m 23651 Resin -Xss1m-Dresin.home=/data/aoxj/resin
+-Dserver.root=/data/aoxj/resin-Djava.util.logging.manager=com.caucho.log.LogManagerImpl-Djavax.management.builder.initial=com.caucho.jmx.MBeanServerBuilderImpl<br>
+
+<br>
+详细情况请参考sun官方文档。<br>
+http://java.sun.com/j2se/1.5.0/docs/tooldocs/share/jps.html<br>
+<br>
+------------------------------------------------------------------------------------------------------------------------<br>
+
+注：jps命令似乎只能显示当前用户的java进程，要显示其他用户的还是只能用unix/linux的ps命令。</div>							
+		</div>
