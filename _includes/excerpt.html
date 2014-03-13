@@ -3,5 +3,5 @@
     <h3><a href="/blog{{ post.url }}">{{ post.title }}</a></h3>
     <time pubdate datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date_to_string }}</time>
   </header>
-  <p>{{ post.content | strip_html | truncatewords:80 }}</p>
+  <p>{{ post.content | strip_html | truncatewords:30 }}</p>
 </article>

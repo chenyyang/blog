@@ -1,0 +1,849 @@
+---
+layout: default
+title: awk
+categories:
+  - linux
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+一</span><span style="color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt;">.
+<span style="mso-spacerun: yes;">&nbsp;<wbr></span>AWK&nbsp;<wbr></span><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">说明</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+awk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">是一种编程语言，用于在</span><span>linux/unix</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">下对文本和数据进行处理。数据可以来自标准输入、一个或多个文件，或其它命令的输出。它支持用户自定义函数和动态正则表达式等先进功能，是</span><span>linux/unix</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">下的一个强大编程工具。它在命令行中使用，但更多是作为脚本来使用。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+<span style="color: red;">awk</span></span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的处理文本和数据的方式：它逐行扫描文件，从第一行到最后一行，寻找匹配的特定模式的行，并在这些行上进行你想要的操作。</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">如果没有指定处理动作，则把匹配的行显示到标准输出</span><span>(</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">屏幕</span><span>)</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，如果没有指定模式，则所有被操作所指定的行都被处理。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+<span style="color: red;">awk</span></span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">分别代表其作者姓氏的第一个字母</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。因为它的作者是三个人，分别是</span><span>Alfred
+Aho</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span>Brian
+Kernighan</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span>Peter
+Weinberger</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+<span style="color: red;">gawk</span></span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">是</span><span style="color: red;">awk</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的</span><span style="color: red;">GNU</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">版本，它提供了</span><span style="color: red;">Bell</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">实验室和</span><span style="color: red;">GNU</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的一些扩展</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。下面介绍的</span><span>awk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">是以</span><span>GUN</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的</span><span>gawk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">为例的，在</span><span>linux</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">系统中已把</span><span>awk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">链接到</span><span>gawk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，所以下面全部以</span><span>awk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">进行介绍。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><font color="#ED1C24"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<br></span></span></span></font></p>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2875182"></a><span><span style="font-family: 宋体;font-size:13px;"><font color="#ED1C24">例子：awk
+'BEGIN { FS="&amp;" } {print $1,$2,$3}&nbsp;<wbr> '
+//用&amp;等特殊符号做分割</font><br></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;"><br></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+二</span><span style="color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt;">.&nbsp;<wbr>awk</span><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">命令格式和选项</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2875104"></a><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">2.1.&nbsp;<wbr>awk</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的语法有两种形式</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+awk [options] 'script' var=value file(s)</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+awk [options] -f scriptfile var=value
+file(s)</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2811790"></a><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">2.2.&nbsp;<wbr></span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">命令选项</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>1</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span>-F
+fs or --field-separator fs</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：指定输入文件折分隔符，</span><span>fs</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">是一个字符串或者是一个正则表达式，如</span><span>-F:</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>2</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span>-v
+var=value or --asign var=value</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：赋值一个用户定义变量。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>3</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span>-f
+scripfile or --file scriptfile</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：从脚本文件中读取</span><span>awk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">命令。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>4</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span>-mf
+nnn and -mr nnn</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：对</span><span>nnn</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">值设置内在限制，</span><span>-mf</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">选项限制分配给</span><span>nnn</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的最大块数目；</span><span>-mr</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">选项限制记录的最大数目。这两个功能是</span><span>Bell</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">实验室版</span><span>awk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的扩展功能，在标准</span><span>awk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">中不适用。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>5</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span>-W
+compact or --compat,&nbsp;<wbr>-W traditional or
+--traditional</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：在兼容模式下运行</span><span>awk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。所以</span><span>gawk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的行为和标准的</span><span>awk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">完全一样，所有的</span><span>awk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">扩展都被忽略。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>6</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span>-W
+copyleft or --copyleft,&nbsp;<wbr>-W copyright or
+--copyright</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：打印简短的版权信息。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>7</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span>-W
+help or --help,&nbsp;<wbr>-W usage or --usage</span>
+<span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：打印全部</span><span>awk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">选项和每个选项的简短说明。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>8</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span>-W
+lint or --lint</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：打印不能向传统</span><span>unix</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">平台移植的结构的警告。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>9</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span>-W
+lint-old or --lint-old</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：打印关于不能向传统</span><span>unix</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">平台移植的结构的警告。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>10</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span>-W
+posix</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：打开兼容模式。但有以下限制，不识别：</span><span>/x</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、函数关键字、</span><span>func</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、换码序列以及当</span><span>fs</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">是一个空格时，将新行作为一个域分隔符；操作符</span><span>**</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">和</span><span>**=</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">不能代替</span><span>^</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">和</span><span>^=</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">；</span><span>fflush</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">无效。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>11</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span>-W
+re-interval or --re-inerval</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：允许间隔正则表达式的使用，参考</span><span>(grep</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">中的</span><span>Posix</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">字符类</span><span>)</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，如括号表达式</span><span>[[:alpha:]]</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>12</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span>-W
+source program-text or --source program-text</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：使用</span><span>program-text</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">作为源代码，可与</span><span>-f</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">命令混用。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>13</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span>-W
+version or --version</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：打印</span><span>bug</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">报告信息的版本。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2810094"></a><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+三</span><span style="color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt;">.&nbsp;<wbr></span><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">模式和操作</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span>awk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">脚本是由模式和操作组成的：</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+<span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+pattern {action}</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+如</span><span>$ awk '/root/' test</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，或</span><span>$
+awk '$3 &lt; 100' test</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+两者是可选的，<span style="color: red;">如果没有模式</span>，则</span><span>action</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">应用到全部记录，<span style="color: red;">如果没有</span></span><span style="color: red;">action</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">则输出匹配全部记录。<span style="color: red;">默认情况下，每一个输入行都是一条记录，但用户可通过</span></span><span style="color: red;">RS</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">变量指定不同的分隔符进行分隔。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2810128"></a><span style="font-family: 宋体;"><span style="color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt;">3.1.&nbsp;<wbr></span><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">模式</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+模式可以是以下任意一个：</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>1</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）正则表达式：使用通配符的扩展集。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>2</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）关系表达式：可以用下面运算符表中的关系运算符进行操作，可以是字符（</span><span>3</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）串或数字的比较，如</span><span>$2&gt;%1</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">选择第二个字段比第一个字段长的行。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>4</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）模式匹配表达式：用运算符</span><span>~(</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">匹配</span><span>)</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">和</span><span>~!(</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">不匹配</span><span>)</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>5</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）模式，模式：指定一个行的范围。该语法不能包括</span><span>BEGIN</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">和</span><span>END</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">模式。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>6</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span>BEGIN</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">：让用户指定在第一条输入记录被处理之前所发生的动作，通常可在这里设置全局变量。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>7</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span>END</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">：让用户在最后一条输入记录被读取之后发生的动作。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2810236"></a><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体;"><span style="color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt;">3.2.&nbsp;<wbr></span><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">操作</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+操作由一人或多个命令、函数、表达式组成，之间由换行符或分号隔开，并位于大括号内。<span style="color: red;">主要有四部份：</span></span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>1</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）变量或数组赋值</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>2</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）输出命令</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>3</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）内置函数</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span>4</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）控制流命令</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2810288"></a><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; font-size: 16pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+四</span><span style="color: red; font-size: 16pt; mso-bidi-font-size: 12.0pt;">.&nbsp;<wbr>awk</span><span style="font-family: 宋体; color: red; font-size: 16pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的环境变量</span></span></p>
+<table style="mso-cellspacing: 1.5pt; mso-yfti-tbllook: 1184;" border="1" cellpadding="0">
+<thead>
+<tr style="mso-yfti-irow: 0; mso-yfti-firstrow: yes;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><a name="id2810296"></a><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';"><span style="font-family: 宋体;font-size:13px;">变量</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">描述</span></span></p>
+</td>
+</tr>
+</thead>
+<tbody>
+<tr style="mso-yfti-irow: 1;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">$n</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+当前记录的第</span><span>n</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">个字段，字段间由</span><span>FS</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">分隔。</span></span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 2;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">$0</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">完整的输入记录。</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 3;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">ARGC</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">命令行参数的数目。</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 4;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">ARGIND</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+命令行中当前文件的位置</span><span>(</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">从</span><span>0</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">开始算</span><span>)</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 5;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">ARGV</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">包含命令行参数的数组。</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 6;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">CONVFMT</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+数字转换格式</span><span>(</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">默认值为</span><span>%.6g)</span></span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 7;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">ENVIRON</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">环境变量关联数组。</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 8;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">ERRNO</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">最后一个系统错误的描述。</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 9;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">FIELDWIDTHS</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+字段宽度列表</span><span>(</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">用空格键分隔</span><span>)</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 10;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">FILENAME</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">当前文件名。</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 11;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">FNR</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+同</span><span>NR</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，但相对于当前文件。</span></span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 12;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">FS</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+字段分隔符</span><span>(</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">默认是任何空格</span><span>)</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 13;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">IGNORECASE</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">如果为真，则进行忽略大小写的匹配。</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 14;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">NF</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">当前记录中的字段数。</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 15;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">NR</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">当前记录数。</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 16;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">OFMT</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+数字的输出格式</span><span>(</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">默认值是</span><span>%.6g)</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 17;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">OFS</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+输出字段分隔符</span><span>(</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">默认值是一个空格</span><span>)</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 18;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">ORS</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+输出记录分隔符</span><span>(</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">默认值是一个换行符</span><span>)</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 19;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">RLENGTH</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+由</span><span>match</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">函数所匹配的字符串的长度。</span></span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 20;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">RS</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+记录分隔符</span><span>(</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">默认是一个换行符</span><span>)</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 21;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">RSTART</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+由</span><span>match</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">函数所匹配的字符串的第一个位置。</span></span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 22; mso-yfti-lastrow: yes;">
+<td style="background-color: transparent; border: #ffffff; padding: 0.75pt;">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">SUBSEP</span></span></p>
+</td>
+<td style="background-color: transparent; width: 325.9pt; border: #ffffff; padding: 0.75pt;" width="435">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+数组下标分隔符</span><span>(</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">默认值是</span><span>/034)</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2861410"></a><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+五</span><span style="color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt;">.&nbsp;<wbr>awk</span><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">运算符</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<table style="mso-cellspacing: 1.5pt; mso-yfti-tbllook: 1184;" border="1" cellpadding="0">
+<thead>
+<tr style="mso-yfti-irow: 0; mso-yfti-firstrow: yes;">
+<td style="background-color: transparent; width: 142.5pt; border: #ffffff; padding: 0.75pt;" width="190">
+<p style="margin: 0cm 0cm 0pt;"><a name="id2861418"></a><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';"><span style="font-family: 宋体;font-size:13px;">运算符</span></span></p>
+</td>
+<td style="background-color: transparent; width: 210.4pt; border: #ffffff; padding: 0.75pt;" width="281">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">描述</span></span></p>
+</td>
+</tr>
+</thead>
+<tbody>
+<tr style="mso-yfti-irow: 1;">
+<td style="background-color: transparent; width: 142.5pt; border: #ffffff; padding: 0.75pt;" width="190">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">= += -= *= /= %= ^=
+**=</span></span></p>
+</td>
+<td style="background-color: transparent; width: 210.4pt; border: #ffffff; padding: 0.75pt;" width="281">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">赋值</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 2;">
+<td style="background-color: transparent; width: 142.5pt; border: #ffffff; padding: 0.75pt;" width="190">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">?:</span></span></p>
+</td>
+<td style="background-color: transparent; width: 210.4pt; border: #ffffff; padding: 0.75pt;" width="281">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span>C</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">条件表达式</span></span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 3;">
+<td style="background-color: transparent; width: 142.5pt; border: #ffffff; padding: 0.75pt;" width="190">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">||</span></span></p>
+</td>
+<td style="background-color: transparent; width: 210.4pt; border: #ffffff; padding: 0.75pt;" width="281">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">逻辑或</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 4;">
+<td style="background-color: transparent; width: 142.5pt; border: #ffffff; padding: 0.75pt;" width="190">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">&amp;&amp;</span></span></p>
+</td>
+<td style="background-color: transparent; width: 210.4pt; border: #ffffff; padding: 0.75pt;" width="281">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">逻辑与</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 5;">
+<td style="background-color: transparent; width: 142.5pt; border: #ffffff; padding: 0.75pt;" width="190">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">~ ~!</span></span></p>
+</td>
+<td style="background-color: transparent; width: 210.4pt; border: #ffffff; padding: 0.75pt;" width="281">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">匹配正则表达式和不匹配正则表达式</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 6;">
+<td style="background-color: transparent; width: 142.5pt; border: #ffffff; padding: 0.75pt;" width="190">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">&lt; &lt;= &gt; &gt;= !=
+==</span></span></p>
+</td>
+<td style="background-color: transparent; width: 210.4pt; border: #ffffff; padding: 0.75pt;" width="281">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">关系运算符</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 7;">
+<td style="background-color: transparent; width: 142.5pt; border: #ffffff; padding: 0.75pt;" width="190">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">空格</span></span></p>
+</td>
+<td style="background-color: transparent; width: 210.4pt; border: #ffffff; padding: 0.75pt;" width="281">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">连接</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 8;">
+<td style="background-color: transparent; width: 142.5pt; border: #ffffff; padding: 0.75pt;" width="190">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">+ -</span></span></p>
+</td>
+<td style="background-color: transparent; width: 210.4pt; border: #ffffff; padding: 0.75pt;" width="281">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">加，减</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 9;">
+<td style="background-color: transparent; width: 142.5pt; border: #ffffff; padding: 0.75pt;" width="190">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">* / &amp;</span></span></p>
+</td>
+<td style="background-color: transparent; width: 210.4pt; border: #ffffff; padding: 0.75pt;" width="281">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">乘，除与求余</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 10;">
+<td style="background-color: transparent; width: 142.5pt; border: #ffffff; padding: 0.75pt;" width="190">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">+ - !</span></span></p>
+</td>
+<td style="background-color: transparent; width: 210.4pt; border: #ffffff; padding: 0.75pt;" width="281">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">一元加，减和逻辑非</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 11;">
+<td style="background-color: transparent; width: 142.5pt; border: #ffffff; padding: 0.75pt;" width="190">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">^ ***</span></span></p>
+</td>
+<td style="background-color: transparent; width: 210.4pt; border: #ffffff; padding: 0.75pt;" width="281">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">求幂</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 12;">
+<td style="background-color: transparent; width: 142.5pt; border: #ffffff; padding: 0.75pt;" width="190">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">++ --</span></span></p>
+</td>
+<td style="background-color: transparent; width: 210.4pt; border: #ffffff; padding: 0.75pt;" width="281">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">增加或减少，作为前缀或后缀</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 13;">
+<td style="background-color: transparent; width: 142.5pt; border: #ffffff; padding: 0.75pt;" width="190">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">$</span></span></p>
+</td>
+<td style="background-color: transparent; width: 210.4pt; border: #ffffff; padding: 0.75pt;" width="281">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">字段引用</span></span></p>
+</td>
+</tr>
+<tr style="mso-yfti-irow: 14; mso-yfti-lastrow: yes;">
+<td style="background-color: transparent; width: 142.5pt; border: #ffffff; padding: 0.75pt;" width="190">
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">in</span></span></p>
+</td>
+<td style="background-color: transparent; width: 210.4pt; border: #ffffff; padding: 0.75pt;" width="281">
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">数组成员</span></span></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2861636"></a><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; font-size: 16pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+六</span><span style="color: red; font-size: 16pt; mso-bidi-font-size: 12.0pt;">.&nbsp;<wbr></span><span style="font-family: 宋体; color: red; font-size: 16pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">记录和域</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2861644"></a><span style="font-family: 宋体;"><span style="color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt;">6.1.&nbsp;<wbr></span><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">记录</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+awk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">把每一个以换行符结束的行称为一个记录。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+记录分隔符：</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">默认的输入和输出的分隔符都是回车，保存在内建变量</span><span>ORS</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">和</span><span>RS</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">中。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+<span style="color: red;">$0</span></span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">变量：</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">它指的是整条记录。如</span><span>$
+awk '{print $0}' test</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">将输出</span><span>test</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">文件中的所有记录。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+变量</span><span style="color: red;">NR</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">：</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">一个计数器，每处理完一条记录，</span><span>NR</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的值就增加</span><span>1</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+如</span><span>$ awk '{print NR,$0}' test</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">将输出</span><span>test</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">文件中所有记录，并在记录前显示记录号。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2861680"></a><span style="font-family: 宋体;"><span style="color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt;">6.2.&nbsp;<wbr></span><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">域</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+记录中每个单词称做“域”，默认情况下以空格或</span><span style="color: red;">tab</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">分隔</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span><span>awk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">可跟踪域的个数，并在内建变量</span><span>NF</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">中保存该值。如</span><span>$
+awk '{print $1,$3}' test</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">将打印</span><span>test</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">文件中第一和第三个以空格分开的列</span><span>(</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">域</span><span>)</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2861697"></a><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体;"><span style="color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt;">6.3.&nbsp;<wbr></span><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">域分隔符</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+内建变量</span><span>FS</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">保存输入域分隔符的值，默认是空格或</span><span>tab</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。我们可以通过</span><span>-F</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">命令行选项修改</span><span>FS</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的值。如</span><span>$
+awk -F: '{print $1,$5}' test</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">将打印以冒号为分隔符的第一，第五列的内容。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+可以同时使用多个域分隔符，这时应该把分隔符写成放到方括号中</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，如</span><span>$awk
+-F'[:/t]' '{print $1,$3}' test</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，表示以空格、冒号和</span><span>tab</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">作为分隔符。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+输出域的分隔符默认是一个空格</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，<span style="color: red;">保存在</span></span><span style="color: red;">OFS</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">中</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。如</span><span>$
+awk -F: '{print $1,$5}' test</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，</span><span>$1</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">和</span><span>$5</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">间的逗号就是</span><span>OFS</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的值。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2861728"></a><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; font-size: 16pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+七</span><span style="color: red; font-size: 16pt; mso-bidi-font-size: 12.0pt;">.&nbsp;<wbr>gawk</span><span style="font-family: 宋体; color: red; font-size: 16pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">专用正则表达式元字符</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+以下几个是</span><span>gawk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">专用的，不适合</span><span>unix</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">版本的</span><span>awk</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span style="color: red;">1</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span style="color: red;">/Y</span>
+<span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">匹配一个单词开头或者末尾的空字符串。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span style="color: red;">2</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span style="color: red;">/B</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">：</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">匹配单词内的空字符串。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span style="color: red;">3</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span style="color: red;">/&lt;&lt;/span&gt;<span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">：</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">匹配一个单词的开头的空字符串，锚定开始。</span></span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span style="color: red;">4</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span style="color: red;">/&gt;</span>
+<span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">匹配一个单词的末尾的空字符串，锚定末尾。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span style="color: red;">5</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span style="color: red;">/w</span>
+<span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">匹配一个字母数字组成的单词。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span style="color: red;">6</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span style="color: red;">/W</span>
+<span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">匹配一个非字母数字组成的单词。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span style="color: red;">7</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span style="color: red;">/</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">‘：</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">匹配字符串开头的一个空字符串。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+（</span><span style="color: red;">8</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）</span><span style="color: red;">/'</span>
+<span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+：</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">匹配字符串末尾的一个空字符串。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2861902"></a><a name="id2861922"></a><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">八</span><span style="color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt;">.&nbsp;<wbr></span><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">匹配操作符</span><span style="color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt;">(~)</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+用来在记录或者域内匹配正则表达式。如</span><span>$ awk '$1 ~/^root/'
+test</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">将显示</span><span>test</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">文件第一列中以</span><span>root</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">开头的行。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2861937"></a><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">九</span><span style="color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt;">.&nbsp;<wbr></span><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">比较表达式</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span>conditional
+expression1 ? expression2: expression3</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+例如：</span><span>$ awk '{max = {$1 &gt; $3} ? $1: $3: print max}'
+test</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。如果第一个域大于第三个域，</span><span>$1</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">就赋值给</span><span>max</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，否则</span><span>$3</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">就赋值给</span><span>max</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span>$ awk '$1 +
+$2 &lt; 100' test</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。如果第一和第二个域相加大于</span><span>100</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，则打印这些行。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span>$ awk '$1
+&gt; 5 &amp;&amp; $2 &lt; 10' test,</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">如果第一个域大于</span><span>5</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，并且第二个域小于</span><span>10</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，则打印这些行。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2861975"></a><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">十</span><span style="color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt;">.&nbsp;<wbr></span><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">范围模板</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+范围模板匹配从第一个模板的第一次出现到第二个模板的第一次出现之间所有行。如果有一个模板没出现，则匹配到开头或末尾。如</span><span>$
+awk '/root/,/mysql/' test</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">将显示</span><span>root</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">第一次出现到</span><span>mysql</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">第一次出现之间的所有行。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2861992"></a><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2808705"></a><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">十一</span><span style="color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt;">.</span>
+<span style="font-family: 宋体; color: red; font-size: 14pt; mso-bidi-font-size: 12.0pt; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+示例</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><a name="id2808824"></a><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">1</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span style="color: red;">awk
+'/101/' file</span> <span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+显示文件</span><span style="color: red;">file</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">中包含</span><span style="color: red;">101</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的匹配行。</span><span style="color: red;">&nbsp;<wbr></span></span></span><span><br>
+
+<span style="font-family: 宋体;font-size:13px;">awk '/101/,/105/'
+file&nbsp;<wbr><br>
+awk '$1 == 5' file&nbsp;<wbr><br>
+awk '$1 == "CT"' file</span></span> <span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+<span style="font-family: 宋体;font-size:13px;">注意必须带双引号</span></span><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr><br>
+
+awk '$1 * $2 &gt;100 ' file&nbsp;<wbr><br>
+awk '$2 &gt;5 &amp;&amp; $2&lt;=15'
+file&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><br>
+<span style="color: red;"><span style="font-family: 宋体;font-size:13px;">2</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span style="color: red;">awk
+'{print NR,NF,$1,$NF,}' file</span> <span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+显示文件</span><span style="color: red;">file</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的当前记录号、域数和每一行的第一个和最后一个域。</span><span style="color: red;">&nbsp;<wbr></span></span></span><span><br>
+
+<span style="font-family: 宋体;font-size:13px;">awk '/101/ {print
+$1,$2 + 10}' file</span></span> <span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+显示文件</span><span>file</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的匹配行的第一、二个域加</span><span>10</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span>&nbsp;<wbr><br>
+
+awk '/101/ {print $1$2}' file&nbsp;<wbr><br>
+awk '/101/ {print $1 $2}' file</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+显示文件</span><span>file</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的匹配行的第一、二个域，但显示时域中间没有分隔符。</span><span>&nbsp;<wbr></span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><br>
+<span style="color: red;"><span style="font-family: 宋体;font-size:13px;">3</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span style="color: red;">df
+| awk '$4&gt;1000000 '</span> <span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+通过管道符获得输入，</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">如：显示第</span><span>4</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">个域满足条件的行。</span><span>&nbsp;<wbr></span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><br>
+<span style="color: red;"><span style="font-family: 宋体;font-size:13px;">4</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span style="color: red;">awk
+-F "|" '{print $1}' file</span> <span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+按照新的分隔符“</span><span style="color: red;">|</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">”进行操作。</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span>&nbsp;<wbr><br>
+
+awk 'BEGIN { FS="[: /t|]" }&nbsp;<wbr><br>
+{print $1,$2,$3}' file</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+通过设置输入分隔符（</span><span>FS="[: /t|]"</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）修改输入分隔符。</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span>&nbsp;<wbr><br>
+
+Sep="|"&nbsp;<wbr><br>
+awk -F $Sep '{print $1}' file</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+按照环境变量</span><span>Sep</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的值做为分隔符。</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span>&nbsp;<wbr><br>
+
+awk -F '[ :/t|]' '{print $1}' file</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+按照正则表达式的值做为分隔符，这里代表空格、</span><span>:</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span>TAB</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span>|</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">同时做为分隔符。</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span>&nbsp;<wbr><br>
+
+awk -F '[][]' '{print $1}' file</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+按照正则表达式的值做为分隔符，这里代表</span><span>[</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span>]&nbsp;<wbr></span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><br>
+<span style="color: red;"><span style="font-family: 宋体;font-size:13px;">5</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span style="color: red;">awk
+-f awkfile file</span> <span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+通过文件</span><span style="color: red;">awkfile</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的内容依次进行控制。</span><span style="color: red;">&nbsp;<wbr></span></span></span><span><br>
+
+<span style="font-family: 宋体;font-size:13px;">cat
+awkfile&nbsp;<wbr><br>
+/101/{print "/047 Hello! /047"} --</span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">遇到匹配行以后打印</span>
+<span>' Hello! './047</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">代表单引号。</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span>&nbsp;<wbr><br>
+
+{print $1,$2} --</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">因为没有模式控制，打印每一行的前两个域。</span></span></span><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr><br style="mso-special-character: line-break;">
+
+<br style="mso-special-character: line-break;"></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">6</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span style="color: red;">awk
+'$1 ~ /101/ {print $1}' file</span> <span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+显示文件中第一个域匹配</span><span style="color: red;">101</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的行（记录）</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">。</span></span></span><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr><br style="mso-special-character: line-break;">
+
+<br style="mso-special-character: line-break;"></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">7</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span style="color: red;">awk
+'BEGIN {
+OFS="%"}&nbsp;<wbr></span></span></span><span><br>
+<span style="font-family: 宋体;font-size:13px;">{print $1,$2}'
+file</span></span> <span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+通过设置输出分隔符（</span><span>OFS="%"</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">）修改输出格式。</span></span></span><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr><br style="mso-special-character: line-break;">
+
+<br style="mso-special-character: line-break;"></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">8</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span style="color: red;">awk
+'BEGIN { max=100 ;print "max=" max}</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;"><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+BEGIN</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+表示在处理任意行之前进行的操作。</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span>&nbsp;<wbr><br>
+{max=($1 &gt;max ?$1:max); print $1,"Now max is "max}' file</span>
+<span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+取得文件第一个域的最大值。</span><span>&nbsp;<wbr></span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">9</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span style="color: red;">awk
+'$1 * $2 &gt;100 {print $1}' file</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+显示文件中第一个域匹配</span><span>101</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的行（记录）。</span></span></span><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr><br style="mso-special-character: line-break;">
+
+<br style="mso-special-character: line-break;"></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">10</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span style="color: red;">awk
+'{$1 == 'Chi' {$3 = 'China'; print}' file</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+找到匹配行后先将第</span><span>3</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">个域替换后再显示该行（记录）。</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span>&nbsp;<wbr><br>
+
+awk '{$7 %= 3; print $7}' file</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+将第</span><span>7</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">域被</span><span>3</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">除，并将余数赋给第</span><span>7</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">域再打印。</span></span></span><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr><br style="mso-special-character: line-break;">
+
+<br style="mso-special-character: line-break;"></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">11</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span style="color: red;">awk
+'/tom/ {wage=$2+$3; printf wage}' file</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+找到匹配行后为变量</span><span>wage</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">赋值并打印该变量。</span></span></span><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr><br style="mso-special-character: line-break;">
+
+<br style="mso-special-character: line-break;"></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">12</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span style="color: red;">awk
+'/tom/
+{count++;}&nbsp;<wbr></span></span></span><span><br>
+<span style="font-family: 宋体;font-size:13px;">END {print "tom was
+found "count" times"}' file</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span>END</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">表示在所有输入行处理完后进行处理。</span></span></span><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr><br style="mso-special-character: line-break;">
+
+<br style="mso-special-character: line-break;"></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">13</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">awk
+'gsub(//$/,"");gsub(/,/,"");
+cost+=$4;&nbsp;<wbr><br></span><span>END {print "The total
+is $" cost&gt;"filename"}' file</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+gsub</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">函数用空串替换</span><span>$</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">和</span><span>,</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">再将结果输出到</span><span>filename</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">中。</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span>&nbsp;<wbr><br>
+
+1 2 3 $1,200.00&nbsp;<wbr><br>
+1 2 3 $2,300.00&nbsp;<wbr><br>
+1 2 3 $4,000.00&nbsp;<wbr><br>
+<br>
+awk '{gsub(//$/,"");gsub(/,/,"");&nbsp;<wbr><br>
+if ($4&gt;1000&amp;&amp;$4&lt;2000) c1+=$4;&nbsp;<wbr><br>
+else if ($4&gt;2000&amp;&amp;$4&lt;3000)
+c2+=$4;&nbsp;<wbr><br>
+else if ($4&gt;3000&amp;&amp;$4&lt;4000)
+c3+=$4;&nbsp;<wbr><br>
+else c4+=$4; }&nbsp;<wbr><br>
+END {printf "c1=[%d];c2=[%d];c3=[%d];c4=[%d]/n",c1,c2,c3,c4}"'
+file&nbsp;<wbr><br></span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">通过</span><span style="color: red;">if</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">和</span><span style="color: red;">else
+if</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">完成条件语句</span><span style="color: red;">&nbsp;<wbr></span></span></span><span><br>
+
+<br>
+<span style="font-family: 宋体;font-size:13px;">awk
+'{gsub(//$/,"");gsub(/,/,"");&nbsp;<wbr><br>
+if ($4&gt;3000&amp;&amp;$4&lt;4000) exit;&nbsp;<wbr><br>
+else c4+=$4; }&nbsp;<wbr><br>
+END {printf "c1=[%d];c2=[%d];c3=[%d];c4=[%d]/n",c1,c2,c3,c4}"'
+file&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+通过</span><span style="color: red;">exit</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">在某条件时退出，但是仍执行</span><span style="color: red;">END</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">操作。</span></span></span><span style="color: red;"><span style="font-size:13px;"><span style="font-family: 宋体;">&nbsp;<wbr><br style="mso-special-character: line-break;">
+
+<br style="mso-special-character: line-break;">
+</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span>awk
+'{gsub(//$/,"");gsub(/,/,"");&nbsp;<wbr><br>
+if ($4&gt;3000) next;&nbsp;<wbr><br>
+else c4+=$4; }&nbsp;<wbr><br>
+END {printf "c4=[%d]/n",c4}"'
+file&nbsp;<wbr><br></span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">通过</span><span style="color: red;">next</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">在某条件时跳过该行，对下一行执行操作。</span><span style="color: red;">&nbsp;<wbr></span></span></span><span><br>
+
+<br>
+<span style="color: red;"><span style="font-family: 宋体;font-size:13px;">14</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span style="color: red;">awk
+'{ print FILENAME,$0 }' file1 file2
+file3&gt;fileall</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+把</span><span>file1</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span>file2</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span>file3</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的文件内容全部写到</span><span>fileall</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">中，格式为打印文件并前置文件名。</span><span>&nbsp;<wbr></span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">15</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span style="color: red;">awk
+' $1!=previous { close(previous); previous=$1
+}</span></span></span><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr><br>
+{print substr($0,index($0," ") +1)&gt;$1}'
+fileall</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+把合并后的文件重新分拆为</span><span>3</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">个文件。并与原文件一致。</span><span>&nbsp;<wbr></span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">16</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span style="color: red;">awk
+'BEGIN {"date"|getline d; print d}'</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+通过管道把</span><span>date</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的执行结果送给</span><span>getline</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，并赋给变量</span><span>d</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，然后打印。</span><span>&nbsp;<wbr></span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">17</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">awk
+'BEGIN {system("echo "Input your name://c""); getline d;print
+"/nYour name
+is",d,"/b!/n"}'&nbsp;<wbr><br></span><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+通过</span><span>getline</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">命令交互输入</span><span>name</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，并显示出来。</span></span></span><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr><br style="mso-special-character: line-break;">
+
+<br style="mso-special-character: line-break;"></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span><span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+<span style="color: red;">awk 'BEGIN {FS=":"; while(getline&lt;
+"/etc/passwd" &gt;0) { if($1~"050[0-9]_") print
+$1}}'&nbsp;<wbr></span><br>
+<span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span></span>
+<span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+打印</span><span>/etc/passwd</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">文件中用户名包含</span><span>050x_</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">的用户名。</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span>&nbsp;<wbr><br>
+
+<br>
+<span style="color: red;">18</span></span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、</span><span style="color: red;">awk
+'{ i=1;while(i</span><span><span style="mso-spacerun: yes;">&nbsp;<wbr></span></span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">通过</span><span>while</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">语句实现循环。</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span>&nbsp;<wbr><br>
+
+<span style="mso-tab-count: 1;">&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr></span>
+<span style="color: red;">awk '{
+for(i=1;i</span></span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">通过</span><span>for</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">语句实现循环。</span><span>&nbsp;<wbr></span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><br>
+<span style="font-family: 宋体;font-size:13px;">type file|awk -F "/"
+'&nbsp;<wbr><br>
+{ for(i=1;i<br>
+{ if(i==NF-1) { printf "%s",$i }&nbsp;<wbr><br>
+else { printf "%s/",$i } }}'</span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+显示一个文件的全路径。</span><span style="color: red;">&nbsp;<wbr></span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><br></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">用</span><span style="color: red;">for</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">和</span><span style="color: red;">if</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">显示日期</span><span style="color: red;">&nbsp;<wbr></span></span></span><span><br>
+
+<span style="font-family: 宋体;font-size:13px;">awk 'BEGIN
+{&nbsp;<wbr><br>
+for(j=1;j&lt;=12;j++)&nbsp;<wbr><br>
+{ flag=0;&nbsp;<wbr><br>
+printf "/n%d</span></span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';"><span style="font-family: 宋体;font-size:13px;">月份</span></span><span><span style="font-family: 宋体;font-size:13px;">/n",j;&nbsp;<wbr><br>
+
+for(i=1;i&lt;=31;i++)&nbsp;<wbr><br>
+{&nbsp;<wbr><br>
+if (j==2&amp;&amp;i&gt;28) flag=1;&nbsp;<wbr><br>
+if ((j==4||j==6||j==9||j==11)&amp;&amp;i&gt;30)
+flag=1;&nbsp;<wbr><br>
+if (flag==0) {printf "dd ",j,i}&nbsp;<wbr><br>
+}&nbsp;<wbr><br>
+}&nbsp;<wbr><br>
+}'&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><br>
+<span style="color: red;"><span style="font-family: 宋体;font-size:13px;">19</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">、在</span><span style="color: red;">awk</span><span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">中调用系统变量必须用单引号，如果是双引号，则表示字符串</span></span></span><span style="color: red;"><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr><br>
+</span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span>Flag=abcd&nbsp;<wbr><br>
+awk '{print '$Flag'}'</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+结果为</span></span></span><span style="font-size:13px;"><span style="font-family: 宋体;"><span>abcd&nbsp;<wbr><br>
+awk '{print "$Flag"}'</span> <span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+结果为</span><span>$Flag</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span><span style="font-family: 宋体;font-size:13px;">&nbsp;<wbr></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">20.</span> <span style="font-family: 宋体; color: red; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+其他小示例</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">$ awk '/^(no|so)/'
+test</span><span>-----</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">打印所有以模式</span><span>no</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">或</span><span>so</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">开头的行。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">$ awk '/^[ns]/{print $1}'
+test-</span><span>----</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">如果记录以</span><span>n</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">或</span><span>s</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">开头，就打印这个记录。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">$ awk '$1 ~/[0-9][0-9]$/(print $1}'
+test</span><span>-----</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">如果第一个域以两个数字结束就打印这个记录。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">$ awk '$1 == 100 || $2 &lt; 50'
+test</span><span>-----</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">如果第一个或等于</span><span>100</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">或者第二个域小于</span><span>50</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，则打印该行。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">$ awk '$1 != 10'
+test</span><span>-----</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">如果第一个域不等于</span><span>10</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">就打印该行。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">$ awk '/test/{print $1 + 10}'
+test</span><span>-----</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">如果记录包含正则表达式</span><span>test</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">，则第一个域加</span><span>10</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">并打印出来。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">$ awk '{print ($1 &gt; 5 ? "ok "$1: "error"$1)}'
+test-</span><span>----</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">如果第一个域大于</span><span>5</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">则打印问号后面的表达式值，否则打印冒号后面的表达式值。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="color: red;">$ awk '/^root/,/^mysql/'
+test</span><span>----</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">打印以正则表达式</span><span>root</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">开头的记录到以正则表达式</span><span>mysql</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">开头的记录范围内的所有记录。如果找到一个新的正则表达式</span><span>root</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">开头的记录，则继续打印直到下一个以正则表达式</span><span>mysql</span><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">开头的记录为止，或到文件末尾。</span></span></span></p>
+<p style="margin: 0cm 0cm 0pt;"><br></p>
+<p style="margin: 0cm 0cm 0pt;"><br></p>
+<p style="margin: 0cm 0cm 0pt;"><span style="font-size:13px;"><span style="font-family: 宋体;"><span style="font-family: 宋体; mso-ascii-font-family: 'Times new roman'; mso-hansi-font-family: 'Times new roman';">
+原文：http://blog.csdn.net/tianlesoftware/article/details/6278273<br>
+</span></span></span></p>							
+		</div>

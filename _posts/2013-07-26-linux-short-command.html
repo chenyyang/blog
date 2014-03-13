@@ -1,0 +1,45 @@
+---
+layout: default
+title: Linux设置快捷命令
+categories:
+  - linux
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			对于经常使用linux的朋友来说，经常碰到每次要输入大量命令而且经常要多次输入，是不是为每次重复输入或者用”↑”来选择历史输入而烦躁呢，今天我们来学习如何来创建linux
+shell命令的快捷方式。<br>
+<br>
+<font color="#ED1C24">1. linux shell命令别名(alias)</font><br>
+linux
+shell别名是个很有用的东西，特别是命令特别长的时候可以显著提高使用效率（减少输入字符的时间，以及减少出错的概率）。如何创建shell别名呢，
+我们是通过shell别名命令：alias<br>
+a). 查看系统中有哪些别名命令 [test @tset test]#<font color="#FF7E00">alias</font> 即可显示目前系统中的别名命令<br>
+alias ll=’ls -l’<br>
+alias vi=’vim’<br>
+b). 如何创建shell命令别名也是使用 [test @tset test]#alias
+alias_name=’command’<br>
+c). 如何删除已经建立的别名命令呢?使用unalias命令 [test @test test]#unalias alias_name
+即可删除alias_name的别名命令<br>
+<br>
+但是通过这种方式设置的别名命令只对当前登录环境下有效，退出后重新登录就无效了，如何才能使别名命令一直有效呢，那就是修改rc配置文件，把设置别名的过程加入到系统启动后初始化用户的脚本中，
+用户只需要修改 <font color="#FF7E00">~/.bashrc</font>文件，
+加入你要设置的别名命令即可，例如<br>
+1 # .bashrc<br>
+2<br>
+3 alias ll=’ls -l’<br>
+5 <font color="#FF7E00">alias vi=’vim’</font><br>
+6 # Source global definitions<br>
+7 if [ -f /etc/bashrc ]; then<br>
+8 . /etc/bashrc<br>
+9 fi<br>
+修改此文件过后我们通常要退出名重新登录后才会生效，当然也可以是用source命令直接把配置载入到当前环境中[test @test
+test]#source ~/.bashrc<br>
+.bashrc可以参考linux下profile ,bash_profile ,bashrc文件简述<br>
+<br>
+<font color="#ED1C24">2. 创建批处理命令文件（不推荐使用）</font><br>
+用户可以直接把要经常使用的linux命令保存到一个shell文件中，把此shell文件加入环境变量path里的任何一个路径中，这样就可以通过直接执行此shell文件来执行此shell文件包含的shell命令。<br>
+
+<br>
+也可以创建一个自己的自定义bin目录， 里面放的都是自己自定义的一些命令文件， 然后把此bin目录加入到path环境变量即可。							
+		</div>

@@ -1,0 +1,48 @@
+---
+layout: default
+title: 打通机器
+categories:
+  - linux
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<div>
+每次登陆ssh都需要输入用户名和密码，我想作一个双机的互备。考虑密码隔断时间都需要修改，那我的备份程序也需要修改。因此就想使用不需要密码用ssh登陆机器，这样我就可以使用rsync，scp，rexec等命令来做的远程备份了。<br>
+
+<br>
+方法如下：<br>
+假设A，B两服务器，现在需要在A机上用root登陆B机，而不需要输入密码，那我们可按照下面的步骤来做：<br>
+1）在A机上生成钥匙对<br></div>
+<div><br>
+A# ssh-keygen -t rsa &nbsp;<wbr><wbr><br>
+Generating public/private rsa key pair.<br>
+Enter file in which to save the key (/root/.ssh/id_rsa):<br>
+Enter passphrase (empty for no passphrase):<br>
+Enter same passphrase again:<br>
+Your identification has been saved in /root/.ssh/id_rsa.<br>
+Your public key has been saved in /root/.ssh/id_rsa.pub.<br>
+The key fingerprint is:<br>
+f6:61:a8:27:35:cf:4c:6d:13:22:70:cf:4c:c8:a0:23
+mlsx@mlsx<br></div>
+<br>
+这样，会生成id_rsa，和id_rsa.pub，其中id_rsa是密钥，id_rsa.pub是公钥。<br>
+<br>
+2）把在A机生成的id_rsa.pub拷贝到B机上。<br>
+<div>A# scp id_rsa.pub root@B:/tmp</div>
+<br>
+<br>
+3）用root帐号登陆B机，进入其主目录，创建authorized_keys文件，并设置好权限<br>
+<div><br>
+B# cd ~/.ssh<br>
+#cat /tmp/id_rsa.pub
+&gt;&gt;authorized_keys<br>
+#chmod &nbsp;<wbr><wbr>400 authorized_keys<br></div>
+<br>
+<br>
+4）测试<br>
+在A机上转到root帐号，尝试登录B机。看看是不是不要密码.<br>
+<br>
+<br>
+每次生成的密钥都不一样，所以不要重复生成，否则之前打通的也不能用了<br>							
+		</div>

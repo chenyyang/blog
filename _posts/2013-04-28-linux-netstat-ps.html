@@ -1,0 +1,70 @@
+---
+layout: default
+title: linux端口号和进程号
+categories:
+  - linux
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			<div style="">端口是指TCP/IP协议中的端口，进程号是进程启动所占用的。<br>
+<font style="font-size: 16px;" color="#00B7EF"><b>查看端口号：</b></font><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+netstat -pan|grep 端口号<br>
+<font style="font-size: 16px;" color="#00B7EF"><b>端口号有关的命令：</b></font><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+NETSTAT [-a] [-b] [-e] [-n] [-o] [-p proto] [-r] [-s] [-v]
+[interval]<br>
+&nbsp;<wbr>-a&nbsp;<wbr>(all)显示所有选项，默认不显示LISTEN相关<br>
+
+&nbsp;<wbr>-t&nbsp;<wbr>(tcp)仅显示tcp相关选项<br>
+-u&nbsp;<wbr>(udp)仅显示udp相关选项<br>
+-n&nbsp;<wbr>拒绝显示别名，能显示数字的全部转化成数字。<br>
+-l&nbsp;<wbr>仅列出有在&nbsp;<wbr>Listen&nbsp;<wbr>(监听)&nbsp;<wbr>的服務状态<br>
+
+-p&nbsp;<wbr>显示建立相关链接的程序名<br>
+-r&nbsp;<wbr>显示路由信息，路由表<br>
+-e&nbsp;<wbr>显示扩展信息，例如uid等<br>
+-s&nbsp;<wbr>按各个协议进行统计<br>
+-c&nbsp;<wbr>每隔一个固定时间，执行该netstat命令。<br>
+提示：LISTEN和LISTENING的状态只有用-a或者-l才能看到<br>
+<br>
+<font style="font-size: 16px;" color="#00B7EF"><b>查看进程：</b></font><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+ps -sux|grep 进程号<br>
+<font style="font-size: 16px;" color="#00B7EF"><b>ps所有命令</b></font>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr><br>
+
+<p>l 长格式输出；</p>
+<p>u 按用户名和启动时间的顺序来显示进程；</p>
+<p>j 用任务格式来显示进程；</p>
+<p>f 用树形格式来显示进程；</p>
+<p>a 显示所有用户的所有进程（包括其它用户）；</p>
+<p>x 显示无控制终端的进程；</p>
+<p>r 显示运行中的进程；</p>
+<p>ww 避免详细参数被截断；</p>
+<p><br>
+-A 列出所有的行程<br>
+-w 显示加宽可以显示较多的资讯<br>
+-au 显示较详细的资讯<br>
+-aux 显示所有包含其他使用者的行程</p>
+<p>-e 显示所有进程,环境变量<br>
+-f 全格式<br>
+-h 不显示标题<br>
+-w 宽输出</p>
+<p><font style="font-size: 16px;" color="#00B7EF"><b>ps
+-aux后每列解释：USER PID %CPU %MEM VSZ RSS TTY STAT START TIME
+COMMAND</b></font><br>
+<br>
+USER: 进程所有者<br>
+PID: 进程ID</p>
+<p>%CPU: 占用的 CPU 使用率<br>
+%MEM: 占用的内存使用率<br>
+VSZ: 占用的虚拟内存大小<br>
+RSS: 占用的内存大小</p>
+<p>TTY: 终端的次要装置号码 (minor device number of tty)</p>
+<p>STAT: 进程状态:</p>
+<p>START: 启动进程的时间；<br>
+TIME: 进程消耗CPU的时间；<br>
+COMMAND:命令的名称和参数；</p>
+<br></div>							
+		</div>

@@ -1,0 +1,991 @@
+---
+layout: default
+title: UBuntu8.04使用的IPTables版本
+categories:
+  - linux
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			原文：http://longkm.blog.163.com/blog/static/116662640201111395846477<wbr>/<br>
+
+<br>
+UBuntu8.04使用的IPTables版本<br>
+<br>
+<p style="TexT-inDenT: 2em;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> iptabels
+--version 可以帮助查看版本号，当前版本为1.3.8<br></p>
+<br>
+原理<br>
+<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+IPTables由若干个table组成。每个table都包含了若干个链，每个链都包含了一组规则列表，每条规则指定了对数据包的处理规则。&nbsp;<wbr><br>
+
+[转自http://hi.baidu.com/ʫչ/blog/item/4ba3504efde97208b2de05ce<wbr>.html&nbsp;<wbr><br>
+
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>执行规则时，是从规则表中从上至下顺序执行的，如果没遇到匹配的规则，就一条一条往下执行，如果遇到匹配的规则后，那么就执行本规则，
+执行后根据本规则的动作(accept, reject, log等)，决定下一步执行的情况，后续执行一般有三种情况。<br>
+1)一种是继续执行当前规则表内的下一条规则。比如执行过Filter表内的LOG后，还会执行Filter表内的下一条规则。<br>
+2)一种是中止当前规则表的执行，转到下一条规则表。比如从执行过accept后就中断Filter队列内其它规则，跳到nat表规则去执行<br>
+
+3)一种是中止所有规则表的执行。<br>
+<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr><br>
+
+<br>
+TOS说明<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>IP
+地址封包标头的TOS字段由8位组成，可以由一个十六进制描述，在这8位里，前3位舍弃不
+用，最后一位固定是0，中间的四个位分别来控制封包的：最小延时，最大处理量，最大可靠度和最小花费。这四个位只有一位是1。如果用十六进制来描述这四种
+状态的话，分别是0x10,0x08,0x04,0x02。如果四个位都是0，则表示正常运行，不做封包的特殊处理。&nbsp;<wbr>TOS操作用来设置或改变数据包的
+服务类型域。这常用来设置网络上的数据包如何被路由等策略。
+注意这个操作并不完善，有时得不所愿。它在Internet上还不能使用，而且很多路由器不会注意到
+这个域值。换句话说，不要设置发往Internet的包，除非你打算依靠TOS来路由，比如用iproute2。<br>
+Filter表<br>
+<p style="TexT-inDenT: 2em;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>filter表用来设置过滤包的规则，内建三个链，支持对包进行DROP&nbsp;<wbr>、LOG&nbsp;<wbr>、ACCEPT&nbsp;<wbr>和REJECT&nbsp;<wbr>等操作。<br>
+</p>
+<p style="TexT-inDenT: 2em;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+INPUT&nbsp;<wbr>链恰恰针对那些目的地是本地（本地指iptables所在的机器）的包,INPUT&nbsp;<wbr>链过滤进入的数据包；</p>
+<p style="TexT-inDenT: 2em;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>OUTPUT&nbsp;<wbr>是用来过滤所有本地生成的向外发送的包。&nbsp;<wbr><br>
+</p>
+<p style="TexT-inDenT: 2em;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>FORWARD&nbsp;<wbr>链过滤所有不是本地产生的并且目的地不是本地的包；</p>
+<br>
+<br>
+<br>
+NAT表<br>
+<p style="TexT-inDenT: 2em;">&nbsp;<wbr></p>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+NAT表主要负责数据包的地址转换。<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>PreRouting链负责修改包的目标地址，通常用于处理收到的包；<br>
+
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>PostRouting链负责修改包的源地址，通常用于要发送出去的包。<br>
+
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>OUTPUT&nbsp;<wbr>这个链对从防火墙本身发出的包进行DNAT操作&nbsp;<wbr><br>
+
+<br>
+<br>
+IPTables处理流程<br>
+以本地为目标（就是我们自己的机子了）的包<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>下
+文中有个词mangle，我实在没想到什么合适的词来表达这个意思，只因为我的英语太差！我只能把我
+理解的写出来。这个词表达的意思是，会对数据包的一些传输特性进行修改，在mangle表中允许的操作是
+TOS、TTL、MARK。也就是说，今后只要我们见到这个词能理解它的作用就行了。<br>
+<br>
+<table border="1">
+<tbody>
+<tr>
+<th valign="top">Step（步骤）</th>
+<th valign="top">Table（表）</th>
+<th valign="top">Chain（链）</th>
+<th valign="top">Comment（注释）</th>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td valign="top" width="12%">1</td>
+<td valign="top" width="12%">&nbsp;<wbr></td>
+<td valign="top" width="25%">&nbsp;<wbr></td>
+<td valign="top" width="50%">在线路上传输(比如，Internet)</td>
+</tr>
+<tr>
+<td valign="top" width="12%">2</td>
+<td valign="top" width="12%">&nbsp;<wbr></td>
+<td valign="top" width="25%">&nbsp;<wbr></td>
+<td valign="top" width="50%">进入接口 (比如， eth0)</td>
+</tr>
+<tr>
+<td valign="top" width="12%">3</td>
+<td valign="top" width="12%">mangle</td>
+<td valign="top" width="25%">PREROUTING</td>
+<td valign="top" width="50%">
+这个链用来mangle数据包，比如改变TOS等</td>
+</tr>
+<tr>
+<td valign="top" width="12%">4</td>
+<td valign="top" width="12%">nat</td>
+<td valign="top" width="25%">PREROUTING</td>
+<td valign="top" width="50%">
+这个链主要用来做DNAT。不要在这个链做过滤操作，因为某些情况下包会溜过去。</td>
+</tr>
+<tr>
+<td valign="top" width="12%">5</td>
+<td valign="top" width="12%">&nbsp;<wbr></td>
+<td valign="top" width="25%">&nbsp;<wbr></td>
+<td valign="top" width="50%">
+路由判断，比如，包是发往本地的，还是要转发的。</td>
+</tr>
+<tr>
+<td valign="top" width="12%">6</td>
+<td valign="top" width="12%">mangle</td>
+<td valign="top" width="25%">INPUT</td>
+<td valign="top" width="50%">
+在路由之后，被送往本地程序之前，mangle数据包。</td>
+</tr>
+<tr>
+<td valign="top" width="12%">7</td>
+<td valign="top" width="12%">filter</td>
+<td valign="top" width="25%">INPUT</td>
+<td valign="top" width="50%">
+所有以本地为目的的包都要经过这个链，不管它们从哪儿来，对这些包的过滤条件就设在这里。</td>
+</tr>
+<tr>
+<td valign="top" width="12%">8</td>
+<td valign="top" width="12%">&nbsp;<wbr></td>
+<td valign="top" width="25%">&nbsp;<wbr></td>
+<td valign="top" width="50%">到达本地程序了(比如，服务程序或客户程序)</td>
+</tr>
+</tbody>
+</table>
+<br>
+<br>
+<br>
+以本地为源的包<br>
+<table border="1">
+<tbody>
+<tr>
+<th valign="top">Step</th>
+<th valign="top">Table</th>
+<th valign="top">Chain</th>
+<th valign="top">Comment</th>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td valign="top" width="12%">1</td>
+<td valign="top" width="12%">&nbsp;<wbr></td>
+<td valign="top" width="25%">&nbsp;<wbr></td>
+<td valign="top" width="50%">本地程序（比如，服务程序或客户程序）</td>
+</tr>
+<tr>
+<td valign="top" width="12%">2</td>
+<td valign="top" width="12%">&nbsp;<wbr></td>
+<td valign="top" width="25%">&nbsp;<wbr></td>
+<td valign="top" width="50%">
+路由判断，要使用源地址，外出接口，还有其他一些信息。</td>
+</tr>
+<tr>
+<td valign="top" width="12%">3</td>
+<td valign="top" width="12%">mangle</td>
+<td valign="top" width="25%">OUTPUT</td>
+<td valign="top" width="50%">
+在这儿可以mangle包。建议不要在这儿做过滤，可能有副作用哦。</td>
+</tr>
+<tr>
+<td valign="top" width="12%">4</td>
+<td valign="top" width="12%">nat</td>
+<td valign="top" width="25%">OUTPUT</td>
+<td valign="top" width="50%">
+这个链对从防火墙本身发出的包进行DNAT操作。</td>
+</tr>
+<tr>
+<td valign="top" width="12%">5</td>
+<td valign="top" width="12%">filter</td>
+<td valign="top" width="25%">OUTPUT</td>
+<td valign="top" width="50%">对本地发出的包过滤。</td>
+</tr>
+<tr>
+<td valign="top" width="12%">6</td>
+<td valign="top" width="12%">mangle</td>
+<td valign="top" width="25%">POSTROUTING</td>
+<td valign="top" width="50%">这
+条链主要在包DNAT之后(译者注：作者把这一次DNAT称作
+实际的路由，虽然在前面有一次路由。对于本地的包，一旦它被生成，就必须经过路由代码的处理，但这个
+包具体到哪儿去，要由NAT代码处理之后才能确定。所以把这称作实际的路由。)，离开本地之前，对包
+mangle。有两种包会经过这里，防火墙所在机子本身产生的包，还有被转发的包。</td>
+</tr>
+<tr>
+<td valign="top" width="12%">7</td>
+<td valign="top" width="12%">nat</td>
+<td valign="top" width="25%">POSTROUTING</td>
+<td valign="top" width="50%">
+在这里做SNAT。但不要在这里做过滤，因为有副作用，而且 有些包是会溜过去的，即使你用了DROP策略。</td>
+</tr>
+<tr>
+<td valign="top" width="12%">8</td>
+<td valign="top" width="12%">&nbsp;<wbr></td>
+<td valign="top" width="25%">&nbsp;<wbr></td>
+<td valign="top" width="50%">离开接口(比如： eth0)</td>
+</tr>
+<tr>
+<td valign="top" width="12%">9</td>
+<td valign="top" width="12%">&nbsp;<wbr></td>
+<td valign="top" width="25%">&nbsp;<wbr></td>
+<td valign="top" width="50%">在线路上传输(比如，Internet)</td>
+</tr>
+</tbody>
+</table>
+<p style="TexT-inDenT: 2em;"><br></p>
+<br>
+<br>
+被转发的包&nbsp;<wbr>（我们假设一个包的目的是另一个网络中的一台机子）<br>
+<table border="1">
+<tbody>
+<tr>
+<th valign="top">Step</th>
+<th valign="top">Table</th>
+<th valign="top">Chain</th>
+<th valign="top">Comment</th>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td valign="top" width="12%">1</td>
+<td valign="top" width="12%">&nbsp;<wbr></td>
+<td valign="top" width="25%">&nbsp;<wbr></td>
+<td valign="top" width="50%">在线路上传输(比如，Internet)</td>
+</tr>
+<tr>
+<td valign="top" width="12%">2</td>
+<td valign="top" width="12%">&nbsp;<wbr></td>
+<td valign="top" width="25%">&nbsp;<wbr></td>
+<td valign="top" width="50%">进入接口（比如， eth0）</td>
+</tr>
+<tr>
+<td valign="top" width="12%">3</td>
+<td valign="top" width="12%">mangle</td>
+<td valign="top" width="25%">PREROUTING</td>
+<td valign="top" width="50%">mangle数据包，，比如改变TOS等。</td>
+</tr>
+<tr>
+<td valign="top" width="12%">4</td>
+<td valign="top" width="12%">nat</td>
+<td valign="top" width="25%">PREROUTING</td>
+<td valign="top" width="50%">
+这个链主要用来做DNAT。不要在这个链做过虑操作，因为某 些情况下包会溜过去。稍后会做SNAT。</td>
+</tr>
+<tr>
+<td valign="top" width="12%">5</td>
+<td valign="top" width="12%">&nbsp;<wbr></td>
+<td valign="top" width="25%">&nbsp;<wbr></td>
+<td valign="top" width="50%">
+路由判断，比如，包是发往本地的，还是要转发的。</td>
+</tr>
+<tr>
+<td valign="top" width="12%">6</td>
+<td valign="top" width="12%">mangle</td>
+<td valign="top" width="25%">FORWARD</td>
+<td valign="top" width="50%">包
+继续被发送至mangle表的FORWARD链，这是非常特殊的情
+况才会用到的。在这里，包被mangle（还记得mangle的意思吗）。这次mangle发生在最初的路由判断之后，
+在最后一次更改包的目的之前（译者注：就是下面的FORWARD链所做的，因其过滤功能，可能会改变一些包 的目的地，如丢弃包）。</td>
+</tr>
+<tr>
+<td valign="top" width="12%">7</td>
+<td valign="top" width="12%">filter</td>
+<td valign="top" width="25%">FORWARD</td>
+<td valign="top" width="50%">
+包继续被发送至这条FORWARD链。只有需要转发的包才会走
+到这里，并且针对这些包的所有过滤也在这里进行。注意，所有要转发的包都要经过这里，不管是外网到内
+网的还是内网到外网的。在你自己书写规则时，要考虑到这一点。</td>
+</tr>
+<tr>
+<td valign="top" width="12%">8</td>
+<td valign="top" width="12%">mangle</td>
+<td valign="top" width="25%">POSTROUTING</td>
+<td valign="top" width="50%">这个链也是针对一些特殊类型的包（译者注：参考第6步，
+我们可以发现，在转发包时，mangle表的两个链都用在特殊的应用上）。这一步mangle是在所有更改包的目
+的地址的操作完成之后做的，但这时包还在本地上。</td>
+</tr>
+<tr>
+<td valign="top" width="12%">9</td>
+<td valign="top" width="12%">nat</td>
+<td valign="top" width="25%">POSTROUTING</td>
+<td valign="top" width="50%">
+这个链就是用来做SNAT的，当然也包括Masquerade（伪 装）。但不要在这儿做过滤，因为某些包即使不满足条件也会通过。</td>
+</tr>
+<tr>
+<td valign="top" width="12%">10</td>
+<td valign="top" width="12%">&nbsp;<wbr></td>
+<td valign="top" width="25%">&nbsp;<wbr></td>
+<td valign="top" width="50%">离开接口(比如： eth0)</td>
+</tr>
+<tr>
+<td valign="top" width="12%">11</td>
+<td valign="top" width="12%">&nbsp;<wbr></td>
+<td valign="top" width="25%">&nbsp;<wbr></td>
+<td valign="top" width="50%">又在线路上传输了(比如，LAN)</td>
+</tr>
+</tbody>
+</table>
+<p style="TexT-inDenT: 2em;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>就如你所见的，包要经历很多步骤，而且它们可以被阻拦在任何一条链上，或者是任何有问题的地方。
+我们的主要兴趣是iptables的概貌。注意，对不同的接口，是没有什么特殊的链和表的。所有要经防火墙/
+路由器转发的包都要经过FORWARD链。</p>
+<br>
+<br>
+IPTables对包的处理动作<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -j
+后面的选项如下：<br>
+<br>
+ACCEPT 将封包放行，进行完此处理动作后，将不再比对其它规则，直接跳往下一个规则链。<br>
+<br>
+REJECT 拦阻该封包，并传送封包通知对方，可以传送的封包有几个选择：ICMP port-unreachable、ICMP
+echo-reply 或是 tcp-reset（这个封包会要求对方关闭联机），进行完此处理动作后，将不再比对其它规则，直接
+中断过滤程序。 范例如下：<br>
+iptables -A FORWARD -p TCP --dport 22 -j REJECT --reject-with
+tcp-reset<br>
+<br>
+DROP 丢弃封包不予处理，进行完此处理动作后，将不再比对其它规则，直接中断过滤程序。<br>
+<br>
+REDIRECT 将封包重新导向到另一个端口（PNAT），进行完此处理动作后，将 会继续比对其它规则。 这个功能可以用来实作通透式
+porxy 或用来保护 web 服务器。例如：iptables -t nat -A PREROUTING -p tcp --dport
+80 -j REDIRECT --to-ports 8080<br>
+<br>
+MASQUERADE 改写封包来源 IP 为防火墙 NIC IP，可以指定 port
+对应的范围，进行完此处理动作后，直接跳往下一个规则链。这个功能与 SNAT 略有不同，当进行 IP 伪装时，不需指定要伪装成哪个
+IP，IP 会从网卡直接读取，当使用拨接连线时，IP 通常是由 ISP 公司的 DHCP 服务器指派的，这个时候 MASQUERADE
+特别有用。范例如下：<br>
+iptables -t nat -A POSTROUTING -p TCP -j MASQUERADE --to-ports
+1024-31000<br>
+<br>
+LOG 将封包相关讯息纪录在 /var/log 中，详细位置请查阅 /etc/syslog.conf
+组态档，进行完此处理动作后，将会继续比对其它规则。例如：<br>
+iptables -A INPUT -p tcp -j LOG --log-prefix "INPUT packets"<br>
+<br>
+SNAT 改写封包来源 IP 为某特定 IP 或 IP 范围，可以指定 port
+对应的范围，进行完此处理动作后，将直接跳往下一个规则炼（mangle:postrouting）。范例如下：<br>
+iptables -t nat -A POSTROUTING -p tcp-o eth0 -j SNAT --to-source
+194.236.50.155-194.236.50.160:1024-32000<br>
+<br>
+DNAT 改写封包目的地 IP 为某特定 IP 或 IP 范围，可以指定 port
+对应的范围，进行完此处理动作后，将会直接跳往下一个规则炼（filter:input 或
+filter:forward）。范例如下：<br>
+iptables -t nat -A PREROUTING -p tcp -d 15.45.23.67 --dport 80 -j
+DNAT --to-destination 192.168.1.1-192.168.1.10:80-100<br>
+<br>
+MIRROR 镜射封包，也就是将来源 IP 与目的地 IP 对调后，将封包送回，进行完此处理动作后，将会中断过滤程序。<br>
+<br>
+QUEUE
+中断过滤程序，将封包放入队列，交给其它程序处理。透过自行开发的处理程序，可以进行其它应用，例如：计算联机费用.......等。<br>
+
+<br>
+RETURN
+结束在目前规则炼中的过滤程序，返回主规则炼继续过滤，如果把自订规则炼看成是一个子程序，那么这个动作，就相当于提早结束子程序并返回到主程序中。<br>
+
+<br>
+MARK 将封包标上某个代号，以便提供作为后续过滤的条件判断依据，进行完此处理动作后，将会继续比对其它规则。范例如下：<br>
+iptables -t mangle -A PREROUTING -p tcp --dport 22 -j MARK
+--set-mark 2<br>
+<br>
+<br>
+<br>
+<br>
+IPTables的状态控制<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr><br>
+
+<p style="TexT-inDenT: 2em;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>状
+态机制是iptables中特殊的一部分，其实它不应该叫状态机制，因为它只是一种连接跟踪机制。连接跟踪可以让Netfilter知道某个特定连接的状
+态。运行连接跟踪的防火墙称作 带有状态机制的防火墙，以下简称为状态防火墙。状态防火墙比非状态防火墙要安全，因为它允许我们编写
+更严密的规则。</p>
+<p style="TexT-inDenT: 2em;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>在
+iptables里，包是和被跟踪连接的四种不同状态有关的。它们是NEW&nbsp;<wbr>，ESTABLISHED&nbsp;<wbr>，RELATED&nbsp;<wbr>和INVALID&nbsp;<wbr>。
+后面我们会深入地讨论每一个状态。使用--state&nbsp;<wbr>匹配操作，我们能很容易地控制
+“谁或什么能发起新的会话”。</p>
+<p style="TexT-inDenT: 2em;">所
+有在内核中由Netfilter的特定框架做的连接跟踪称作conntrack（译者注：就是connection tracking
+的首字母缩写）。conntrack可以作为模块安装，也可以作为内核的一部分。大部分情况下，我们想要，也
+需要更详细的连接跟踪，这是相比于缺省的conntrack而言。也因为此，conntrack中有许多用来处理TCP，
+UDP或ICMP协议的部件。这些模块从数据包中提取详细的、唯一的信息，因此能保持对每一个数据流的跟
+踪。这些信息也告知conntrack流当前的状态。例如，UDP流一般由他们的目的地址、源地址、目的端口和源 端口唯一确定。</p>
+<p style="TexT-inDenT: 2em;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+除了本地产生的包由OUTPUT链处理外，所有连接跟踪都是在PREROUTING链里进行处理的，意思就是，
+iptables会在PREROUTING链里重新计算所有的状态。如果我们发送一个流的初始化包，状态就会在OUTPUT链
+里被设置为NEW&nbsp;<wbr>，当我们收到回应的包时，状态就会在PREROUTING链里被设置为ESTABLISHED&nbsp;<wbr>。如果第一个包不是本地产生的，那就会
+在PREROUTING链里被设置为NEW状
+态。因此，所有状态的改变和计算都是在nat表中的PREROUTING链和OUTPUT链里完成的。</p>
+<p style="TexT-inDenT: 2em;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>UBuntu8.04
+默认启用了conntrack功能。conntrack的所有记录保存在/proc/net/ip_conntrack文件中。连接跟踪表能容纳多少记录
+是被一个变量控制的，它可由内核中的ip-
+sysctl函数设置。默认值取决于你的内存大小，128MB可以包含8192条目录，256MB是16376条。你也可以在
+/proc/sys/net/ipv4/ip_conntrack_max里查看、设置（UBuntu8.04里面没有这个文件）。我们先来看看怎样阅读
+/proc/net/ip_conntrack里的conntrack记录。这些记
+录表示的是当前被跟踪的连接。如果安装了ip_conntrack模块，cat&nbsp;<wbr>/proc/net/ip_conntrack
+的显示类似：</p>
+<pre>tcp 6 117 SYN_SENT src=192.168.1.6 dst=192.168.1.9 sport=32775 dport=22 [UNREPLIED] src=192.168.1.9 dst=192.168.1.6 sport=22 dport=32775 use=2<br>
+ 
+</pre>
+<p style="TexT-inDenT: 2em;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>conntrack
+模块维护的所有信息都包含在这个例子中了，通过它们就可以知道某个特定的连接处于什么状
+态。首先显示的是协议，这里是tcp，接着是十进制的6（译者注：tcp的协议类型代码是6）。之后的117是
+这条conntrack记录的生存时间，它会有规律地被消耗，直到收到这个连接的更多的包。那时，这个值就会
+被设为当时那个状态的缺省值。接下来的是这个连接在当前时间点的状态。上面的例子说明这个包处在状态
+SYN_SENT，这个值是iptables显示的，以便我们好理解，而内部用的值稍有不同。SYN_SENT说明我们正在观
+察的这个连接只在一个方向发送了一TCP SYN包。再下面是源地址、目的地址、源端口和目的端口。其
+中有个特殊的词UNREPLIED，说明这个连接还没有收到任何回应。最后，是希望接收的应答包的信息，他们
+的地址和端口和前面是相反的。</p>
+<p style="TexT-inDenT: 2em;"><br></p>
+<br>
+<a name="USERLANDSTATES">数据包在用户空间的状态</a><br>
+<p style="TexT-inDenT: 2em;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>就象前面说的，包的状态依据IP所包含的协议不同而不同，但在内核外部，也就是用户空间里，只有4种
+状态：&nbsp;<wbr>NEW&nbsp;<wbr>，&nbsp;<wbr>ESTABLISHED&nbsp;<wbr>，&nbsp;<wbr>RELATED&nbsp;<wbr>和&nbsp;<wbr>INVALID&nbsp;<wbr>。它们主要是和状态匹配一起使用。下面就简要地介绍以下这几种状态：</p>
+<br>
+<p style="TexT-inDenT: 2em;"><a name="TABLE.USERLANDSTATES"></a></p>
+<p style="TexT-inDenT: 2em;">Table 4-1. 数据包在用户空间的状态</p>
+<table border="1">
+<tbody>
+<tr>
+<th valign="top">State（状态）</th>
+<th valign="top">Explanation（注释）</th>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<td valign="top" width="17%">
+<p style="TexT-inDenT: 2em;">NEW</p>
+</td>
+<td valign="top" width="83%">
+<p style="TexT-inDenT: 2em;">NEW&nbsp;<wbr>说 明这个包是我们看到的第一个
+包。意思就是，这是conntrack模块看到的某个连接第一个包，它即将被匹配了。比如，我们看到一个SYN
+包，是我们所留意的连接的第一个包，就要匹配它。第一个包也可能不是SYN包，但它仍会被认为是NEW&nbsp;<wbr>状态。这样做有时会导致一些问题，但对某些情况是
+有非常大的帮助的。例如，在 我们想恢复某条从其他的防火墙丢失的连接时，或者某个连接已经超时，但实际上并未关闭时。</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="17%">
+<p style="TexT-inDenT: 2em;">ESTABLISHED</p>
+</td>
+<td valign="top" width="83%">
+<p style="TexT-inDenT: 2em;">ESTABLISHED&nbsp;<wbr>已
+经注意到两个方向上
+的数据传输，而且会继续匹配这个连接的包。处于ESTABLISHED&nbsp;<wbr>状态的连接是非常容
+易理解的。只要发送并接到应答，连接就是ESTABLISHED的了。一个连接要从NEW&nbsp;<wbr>变
+为ESTABLISHED&nbsp;<wbr>，只需要接到应答包即可，不管这个包是发往防火墙的，还是要由防
+火墙转发的。ICMP的错误和重定向等信息包也被看作是ESTABLISHED&nbsp;<wbr>，只要它们是我
+们所发出的信息的应答。</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="17%">
+<p style="TexT-inDenT: 2em;">RELATED</p>
+</td>
+<td valign="top" width="83%">
+<p style="TexT-inDenT: 2em;">RELATED&nbsp;<wbr>是 个比较麻烦的状态。当一
+个连接和某个已处于ESTABLISHED状态的连接有关系时，就被认为是RELATED的了。换句话说，一个连接要想
+是RELATED的，首先要有一个ESTABLISHED的连接。这个ESTABLISHED连接再产生一个主连接之外的连接，这
+个新的连接就是RELATED的了，当然前提是conntrack模块要能理解RELATED。ftp是个很好的例子，FTP-data
+连接就是和FTP-control有RELATED的。还有其他的例子，比如，通过IRC的DCC连接。有了这个状态，ICMP应
+答、FTP传输、DCC等才能穿过防火墙正常工作。注意，大部分还有一些UDP协议都依赖这个机制。这些协议
+是很复杂的，它们把连接信息放在数据包里，并且要求这些信息能被正确理解。</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="17%">
+<p style="TexT-inDenT: 2em;">INVALID</p>
+</td>
+<td valign="top" width="83%">
+<p style="TexT-inDenT: 2em;">INVALID&nbsp;<wbr>说明数据包不能被识别属于
+哪个连接或没有任何状态。有几个原因可以产生这种情况，比如，内存溢出，收到不知属于哪个连接的ICMP
+错误信息。一般地，我们DROP这个状态的任何东西。</p>
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<p style="TexT-inDenT: 2em;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>这些状态可以一起使用，以便匹配数据包。这可以使我们的防火墙非常强壮和有效。以前，我们经常打
+开1024以上的所有端口来放行应答的数据。现在，有了状态机制，就不需再这样了。因为我们可以只开放那
+些有应答数据的端口，其他的都可以关闭。这样就安全多了。</p>
+<br>
+IPTables命令语法<br>
+iptables&nbsp;<wbr>[-t&nbsp;<wbr>table&nbsp;<wbr>]
+command [match] [target/jump]&nbsp;<wbr><br>
+<br>
+freebird@freebird-desktop:/home/public$ sudo iptables
+-help&nbsp;<wbr><br>
+iptables v1.3.8&nbsp;<wbr><br>
+<br>
+Usage: iptables -[AD] chain rule-specification
+[options]&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+iptables -[RI] chain rulenum rule-specification
+[options]&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+iptables -D chain rulenum [options]&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+iptables -[LFZ] [chain] [options]&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+iptables -[NX] chain&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+iptables -E old-chain-name new-chain-name&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+iptables -P chain target [options]&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+iptables -h (print this help information)&nbsp;<wbr><br>
+<br>
+Commands:&nbsp;<wbr><br>
+Either long or short options are allowed.&nbsp;<wbr><br>
+&nbsp;<wbr> --append&nbsp;<wbr> -A
+chain&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> Append to
+chain&nbsp;<wbr><br>
+&nbsp;<wbr> --delete&nbsp;<wbr> -D
+chain&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> Delete
+matching rule from chain&nbsp;<wbr><br>
+&nbsp;<wbr> --delete&nbsp;<wbr> -D chain
+rulenum&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> Delete rule
+rulenum (1 = first) from chain&nbsp;<wbr><br>
+&nbsp;<wbr> --insert&nbsp;<wbr> -I chain
+[rulenum]&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> Insert in
+chain as rulenum (default 1=first)&nbsp;<wbr><br>
+&nbsp;<wbr> --replace -R chain
+rulenum&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> Replace rule
+rulenum (1 = first) in chain&nbsp;<wbr><br>
+&nbsp;<wbr>
+--list&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -L
+[chain]&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> List the
+rules in a chain or all chains&nbsp;<wbr><br>
+&nbsp;<wbr> --flush&nbsp;<wbr>&nbsp;<wbr> -F
+[chain]&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> Delete all
+rules in&nbsp;<wbr> chain or all
+chains&nbsp;<wbr><br>
+&nbsp;<wbr>
+--zero&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -Z
+[chain]&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> Zero
+counters in chain or all chains&nbsp;<wbr><br>
+&nbsp;<wbr>
+--new&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+-N chain&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> Create a new
+user-defined chain&nbsp;<wbr><br>
+&nbsp;<wbr> --delete-chain&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+-X [chain]&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> Delete a
+user-defined chain&nbsp;<wbr><br>
+&nbsp;<wbr> --policy&nbsp;<wbr> -P chain
+target&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> Change
+policy on chain to target&nbsp;<wbr><br>
+&nbsp;<wbr> --rename-chain&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+-E old-chain new-chain&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> Change chain
+name, (moving any references)&nbsp;<wbr><br>
+Options:&nbsp;<wbr><br>
+&nbsp;<wbr>
+--proto&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -p
+[!] proto&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+protocol: by number or name, eg. `tcp'&nbsp;<wbr><br>
+&nbsp;<wbr>
+--source&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -s
+[!] address[/mask]&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> source
+specification&nbsp;<wbr><br>
+&nbsp;<wbr> --destination -d [!]
+address[/mask]&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> destination
+specification&nbsp;<wbr><br>
+&nbsp;<wbr> --in-interface -i [!] input
+name[+]&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> network
+interface name ([+] for wildcard)&nbsp;<wbr><br>
+&nbsp;<wbr>
+--jump&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -j
+target&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> target for
+rule (may load target extension)&nbsp;<wbr><br>
+&nbsp;<wbr>
+--goto&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+-g chain&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+jump to chain with no return&nbsp;<wbr><br>
+&nbsp;<wbr>
+--match&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -m
+match&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> extended
+match (may load extension)&nbsp;<wbr><br>
+&nbsp;<wbr>
+--numeric&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+-n&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> numeric
+output of addresses and ports&nbsp;<wbr><br>
+&nbsp;<wbr> --out-interface -o [!] output
+name[+]&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> network
+interface name ([+] for wildcard)&nbsp;<wbr><br>
+&nbsp;<wbr>
+--table&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> -t
+table&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> table
+to manipulate (default: `filter')&nbsp;<wbr><br>
+&nbsp;<wbr>
+--verbose&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+-v&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> verbose
+mode&nbsp;<wbr><br>
+&nbsp;<wbr>
+--line-numbers&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> print line
+numbers when listing&nbsp;<wbr><br>
+&nbsp;<wbr>
+--exact&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+-x&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> expand
+numbers (display exact values)&nbsp;<wbr><br>
+[!]
+--fragment&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+-f&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> match second
+or further fragments only&nbsp;<wbr><br>
+&nbsp;<wbr>
+--modprobe=&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> try to
+insert modules using this command&nbsp;<wbr><br>
+&nbsp;<wbr> --set-counters PKTS
+BYTES&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> set the
+counter during insert/append&nbsp;<wbr><br>
+[!] --version&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+-V&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr> print
+package version.&nbsp;<wbr><br>
+<br>
+<br>
+<br>
+<br>
+常用命令<br>
+<br>
+<br>
+显示filter表中的INPUT链的所有规则<br>
+sudo iptables -t filter -L INPUT&nbsp;<wbr><br>
+-t filter可以去掉<br>
+<br>
+显示filter表中的所有规则链<br>
+sudo iptables -L&nbsp;<wbr><br>
+<br>
+<br>
+删除filter表中所有的规则<br>
+sudo iptables -F&nbsp;<wbr><br>
+<br>
+<br>
+<br>
+<br>
+删除filter表中用户定义的规则链<br>
+sudo iptables -X&nbsp;<wbr><br>
+<br>
+<br>
+<br>
+允许处于已建立的连接状态或者相关连接状态的数据包通过<br>
+sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j
+ACCEPT&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+已建立的连接创建一个新的连接，叫做相关连接。<br>
+<br>
+<br>
+<br>
+设定filter表的某个规则链的默认处理方式为ACCEPT<br>
+sudo iptables -P FORWARD
+ACCEPT&nbsp;<wbr>(更加安全的做法是DROP)&nbsp;<wbr><br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr><br>
+
+<br>
+开放tcp端口4848<br>
+sudo iptables -A INPUT -p tcp -i eth0 --dport 4848 -j
+ACCEPT&nbsp;<wbr><br>
+<br>
+<br>
+删除规则语法<br>
+<br>
+sudo iptables -D INPUT 2<br>
+<br>
+上面的命令可以删除filter表的INPUT链中的第二条规则<br>
+<br>
+<br>
+<br>
+IPTables设置保存<br>
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+下面的命令可以将当前iptables的设置保存到指定文件中：<br>
+<br>
+<pre>sudo sh -c "iptables-save &gt; /etc/iptables.up.rules"
+</pre>
+<p style="TexT-inDenT: 2em;"><br></p>
+<p style="TexT-inDenT: 2em;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>在/etc/network/interfaces文件中增加两行，可以使得系统重新启动之前，将当前防火墙设置保存下来，并在下次启动的时候将防火墙设置读取<br>
+</p>
+<p style="TexT-inDenT: 2em;">pre-up iptables-restore &lt;
+/etc/iptables.up.rules<br>
+post-down iptables-save &gt; /etc/iptables.up.rules</p>
+<p style="TexT-inDenT: 2em;">&nbsp;<wbr></p>
+<p style="TexT-inDenT: 2em;">注意，这两行命令需要加在<br></p>
+<pre>iface eth0 inet dhcp之后，或者如果dhcp为static，应该加在ip地址、子网掩码、网关设置之后，举例如下：<br>
+ auto lo<br>
+ iface lo inet loopback<br>
+ <br>
+ iface eth0 inet static<br>
+ address 192.168.10.67<br>
+ netmask 255.255.255.0<br>
+ gateway 192.168.10.244<br>
+ pre-up iptables-restore &lt; /etc/iptables.up.rules<br>
+ post-down iptables-save &gt; /etc/iptables.up.rules <br>
+ <br>
+ auto eth0<br>
+ 然后，可以通过重新启动网络服务检查是否有效。<br>
+ 
+</pre>
+<p style="TexT-inDenT: 2em;"><br></p>
+<br>
+模块挂载<br>
+<p style="TexT-inDenT: 2em;">
+&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+iptabels文章中经常谈到挂载某些模块的问题。UBuntu8.04中使用的是modprobe命令。下面是常用的命令：</p>
+<p style="TexT-inDenT: 2em;">modprobe -l
+//是列出内核中所有的模块，包括已挂载和未挂载的；通过modprobe -l
+，我们能查看到我们所需要的模块，然后根据我们的需要来挂载；</p>
+<p style="TexT-inDenT: 2em;"><br></p>
+<p style="TexT-inDenT: 2em;">modprobe 模块名&nbsp;<wbr>
+//挂载一个模块</p>
+<p style="TexT-inDenT: 2em;"><br></p>
+<p style="TexT-inDenT: 2em;">modprobe -r 模块名 //移除已加载的模块 或者使用rmmod
+模块名</p>
+<p style="TexT-inDenT: 2em;"><br></p>
+<p style="TexT-inDenT: 2em;">modinfo 查看模块的信息，用法如下：<br></p>
+<p style="TexT-inDenT: 2em;">freebird@freebird-desktop:~$ sudo
+modinfo nf_nat_ftp<br>
+filename:&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+/lib/modules/2.6.24-20-rt/kernel/net/ipv4/netfilter/nf_nat_ftp.ko<br>
+
+alias:&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+ip_nat_ftp<br>
+description:&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+ftp NAT helper<br>
+author:&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+Rusty Russell&nbsp;<wbr><br>
+license:&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+GPL<br>
+srcversion:&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+F92EE3A32D64466A49CF33B<br>
+depends:&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+nf_nat,nf_conntrack,nf_conntrack_ftp<br>
+vermagic:&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+2.6.24-20-rt SMP preempt mod_unload 586&nbsp;<wbr><br></p>
+<p style="TexT-inDenT: 2em;"><br></p>
+<p style="TexT-inDenT: 2em;">为了支持ftp，我挂载了所有的ftp,tftp的模块</p>
+<p style="TexT-inDenT: 2em;"><br></p>
+<p style="TexT-inDenT: 2em;"><br></p>
+<p style="TexT-inDenT: 2em;">//一个网上的小例子，暂且放在这里，还没有测试</p>
+<p style="TexT-inDenT: 2em;"><br></p>
+OUTPUT是数据包出去的检查链表 &nbsp;<wbr>&nbsp;<wbr><br>
+&nbsp;<wbr> iptables &nbsp;<wbr> -I
+&nbsp;<wbr> OUTPUT &nbsp;<wbr> -p &nbsp;<wbr>
+tcp &nbsp;<wbr> --dport &nbsp;<wbr> 23
+&nbsp;<wbr> -j &nbsp;<wbr> REJECT
+&nbsp;<wbr>&nbsp;<wbr><br>
+&nbsp;<wbr> 表示拒绝目的端口为23的数据包出去
+&nbsp;<wbr>&nbsp;<wbr><br>
+&nbsp;<wbr> 你telnet到本机时数据包的目的端口是23，这时应该在INPUT链中REJECT
+&nbsp;<wbr>&nbsp;<wbr><br>
+&nbsp;<wbr> 当数据包从本机出去时源端口为23，这时应该在OUTPUT &nbsp;<wbr>
+链中REJECT &nbsp;<wbr>&nbsp;<wbr><br>
+&nbsp;<wbr> 但是你用的规则是--dport &nbsp;<wbr> 23，这是过滤目的端口
+&nbsp;<wbr>&nbsp;<wbr><br>
+&nbsp;<wbr> 所以这条规则不能达你的目的
+&nbsp;<wbr>&nbsp;<wbr><br>
+&nbsp;<wbr> 正确的应该是
+&nbsp;<wbr>&nbsp;<wbr><br>
+&nbsp;<wbr> iptables -I OUTPUT -p tcp --source-port 23 -j
+REJECT&nbsp;<wbr><br>
+<br>
+可以参考这篇文章，里面有更详细的介绍&nbsp;<wbr><br>
+<br>
+<br>
+1、iptables&nbsp;<wbr>介绍&nbsp;<wbr><br>
+<br>
+iptables&nbsp;<wbr>是
+复杂的，它集成到linux内核中。用户通过iptables&nbsp;<wbr>，可以对进出你的计算机的数据包进行过滤。通过iptables&nbsp;<wbr>命令设置你的规则，来把
+守你的计算机网络──哪些数据允许通过，哪些不能通过，哪些通过的数据进行记录（log）。接下来，我将告诉你如何设置自己的规则，从现在就开始吧。&nbsp;<wbr><br>
+
+<br>
+<br>
+<br>
+2、初始化工作&nbsp;<wbr><br>
+<br>
+在shell提示符 # 下打入&nbsp;<wbr><br>
+<br>
+iptables&nbsp;<wbr>-F&nbsp;<wbr><br>
+<br>
+iptables&nbsp;<wbr>-X&nbsp;<wbr><br>
+<br>
+iptables&nbsp;<wbr>-t nat -F&nbsp;<wbr><br>
+<br>
+iptables&nbsp;<wbr>-t nat -X&nbsp;<wbr><br>
+<br>
+以上每一个命令都有它确切的含义。一般设置你的iptables&nbsp;<wbr>之前，首先要清除所有以前设置的规则，我们就把它叫做初始化好了。虽然很多情况下它什么也不做，但是保险起见，不妨小心一点吧！&nbsp;<wbr><br>
+
+<br>
+<br>
+<br>
+3、开始设置规则:&nbsp;<wbr><br>
+<br>
+接下下开始设置你的规则了&nbsp;<wbr><br>
+<br>
+iptables&nbsp;<wbr>-P INPUT DROP&nbsp;<wbr><br>
+<br>
+这
+一条命令将会为你构建一个非常“安全”的防火墙，我很难想象有哪个hacker能攻破这样的机器，因为它将所有从网络进入你机器的数据丢弃(drop)
+了。这当然是安全过头了，此时你的机器将相当于没有网络。如果你ping
+localhost，你就会发现屏幕一直停在那里，因为ping收不到任何回应。&nbsp;<wbr><br>
+<br>
+<br>
+4 、添加规则&nbsp;<wbr><br>
+<br>
+接着上文继续输入命令：&nbsp;<wbr><br>
+<br>
+iptables&nbsp;<wbr>-A INPUT -i ! ppp0 -j
+ACCEPT&nbsp;<wbr><br>
+<br>
+(如果是局域网的话，应该用iptables -A INPUT -i eth0 -j ACCEPT)<br>
+<br>
+这条规则的意思是：接受所有的，来源不是网络接口ppp0的数据。 -i 代表 接收数据的网络接口<br>
+<br>
+我们假设你有两个网络接口，eth0连接局域网，loop是回环网（localhost）。ppp0是一般的adsl上网的internet网络接口，如果你不是这种上网方式，那则有可能是eth1。在此我假设你是adsl上网，你的internet接口是ppp0&nbsp;<wbr><br>
+
+<br>
+此时你即允许了局域网的访问，你也可以访问localhost&nbsp;<wbr><br>
+<br>
+此时再输入命令 ping localhost，结果还会和刚才一样吗？&nbsp;<wbr><br>
+<br>
+到此我们还不能访问www,也不能mail，接着看吧。&nbsp;<wbr><br>
+<br>
+<br>
+5、我想访问www&nbsp;<wbr><br>
+<br>
+iptables&nbsp;<wbr>-A INPUT -i ppp0 -p tcp --sport 80 -j
+ACCEPT&nbsp;<wbr><br>
+<br>
+允许来自网络接口ppp0(internet接口)，并且来源端口是80的数据进入你的计算机。&nbsp;<wbr><br>
+
+80端口正是www服务所使用的端口。&nbsp;<wbr><br>
+<br>
+好了，现在可以看网页了。但是，你能看到吗？&nbsp;<wbr><br>
+<br>
+<br>
+如果你在浏览器的地址中输入www.baidu.com，能看到网页吗？&nbsp;<wbr><br>
+<br>
+你得到的结果一定是：找不到主机www.baidu.com&nbsp;<wbr><br>
+<br>
+但是，如果你再输入220.181.27.5,你仍然能够访问baidu的网页。&nbsp;<wbr><br>
+<br>
+为什么？如果你了解dns的话就一定知道原因了。&nbsp;<wbr><br>
+<br>
+因
+为如果你打入www.baidu.com,你的电脑无法取得www.baidu.com这个名称所能应的ip地址220.181.27.5。如果你确实
+记得这个ip，那么你仍然能够访问www,你当然可以只用ip来访问www，如果你想挑战你的记忆的话^ _
+^，当然，我们要打开DNS。&nbsp;<wbr><br>
+<br>
+<br>
+<br>
+6、打开dns端口&nbsp;<wbr><br>
+<br>
+打开你的dns端口，输入如下命令：&nbsp;<wbr><br>
+<br>
+iptables&nbsp;<wbr>-A INPUT -i ppp0 -p udp --sport 53 -j
+ACCEPT&nbsp;<wbr><br>
+<br>
+这条命令的含义是，接受所有来自网络接口ppp0,upd协议的53端口的数据。53也就是著名的dns端口。&nbsp;<wbr><br>
+
+<br>
+此时测试一下，你能通过主机名称访问www吗？你能通过ip访问www吗？&nbsp;<wbr><br>
+<br>
+当然，都可以！&nbsp;<wbr><br>
+<br>
+<br>
+注意，在局域网内，通常都有路由器，比如我的是192.168.10.244,通过以下设置，可以让我能够上www浏览网页。&nbsp;<wbr><br>
+
+sudo iptables -A INPUT -i eth0 -p tcp -s
+192.168.10.244&nbsp;<wbr> -j ACCEPT&nbsp;<wbr><br>
+//设置我接受路由器的任何端口通过tcp协议传来的数据&nbsp;<wbr><br>
+sudo iptables -A INPUT -i eth0 -p udp -sport 53 -j
+ACCEPT&nbsp;<wbr><br>
+//设置我接受任何机器通过53端口发过来的udp数据，这是用来接收dns数据的&nbsp;<wbr><br>
+&nbsp;<wbr>sudo iptables -A INPUT -i eth0 -p tcp --sport 80
+-j ACCEPT&nbsp;<wbr><br>
+//设置我接受任何机器通过80端口发过来的tcp数据，这是用来上网页的&nbsp;<wbr><br>
+<br>
+设置结果如下：&nbsp;<wbr><br>
+freebird@freebird-desktop:~$ sudo iptables
+-L&nbsp;<wbr><br>
+Chain INPUT (policy DROP)&nbsp;<wbr><br>
+target&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+prot opt
+source&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+destination&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr><br>
+
+ACCEPT&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+tcp&nbsp;<wbr> --&nbsp;<wbr>
+192.168.10.244&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+anywhere&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr><br>
+
+ACCEPT&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+udp&nbsp;<wbr> --&nbsp;<wbr>
+anywhere&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+anywhere&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+udp spt:domain&nbsp;<wbr><br>
+ACCEPT&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+tcp&nbsp;<wbr> --&nbsp;<wbr>
+anywhere&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+anywhere&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+tcp spt:www&nbsp;<wbr><br>
+<br>
+Chain FORWARD (policy ACCEPT)&nbsp;<wbr><br>
+target&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+prot opt
+source&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+destination&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr><br>
+
+<br>
+Chain OUTPUT (policy ACCEPT)&nbsp;<wbr><br>
+target&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+prot opt
+source&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>
+destination&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr>&nbsp;<wbr><br>
+
+freebird@freebird-desktop:~$<br>							
+		</div>

@@ -1,0 +1,139 @@
+---
+layout: default
+title: 修复commit不能输入中文
+categories:
+  - linux
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+			将Ubuntu系统语言环境改为英文的en_US.UTF-8&nbsp;<wbr>
+<div>
+<div><b>查看当前系统语言环境：</b></div>
+<div>&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr>locale</div>
+</div>
+<div><b>编辑配置文件：</b></div>
+<div><b>&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr>&nbsp;<wbr></b>sudo vim
+/etc/default/locale</div>
+<div><b>文件内容：</b></div>
+<div>&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr>LANG=en_US.UTF-8</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LANGUAGE=en_US:en</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_CTYPE="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_NUMERIC="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_TIME="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_COLLATE="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_MONETARY="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_MESSAGES="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_PAPER="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_NAME="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_ADDRESS="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_TELEPHONE="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_MEASUREMENT="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_IDENTIFICATION="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_ALL=</div>
+<div><b>查看系统内安装的locale：</b></div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>locale -a</div>
+<div><b>如果报错，没装en_US.UTF-8 安装en_US.UTF-8 ：</b></div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>qii@ubuntu:~$ cd /usr/share/locales</div>
+<div>&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr>qii@ubuntu:/usr/share/locales$
+ls</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>install-language-pack
+&nbsp;<wbr>remove-language-pack</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>qii@ubuntu:/usr/share/locales$ sudo
+./install-language-pack en_US</div>
+<div><b>查看，应该一切正常了:</b></div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>qii@ubuntu:/usr/share/locales$
+locale</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LANG=en_US.UTF-8</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LANGUAGE=en_US:en</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_CTYPE="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_NUMERIC="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_TIME="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_COLLATE="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_MONETARY="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_MESSAGES="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_PAPER="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_NAME="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_ADDRESS="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_TELEPHONE="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_MEASUREMENT="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_IDENTIFICATION="en_US.UTF-8"</div>
+<div><span style="line-height: 21px;">&nbsp;<wbr>
+&nbsp;<wbr> &nbsp;<wbr> &nbsp;<wbr>
+&nbsp;<wbr></span>LC_ALL=</div>
+<div><br></div>
+<div>原文：http://wiki.ubuntu.org.cn/修改locale</div>							
+		</div>
