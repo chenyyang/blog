@@ -2,10 +2,11 @@
 layout: category
 title: Welcome!
 ---
-
+<table class="mb20">
 {% for post in site.posts limit:15 %}
   {% include excerpt.html %}
 {% endfor %}
+</table>
 
 <div class="floatr mr20">
   <a href="/archive.html">&laquo; Archives</a>
