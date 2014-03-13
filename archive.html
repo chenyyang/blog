@@ -8,7 +8,7 @@ title: Archive
   {% unless post.layout == 'redirect' %}
   <tr>
     <th style="padding: 4px 10px 4px 0;" class="nowrap"><time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date_to_string }}</time></th>
-    <td style="padding: 4px 10px 4px 0;"><a href="{{ post.url }}">{{ post.title }}</a></td>
+    <td style="padding: 4px 10px 4px 0;"><a href="/blog{{ post.url }}">{{ post.title }}</a></td>
   </tr>
   {% endunless %}
   {% endfor %}
