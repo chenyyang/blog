@@ -1,3 +1,4 @@
+permalink: /blog/:year/:month/:day/:title
 baseurl: /blog
 production: false
 timezone: America/New_York
