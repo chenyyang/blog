@@ -13,29 +13,29 @@ categories:
 <strong>获取表单</strong>
 
 &nbsp;&nbsp;&nbsp;在WEB页面设计中，form是很重要的元素。Form通常用来收集并向网站提交信息。提交信息的方法有两种，GET方法和POST方法。先讨论GET方法，例如在页面中有这样一段：
-&nbsp;&nbsp;&nbsp;<c:out value='<form method="GET" action="junk.cgi">' escapeXml="false"/> 
-&nbsp;&nbsp;&nbsp;<input type=text name="birthyear">
-&nbsp;&nbsp;&nbsp;<input type=submit name=press value="OK">
-&nbsp;&nbsp;&nbsp;</form>
+&nbsp;&nbsp;&nbsp;<c:out value='<form method="GET" action="junk.cgi">'/> 
+&nbsp;&nbsp;&nbsp;<c:out value='<input type=text name="birthyear">'/>
+&nbsp;&nbsp;&nbsp;<c:out value='<input type=submit name=press value="OK">'/>
+&nbsp;&nbsp;&nbsp;<c:out value='</form>'/>
 &nbsp;&nbsp;&nbsp;那么浏览器上会出现一个文本框和一个标为“OK”的按钮。按下这个按钮，表单就用GET方法向服务器提交文本框的数据。
 例如原始页面是在 www.hotmail. com/when/birth.html看到的，然后您在文本框中输入1905，然后按OK按钮，那么浏览器的URL现在应该是：“www.hotmail. com/when/junk.cgi?birthyear=1905&press=OK”
 &nbsp;&nbsp;&nbsp;对于这种网页，curl可以直接处理，例如想获取上面的网页，只要输入：
 &nbsp;&nbsp;&nbsp;curl "www.hotmail. com/when/junk.cgi?birthyear=1905&press=OK"
 就可以了。
 &nbsp;&nbsp;&nbsp;表单用来提交信息的第二种方法叫做POST方法，POST方法和GET方法的区别在于GET方法使用的时候，浏览器中会产生目标URL，而POST不会。类似GET，这里有一个网页：
-&nbsp;&nbsp;&nbsp;<form method="POST" action="junk.cgi">
-&nbsp;&nbsp;&nbsp;<input type=text name="birthyear">
-&nbsp;&nbsp;&nbsp;<input type=submit name=press value="OK">
-&nbsp;&nbsp;&nbsp;</form>
+&nbsp;&nbsp;&nbsp;<c:out value='<form method="POST" action="junk.cgi">'/>
+&nbsp;&nbsp;&nbsp;<c:out value='<input type=text name="birthyear">'/>
+&nbsp;&nbsp;&nbsp;<c:out value='<input type=submit name=press value="OK">'/>
+&nbsp;&nbsp;&nbsp;<c:out value='</form>'/>
 &nbsp;&nbsp;&nbsp;浏览器上也会出现一个文本框和一个标为“OK”的按钮。按下这个按钮，表单用POST方法向服务器提交数据。
 &nbsp;&nbsp;&nbsp;这时的URL是看不到的，因此需要使用特殊的方法来抓取这个页面：
 &nbsp;&nbsp;&nbsp;curl -d "birthyear=1905&press=OK" www.hotmail. com/when/junk.cgi
 &nbsp;&nbsp;&nbsp;这个命令就可以做到。
 &nbsp;&nbsp;&nbsp;1995年年末，RFC 1867定义了一种新的POST方法，用来上传文件。主要用于把本地文件上传到服务器。此时页面是这样写的：
-&nbsp;&nbsp;&nbsp;<form method="POST" enctype='multipart/form-data' action="upload.cgi">
-&nbsp;&nbsp;&nbsp;<input type=file name=upload>
-&nbsp;&nbsp;&nbsp;<input type=submit name=press value="OK">
-&nbsp;&nbsp;&nbsp;</form>
+&nbsp;&nbsp;&nbsp;<c:out value='<form method="POST" enctype='multipart/form-data' action="upload.cgi">'/>
+&nbsp;&nbsp;&nbsp;<c:out value='<input type=file name=upload>'/>
+&nbsp;&nbsp;&nbsp;<c:out value='<input type=submit name=press value="OK">'/>
+&nbsp;&nbsp;&nbsp;<c:out value='</form>'/>
 &nbsp;&nbsp;&nbsp;对于这种页面，curl的用法不同：
 &nbsp;&nbsp;&nbsp;curl -F upload=@localfilename -F press=OK URL
 &nbsp;&nbsp;&nbsp;这个命令的实质是将本地的文件用POST上传到服务器。
