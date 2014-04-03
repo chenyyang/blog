@@ -8,12 +8,12 @@ categories:
 <h2>{{ page.title }}</h2>
 <strong>获得页面</strong>
 
-&nbsp;&nbsp;&nbsp;使用命令：curl http://curl.haxx. se<br>
+<br>&nbsp;&nbsp;&nbsp;使用命令：curl http://curl.haxx. se<br>
 &nbsp;&nbsp;&nbsp;这是最简单的使用方法。用这个命令获得了http://curl.haxx. se指向的页面，同样，如果这里的URL指向的是一个文件或者一幅图都可以直接下载到本地。如果下载的是HTML文档，那么缺省的将不显示文件头部，即HTML文档的header。要全部显示，请加参数 -i，要只显示头部，用参数 -I。任何时候，可以使用 -v 命令看curl是怎样工作的，它向服务器发送的所有命令都会显示出来。为了断点续传，可以使用-r参数来指定传输范围。
 <strong>获取表单</strong>
 
 <br>&nbsp;&nbsp;&nbsp;在WEB页面设计中，form是很重要的元素。Form通常用来收集并向网站提交信息。提交信息的方法有两种，GET方法和POST方法。先讨论GET方法，例如在页面中有这样一段：
-<br>&nbsp;&nbsp;&nbsp;<c:out value='<form method="GET" action="junk.cgi">'/> 
+<br>&nbsp;&nbsp;&nbsp;<% out.println('<form method="GET" action="junk.cgi">'); %>
 <br>&nbsp;&nbsp;&nbsp;<c:out value='<input type=text name="birthyear">'/>
 <br>&nbsp;&nbsp;&nbsp;<c:out value='<input type=submit name=press value="OK">'/>
 <br>&nbsp;&nbsp;&nbsp;<c:out value='</form>'/>
