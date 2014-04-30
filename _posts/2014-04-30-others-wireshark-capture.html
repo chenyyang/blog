@@ -1,35 +1,35 @@
 ---
 layout: default
-title: wireshark捕捉过滤器和显示过滤器
+title: wireshark捕捉过滤器
 categories:
   - others
 ---
 
 <h2>{{ page.title }}</h2>
 <div id="sina_keyword_ad_area2" class="articalContent  ">
-		<strong>1.捕捉过滤器</strong><br>
+		<strong>捕捉过滤器</strong><br>
 <font color="green">设置捕捉过滤器的步骤是： </font><br>
 - 选择 capture -> options。<br>
 - 填写"capture filter"栏或者点击"capture filter"按钮为您的过滤器起一个名字并保存，以便在今后的捕捉中继续使用这个过滤器。<br> 
 - 点击开始（Start）进行捕捉。<br><br>
-<table>
-<tr>
-<th>语法：</th>	
-<th>Protocol</th> 
-<th>Direction</th> 
-<th>Host(s)</th> 
-<th>Value</th> 
-<th>Logical Operations</th> 
-<th>Other expression</th> 
+<table  style="border: solid thin red">
+<tr bordercolor="red" >
+<th bordercolor="red" >语法：</th>	
+<th bordercolor="red" >Protocol</th> 
+<th bordercolor="red" >Direction</th> 
+<th bordercolor="red" >Host(s)</th> 
+<th bordercolor="red" >Value</th> 
+<th bordercolor="red" >Logical Operations</th> 
+<th bordercolor="red" >Other expression</th> 
 </tr>
-<tr>
-<td>例子</td>
-<td>tcp</td>
-<td>dst</td>
-<td>10.1.1.1</td>
-<td>80</td>
-<td>and</td>
-<td>tcp dst 10.2.2.2 3128</td>
+<tr >
+<td bordercolor="red" >例子</td>
+<td bordercolor="red" >tcp</td>
+<td bordercolor="red" >dst</td>
+<td bordercolor="red" >10.1.1.1</td>
+<td bordercolor="red" >80</td>
+<td bordercolor="red" >and</td>
+<td bordercolor="red" >tcp dst 10.2.2.2 3128</td>
 </tr>
 </table>
 <br>
@@ -46,7 +46,7 @@ categories:
 可能的值：not, and, or.<br>
 否("not")具有最高的优先级。或("or")和与("and")具有相同的优先级，运算时从左至右进行。<br><br>
 ---------------------------------------------------------------------
-例子：<br>
+<br>例子：<br>
 <font color="red">tcp dst port 3128</font><br>
 显示目的TCP端口为3128的封包。<br>
 <font color="red">ip src host 10.1.1.1</font><br>

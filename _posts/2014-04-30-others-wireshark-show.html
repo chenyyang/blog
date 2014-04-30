@@ -1,0 +1,151 @@
+---
+layout: default
+title: wireshark显示过滤器
+categories:
+  - others
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+		<strong>显示过滤器</strong><br>
+通常经过捕捉过滤器过滤后的数据还是很复杂。此时您可以使用显示过滤器进行更加细致的查找。<br>
+它的功能比捕捉过滤器更为强大，而且在您想修改过滤器条件时，并不需要重新捕捉一次。<br><br>
+<table  style="border: solid thin red">
+<tr bordercolor="red" >
+<th bordercolor="red" >语法：</th>	
+<th bordercolor="red" >Protocol</th> 
+<th bordercolor="red" >String 1</th> 
+<th bordercolor="red" >String 2</th> 
+<th bordercolor="red" >Comparison operator</th> 
+<th bordercolor="red" >Value</th> 
+<th bordercolor="red" >Logical Operations</th> 
+<th bordercolor="red" >Other expression</th>
+</tr>
+<tr >
+<td bordercolor="red" >例子：</td>
+<td bordercolor="red" >ftp</td>
+<td bordercolor="red" >passive</td>
+<td bordercolor="red" >ip</td>
+<td bordercolor="red" >==</td>
+<td bordercolor="red" >10.2.3.4</td>
+<td bordercolor="red" >xor</td>
+<td bordercolor="red" >icmp.type</td>
+</tr>
+</table>
+<br>
+<font color="green">Protocol（协议）:</font><br>
+您可以使用大量位于OSI模型第2至7层的协议。点击"Expression..."按钮后，您可以看到它们。<br>
+比如：IP，TCP，DNS，SSH<br><br>
+<font color="green">String1, String2 (可选项):</font><br>
+协议的子类。<br>
+点击相关父类旁的"+"号，然后选择其子类。<br>
+<font color="green">Comparison operators （比较运算符）: </font><br>
+可以使用6种比较运算符：<br>
+
+
+---------------------------------------------------------------------
+<table tyle="border: solid thin red">
+<tr bordercolor="red" >
+<th bordercolor="red" >英文写法</th>
+<th bordercolor="red" >C语言写法：</th>
+<th bordercolor="red" >含义：</th>
+</tr>
+<tr tyle="border: solid thin red">
+<td bordercolor="red" >eq</td>
+<td bordercolor="red" >==</td>
+<td bordercolor="red" >等于</td>
+</tr>
+</tr>
+<tr tyle="border: solid thin red">
+<td bordercolor="red" >ne</td>
+<td bordercolor="red" >!=</td>
+<td bordercolor="red" >不等于</td>
+</tr>
+</tr>
+<tr tyle="border: solid thin red">
+<td bordercolor="red" >gt</td>
+<td bordercolor="red" >></td>
+<td bordercolor="red" >大于</td>
+</tr>
+</tr>
+<tr tyle="border: solid thin red">
+<td bordercolor="red" >lt</td>
+<td bordercolor="red" ><</td>
+<td bordercolor="red" >小于</td>
+</tr>
+</tr>
+<tr tyle="border: solid thin red">
+<td bordercolor="red" >ge</td>
+<td bordercolor="red" >>=</td>
+<td bordercolor="red" >大于等于</td>
+</tr>
+</tr>
+<tr tyle="border: solid thin red">
+<td bordercolor="red" >le</td>
+<td bordercolor="red" ><=</td>
+<td bordercolor="red" >小于等于</td>
+</tr>
+</table>
+<br>
+<font color="red">Logical expressions（逻辑运算符）:</font><br>
+<table tyle="border: solid thin red">
+<tr bordercolor="red" >
+<th bordercolor="red" >英文写法</th>
+<th bordercolor="red" >C语言写法：</th>
+<th bordercolor="red" >含义：</th>
+</tr>
+<tr tyle="border: solid thin red">
+<td bordercolor="red" >and</td>
+<td bordercolor="red" >&&</td>
+<td bordercolor="red" >逻辑与</td>
+</tr>
+</tr>
+<tr tyle="border: solid thin red">
+<td bordercolor="red" >or</td>
+<td bordercolor="red" >||</td>
+<td bordercolor="red" >逻辑或</td>
+</tr>
+</tr>
+<tr tyle="border: solid thin red">
+<td bordercolor="red" >xor</td>
+<td bordercolor="red" >^^</td>
+<td bordercolor="red" >逻辑异或</td>
+</tr>
+</tr>
+<tr tyle="border: solid thin red">
+<td bordercolor="red" >not</td>
+<td bordercolor="red" >!</td>
+<td bordercolor="red" >逻辑非</td>
+</tr>
+
+被程序员们熟知的逻辑异或是一种排除性的或。当其被用在过滤器的两个条件之间时，只有当且仅当其中的一个条件满足时，这样的结果才会被显示在屏幕上。<br>
+让我们举个例子：<br>
+"tcp.dstport 80 xor tcp.dstport 1025"<br>
+只有当目的TCP端口为80或者来源于端口1025（但又不能同时满足这两点）时，这样的封包才会被显示。 <br>
+<br>
+---------------------------------------------------------------<br>
+<font color="red">snmp || dns || icmp</font><br>
+显示SNMP或DNS或ICMP封包。<br><br>
+<font color="red">ip.addr == 10.1.1.1</font><br>
+显示来源或目的IP地址为10.1.1.1的封包。<br><br>
+<font color="red">ip.src != 10.1.2.3 or ip.dst != 10.4.5.6</font><br>
+显示来源不为10.1.2.3或者目的不为10.4.5.6的封包。<br><br>
+<font color="red">ip.src != 10.1.2.3 and ip.dst != 10.4.5.6</font><br>
+显示来源不为10.1.2.3并且目的IP不为10.4.5.6的封包。 <br><br>
+<font color="red">tcp.port == 25</font><br>
+显示来源或目的TCP端口号为25的封包。<br><br>
+<font color="red">tcp.dstport == 25</font><br>
+显示目的TCP端口号为25的封包。<br><br>
+<font color="red">tcp.flags</font><br>
+显示包含TCP标志的封包。<br><br>
+<font color="red">tcp.flags.syn == 0x02</font><br>
+显示包含TCP SYN标志的封包。<br><br>
+
+
+<font color="green">注意事项：</font><br>
+如果过滤器的语法是正确的，表达式的背景呈绿色。如果呈红色，说明表达式有误。<br>
+
+	
+
+
+</div>
