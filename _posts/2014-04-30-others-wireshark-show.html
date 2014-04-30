@@ -10,26 +10,26 @@ categories:
 		<strong>显示过滤器</strong><br>
 通常经过捕捉过滤器过滤后的数据还是很复杂。此时您可以使用显示过滤器进行更加细致的查找。<br>
 它的功能比捕捉过滤器更为强大，而且在您想修改过滤器条件时，并不需要重新捕捉一次。<br><br>
-<table  style="border: solid thin red">
-<tr bordercolor="red" >
-<th bordercolor="red" >语法：</th>	
-<th bordercolor="red" >Protocol</th> 
-<th bordercolor="red" >String 1</th> 
-<th bordercolor="red" >String 2</th> 
-<th bordercolor="red" >Comparison operator</th> 
-<th bordercolor="red" >Value</th> 
-<th bordercolor="red" >Logical Operations</th> 
-<th bordercolor="red" >Other expression</th>
+<table >
+<tr  >
+<th  >语法：</th>	
+<th >Protocol</th> 
+<th >String 1</th> 
+<th  >String 2</th> 
+<th  >Comparison operator</th> 
+<th  >Value</th> 
+<th  >Logical Operations</th> 
+<th  >Other expression</th>
 </tr>
 <tr >
-<td bordercolor="red" >例子：</td>
-<td bordercolor="red" >ftp</td>
-<td bordercolor="red" >passive</td>
-<td bordercolor="red" >ip</td>
-<td bordercolor="red" >==</td>
-<td bordercolor="red" >10.2.3.4</td>
-<td bordercolor="red" >xor</td>
-<td bordercolor="red" >icmp.type</td>
+<td  >例子：</td>
+<td  >ftp</td>
+<td  >passive</td>
+<td >ip</td>
+<td  >==</td>
+<td  >10.2.3.4</td>
+<td  >xor</td>
+<td  >icmp.type</td>
 </tr>
 </table>
 <br>
@@ -113,7 +113,7 @@ categories:
 <td bordercolor="red" >!</td>
 <td bordercolor="red" >逻辑非</td>
 </tr>
-
+</table>
 被程序员们熟知的逻辑异或是一种排除性的或。当其被用在过滤器的两个条件之间时，只有当且仅当其中的一个条件满足时，这样的结果才会被显示在屏幕上。<br>
 让我们举个例子：<br>
 "tcp.dstport 80 xor tcp.dstport 1025"<br>
