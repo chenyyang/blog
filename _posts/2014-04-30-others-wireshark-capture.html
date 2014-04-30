@@ -1,0 +1,80 @@
+---
+layout: default
+title: wireshark捕捉过滤器和显示过滤器
+categories:
+  - others
+---
+
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+		<strong>1.捕捉过滤器</strong><br>
+<font color="green">设置捕捉过滤器的步骤是： </font><br>
+- 选择 capture -> options。<br>
+- 填写"capture filter"栏或者点击"capture filter"按钮为您的过滤器起一个名字并保存，以便在今后的捕捉中继续使用这个过滤器。<br> 
+- 点击开始（Start）进行捕捉。<br><br>
+<table>
+<tr>
+<th>语法：</th>	
+<th>Protocol</th> 
+<th>Direction</th> 
+<th>Host(s)</th> 
+<th>Value</th> 
+<th>Logical Operations</th> 
+<th>Other expression</th> 
+</tr>
+<tr>
+<td>例子</td>
+<td>tcp</td>
+<td>dst</td>
+<td>10.1.1.1</td>
+<td>80</td>
+<td>and</td>
+<td>tcp dst 10.2.2.2 3128</td>
+</tr>
+</table>
+<br>
+<font color="green">Protocol（协议）:</font><br>
+可能的值: ether, fddi, ip, arp, rarp, decnet, lat, sca, moprc, mopdl, tcp and udp.<br><br>
+<font color="green">Direction（方向）:</font><br>
+可能的值: src, dst, src and dst, src or dst<br>
+如果没有特别指明来源或目的地，则默认使用 "src or dst" 作为关键字。<br>
+例如，"host 10.2.2.2"与"src or dst host 10.2.2.2"是一样的。   Host(s):<br>
+可能的值： net, port, host, portrange.<br>
+如果没有指定此值，则默认使用"host"关键字。<br>
+例如，"src 10.1.1.1"与"src host 10.1.1.1"相同。<br><br>
+<font color="green">Logical Operations（逻辑运算）:</font><br>
+可能的值：not, and, or.<br>
+否("not")具有最高的优先级。或("or")和与("and")具有相同的优先级，运算时从左至右进行。<br><br>
+---------------------------------------------------------------------
+例子：<br>
+<font color="red">tcp dst port 3128</font><br>
+显示目的TCP端口为3128的封包。<br>
+<font color="red">ip src host 10.1.1.1</font><br>
+显示来源IP地址为10.1.1.1的封包。<br>
+ <font color="red">host 10.1.2.3</font><br>
+显示目的或来源IP地址为10.1.2.3的封包。<br>
+<font color="red">src portrange 2000-2500</font><br>
+显示来源为UDP或TCP，并且端口号在2000至2500范围内的封包。<br>
+<font color="red">not imcp</font><br>
+显示除了icmp以外的所有封包。（icmp通常被ping工具使用）<br>
+<font color="red">src host 10.7.2.12 and not dst net 10.200.0.0/16</font><br>
+显示来源IP地址为10.7.2.12，但目的地不是10.200.0.0/16的封包。<br>
+<font color="red">(src host 10.4.1.12 or src net 10.6.0.0/16) and tcp dst portrange 200-10000 and dst net 10.0.0.0/8</font><br>
+显示来源IP为10.4.1.12或者来源网络为10.6.0.0/16，目的地TCP端口号在200至10000之间，并且目的位于网络10.0.0.0/8内的所有封包。<br><br>
+
+<font color="green">注意事项：</font><br>
+当使用关键字作为值时，需使用反斜杠“\”。<br>
+"ether proto \ip" (与关键字"ip"相同).<br>
+这样写将会以IP协议作为目标。<br><br>
+
+"ip proto \icmp" (与关键字"icmp"相同).<br>
+这样写将会以ping工具常用的icmp作为目标。 <br><br>
+
+可以在"ip"或"ether"后面使用"multicast"及"broadcast"关键字。<br>
+当您想排除广播请求时，"no broadcast"就会非常有用。<br><br>
+
+
+	
+
+
+</div>
