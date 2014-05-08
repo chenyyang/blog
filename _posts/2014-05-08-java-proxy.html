@@ -6,7 +6,7 @@ categories:
 ---
 <style>
 .dp-highlighter ol {
-    background-color: #FFFFFF;
+    background-color: #D0D0D0;
     border: 1px solid #D1D7DC;
     color: #2B91AF;
     list-style: decimal outside none;
@@ -22,7 +22,7 @@ categories:
 <br>
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Java中动态代理的实现，关键就是这两个东西：Proxy、InvocationHandler，下面从InvocationHandler接口中的invoke方法入手，简单说明一下Java如何实现动态代理的。
 <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 首先，invoke方法的完整形式如下：
-<br><div class="dp-highlighter" id=""><div class="bar"><div class="tools">Java代码 <embed width="14" height="15" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" allowscriptaccess="always" quality="high" flashvars="clipboard=public%20Object%20invoke(Object%20proxy%2C%20Method%20method%2C%20Object%5B%5D%20args)%20throws%20Throwable%0A%20%20%20%20%7B%0A%0A%20%20%20%20%20%20%20%20method.invoke(obj%2C%20args)%3B%0A%0A%20%20%20%20%20%20%20%20return%20null%3B%0A%09%7D" src="/javascripts/syntaxhighlighter/clipboard_new.swf" wmode="transparent">&nbsp;<a onclick="code_favorites_do_favorite(this);return false;" title="收藏这段代码" href="javascript:void()"><img alt="收藏代码" src="/images/icon_star.png" class="star"><img style="display:none" src="/images/spinner.gif" class="spinner"></a></div></div><ol start="1" class="dp-j"><li><span><span class="keyword">public</span><span>&nbsp;Object&nbsp;invoke(Object&nbsp;proxy,&nbsp;Method&nbsp;method,&nbsp;Object[]&nbsp;args)&nbsp;</span><span class="keyword">throws</span><span>&nbsp;Throwable&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method.invoke(obj,&nbsp;args);&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;</span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span><span>&nbsp;</span><span class="keyword">null</span><span>;&nbsp;&nbsp;</span></span></li><li><span>&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="java" style="display: none;" codeable_id="841798" codeable_type="Blog" source_url="http://paddy-w.iteye.com/blog/841798" pre_index="0" title="InvocationHandler中invoke()方法的调用问题">public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
+<br><div class="dp-highlighter" id=""><div class="bar"><div class="tools">Java代码 public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
     {
 
         method.invoke(obj, args);
