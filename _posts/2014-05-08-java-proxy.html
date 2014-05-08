@@ -67,8 +67,7 @@ categories:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subject rs=new RealSubject();//这里指定被代理类 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InvocationHandler ds=new DynamicSubject(rs);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Class<?> cls=rs.getClass();  <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subject subject=(Subject);
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Proxy.newProxyInstance(s.getClassLoader(),cls.getInterfaces(), ds);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subject subject=(Subject) Proxy.newProxyInstance( s.getClassLoader(),cls.getInterfaces(), ds);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//这里可以通过运行结果证明subject是Proxy的一个实例，这个实例实现了Subject接口<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(subject instanceof Proxy); <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//这里可以看出subject的Class类是$Proxy0,这个$Proxy0类继承了Proxy，实现了Subject接口<br>
@@ -109,4 +108,11 @@ before calling public abstract void ***.Subject.request()<br>
 From real subject.<br>
 after calling public abstract void ***.Subject.request()<br>
 <br>
+<font color="#D9B300">总结</font>
+<span style="color: red;">
+Proxy.newProxyInstance返回的是不是具体的代理类，而是实现了JDK自己创建的一个$Proxy0类的对象，$Proxy0类实现了需要代理类（RealSubject）的所有接口（Subject）。<br>
+当调用 接口的方法（subject.request()），调用的是$Proxy0类的对象的 request方法。<br>
+$Proxy0类的实现的request方法是：调用InvocationHandler的invoke。InvocationHandler就是Proxy.newProxyInstance传入的第三个参数<br>
+
+
 </div>
