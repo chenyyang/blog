@@ -8,10 +8,10 @@ categories:
 <div id="sina_keyword_ad_area2" class="articalContent  ">
 		<strong> Java中动态代理的实现</strong><br>
 <div class="blog_content" id="blog_content">
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 以下的内容部分参考了网络上的内容，在此对原作者表示感谢！
+     以下的内容部分参考了网络上的内容，在此对原作者表示感谢！
 <br>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Java中动态代理的实现，关键就是这两个东西：Proxy、InvocationHandler，下面从InvocationHandler接口中的invoke方法入手，简单说明一下Java如何实现动态代理的。
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 首先，invoke方法的完整形式如下：
+<br>&nbsp;&nbsp;&nbsp; Java中动态代理的实现，关键就是这两个东西：Proxy、InvocationHandler，下面从InvocationHandler接口中的invoke方法入手，简单说明一下Java如何实现动态代理的。
+<br>&nbsp;&nbsp;&nbsp; 首先，invoke方法的完整形式如下：
 <br>Java代码:<br>
 <font color="green">
 &nbsp;&nbsp;&nbsp;public Object invoke(Object proxy, Method method, Object[] args) throws Throwable<br>
@@ -20,11 +20,11 @@ categories:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return null;<br>
 &nbsp;&nbsp;&nbsp;}<br>
 </font>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;proxy : 需要代理类的实例
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method : 调用的方法
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;args : 调用方法传递的参数
+<br>proxy : 需要代理类的实例
+<br>method : 调用的方法
+<br>args : 调用方法传递的参数
 <br>
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 为了方便说明，这里写一个简单的例子来实现动态代理。
+<br>为了方便说明，这里写一个简单的例子来实现动态代理。
 <br>
 <br>Java代码:<br>
 <font color="green">
@@ -66,7 +66,8 @@ categories:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subject rs=new RealSubject();//这里指定被代理类 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InvocationHandler ds=new DynamicSubject(rs);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Class<?> cls=rs.getClass();  <br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subject subject=(Subject) Proxy.newProxyInstance(s.getClassLoader(),cls.getInterfaces(), ds);<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Subject subject=(Subject);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Proxy.newProxyInstance(s.getClassLoader(),cls.getInterfaces(), ds);<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//这里可以通过运行结果证明subject是Proxy的一个实例，这个实例实现了Subject接口<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(subject instanceof Proxy); <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//这里可以看出subject的Class类是$Proxy0,这个$Proxy0类继承了Proxy，实现了Subject接口<br>
