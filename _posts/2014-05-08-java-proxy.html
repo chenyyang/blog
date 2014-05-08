@@ -6,7 +6,7 @@ categories:
 ---
 <h2>{{ page.title }}</h2>
 <div id="sina_keyword_ad_area2" class="articalContent  ">
-	<strong> <font color="#FF0080">Java中动态代理的实现</font></strong><br>
+	<strong> <font color="red">Java中动态代理的实现</font></strong><br>
 
 <div class="blog_content" id="blog_content">
      以下的内容部分参考了网络上的内容，在此对原作者表示感谢！
@@ -27,13 +27,13 @@ categories:
 <br>
 <br>为了方便说明，这里写一个简单的例子来实现动态代理。
 <br>
-<br>Java代码:<br>
+<br><font color="#D9B300">Java代码:</font><br>
 <font color="green">
 &nbsp;&nbsp;&nbsp;public interface Subject {<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public void request();<br>
 &nbsp;&nbsp;&nbsp;}<br>
 </font>
-<br>Java代码:<br>
+<br><font color="#D9B300">Java代码:</font><br>
 <font color="green">
 &nbsp;&nbsp;&nbsp;public class RealSubject implements Subject{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public void request(){<br>
@@ -42,7 +42,7 @@ categories:
 &nbsp;&nbsp;&nbsp;}<br>
 </font>
 
-<br>Java代码:<br>
+<br><font color="#D9B300">Java代码:</font><br>
 <font color="green">
 &nbsp;&nbsp;&nbsp;public class DynamicSubject implements InvocationHandler{<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;private Object obj;//这是动态代理的好处，被封装的对象是Object类型，接受任意类型的对象<br>
@@ -60,7 +60,7 @@ categories:
 &nbsp;&nbsp;&nbsp;}<br>
 </font>
 
-<br>Java代码:<br>
+<br><font color="#D9B300">Java代码:</font><br>
 <font color="green">
 &nbsp;&nbsp;&nbsp;public class Client {  <br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;public static void main(String[] args) throws Throwable{ <br>
@@ -94,7 +94,8 @@ categories:
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
 &nbsp;&nbsp;&nbsp;}<br>
 <br></font>
-运行结果如下：此处省略了包名，***代替
+<font color="#D9B300">
+运行结果如下：此处省略了包名，***代替</font>
 <span style="color: red;">
 <br>true<br>
 subject的Class类是：class $Proxy0<br>
