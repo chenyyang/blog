@@ -108,11 +108,12 @@ before calling public abstract void ***.Subject.request()<br>
 From real subject.<br>
 after calling public abstract void ***.Subject.request()<br>
 <br>
+----------------------------------------------------------------------<br>
 <font color="#D9B300">总结</font>
-<span style="color: red;">
-Proxy.newProxyInstance返回的是不是具体的代理类，而是实现了JDK自己创建的一个$Proxy0类的对象，$Proxy0类实现了需要代理类（RealSubject）的所有接口（Subject）。<br>
-当调用 接口的方法（subject.request()），调用的是$Proxy0类的对象的 request方法。<br>
-$Proxy0类的实现的request方法是：调用InvocationHandler的invoke。InvocationHandler就是Proxy.newProxyInstance传入的第三个参数<br>
+<br><span style="color: red;">
+<br>1. Proxy.newProxyInstance返回的是不是具体的代理类，而是实现了JDK自己创建的一个$Proxy0类的对象，$Proxy0类实现了需要代理类（RealSubject）的所有接口（Subject）。<br>
+<br>2. 当调用 接口的方法（subject.request()），调用的是$Proxy0类的对象的 request方法。<br>
+<br>3. $Proxy0类的实现的request方法是：调用InvocationHandler的invoke。InvocationHandler就是Proxy.newProxyInstance传入的第三个参数<br>
 
 
 </div>
