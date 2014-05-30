@@ -78,21 +78,5 @@ CronTrigger 例 4 – 在每个月的 5号， 20号的 8点和 10点之间每隔
 9：00到10：00之间每隔 5分钟触发一次，下午1：00到 10点每隔 20分钟触发一次。<br>
 这个解决方案就是创建两个触发器，两个触发器都运行相同的任务。</p>
 </div>							
-
-<br><font color="#D9B300">Java代码:</font><br>
-<font color="green">
-&nbsp;&nbsp;&nbsp; public static void main(String[] arg) throws JSONException, VipException, TException, MipubException, DocumentException, IOException {<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InputStream in = new FileInputStream("/home/yyy/Downloads/xx1.jpg");<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BufferedImage outputBarcode = ImageIO.read(in);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InputStream in2 = new FileInputStream("/home/yyy/Downloads/xx2.jpg");<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BufferedImage barcode = ImageIO.read(in2);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int size = outputBarcode.getHeight();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int msize = barcode.getHeight();<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;outputBarcode.getGraphics().drawImage(barcode, 0, 0, msize, msize, 0, 0,size, size, null);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;File file = new File("/home/chenyang/Downloads/yyy.jpg");<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ImageIO.write(outputBarcode, "JPEG", file);<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in.close();<br>
-&nbsp;&nbsp;&nbsp;}<br>
-</font>
 		
 </div>
