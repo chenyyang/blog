@@ -34,3 +34,14 @@ table { border-collapse:collapse; border-spacing:0; }
 hr { display:block; height:1px; border:0; border-top:1px solid #ccc; margin:1em 0; padding:0; }
 input, select { vertical-align:middle; }
 
+.left
+{
+position:relative;
+left:20px
+}
+
+.leftleft
+{
+position:relative;
+left:40px
+}
