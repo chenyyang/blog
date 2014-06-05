@@ -1,0 +1,99 @@
+---
+layout: default
+title: grep
+categories:
+  - linux
+---
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+
+<div class="title1"> 1. 从单个文件中搜索指定的字串</div>
+<div class=".rig">
+语法:<br>
+grep "string" filename<br>
+例子:<br>
+grep "name" file.txt<br>
+</div>
+
+<div class="title1">2. 在多个文件中检索指定的字串</div>
+<div class=".rig">
+语法:<br>
+grep "string" FILE_PATTERN<br>
+例子:<br>
+grep "name" file_*<br>
+</div> 
+</div>
+
+<div class="title1">3. 用 grep -i 进行大小写无关的搜索</div>
+<div class=".rig">
+语法:<br>
+grep -i "string" FILE<br>
+例子:<br>
+grep -i "name" file.txt
+</div> 
+</div>
+
+<div class="title1">4. 使用用正则表达式<div>
+<div class=".rig">
+语法:<br>
+grep "REGEX" filename<br>
+例子:<br>
+grep "name.*empty" file.txt<br>
+</div> 
+</div>
+
+<div class="title1">5. 用grep -w搜索整个词，而不是词中的部</div>
+<div class=".rig">
+语法:<br>
+grep -w "string" FILE<br>
+例子:<br>
+grep -iw "is" demo_file 搜索包含大写或小写is单词的行<br>
+</div> 
+</div>
+
+<div class="title1">6. 使用grep -A, -B and -C显示之前、之后、前后的几行</div>
+<div class=".rig">
+语法:<br>
+grep -A n "string" FILENAME或者grep "string" FILENAME -A n 匹配行的后面几行<br>
+grep -B n "string" FILENAME或者grep "string" FILENAME -B n 匹配行的前面几行<br>
+grep -C n "string" FILENAME或者grep "string" FILENAME -C n 匹配行的前面后面几行<br>
+</div> 
+</div>
+
+<div class="title1">7.通过--color 高亮显示搜索的字串</div>
+<div class=".rig">
+语法:<br>grep this file.txt --color<br>
+例子: <br>grep "name" file.txt --color<br>
+</div> 
+</div>
+
+<div class="title1">8. 用grep -r递归搜索全部的文件</div>
+<div class=".rig">
+语法:<br>grep -r "string" FILE<br>
+例子:<br>grep -r "name" *<br>
+</div> 
+</div>
+
+
+<div class="title1">12. 用grep -l 只显示文件名</div>
+<div class=".rig">
+语法:<br>grep -l "string" FILE<br>
+例子:<br> grep -l name file_*<br>
+</div> 
+</div>
+
+
+<div class="title1">13. 用 grep -n 在输出时显示行号</div>
+<div class=".rig">
+语法:<br>grep -n "string" FILE<br>
+例子:<br>grep -n "name" file.txt<br>
+</div> 
+</div>
+
+<div class="title1">14. 使用grep -v进行不匹配</div>
+<div class=".rig">
+语法: <br>grep -v "string" FILE<br>
+例子: <br>grep -v "name" file.txt<br>
+</div> 
+</div>
+</div>
