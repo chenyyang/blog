@@ -8,7 +8,7 @@ categories:
 <div id="sina_keyword_ad_area2" class="articalContent  ">
 
 <div class="title1"> 1. 安装,CentOS环境</div>
-<div class="title2"> 1.1. 基础依赖</div>
+<br><div class="title2"> 1.1. 基础依赖</div>
 <div class="rig">
 yum install gcc -y<br>
 yum install perl -y<br>
@@ -16,7 +16,7 @@ yum install unixODBC<br>
 yum install unixODBC-devel<br>
 </div>
 
-<div class="title2">1.2. erlang</div>
+<br><div class="title2">1.2. erlang</div>
 <div class="rig">
 wget http://www.erlang.org/download/otp_src_R14B04.tar.gz<br>
 tar -zxvf otp_src_R14B04.tar.gz<br>
@@ -27,7 +27,7 @@ make install <br><br>
 注：如果提示失败，执行yum install -y ncurses-devel，再从./configure命令开始<br>
 </div> 
 
-<div class="title2">1.3. Tsung</div>
+<br><div class="title2">1.3. Tsung</div>
 <div class="rig">
 wget http://tsung.erlang-projects.org/dist/tsung-1.4.2.tar.gz<br>
 tar -zxvf tsung-1.4.2.tar.gz<br>
@@ -38,9 +38,8 @@ make install<br><br>
 注：建议安装更高级的版本，http://tsung.erlang-projects.org/dist/，很多功能在1.5得到了支持。但是如果用集群压测的时候，所有集群安装的版本需要一致<br>
 </div>
 
-<div class="title2">1.4. perl Template 用于生成报告</div>
+<br><div class="title2">1.4. perl Template 用于生成报告</div>
 <div class="rig">
-<br>
 wget http://cpan.org/modules/by-module/Template/Template-Toolkit-2.24.tar.gz<br>
 tar -zxvf Template-Toolkit-2.24.tar.gz<br>
 cd Template-Toolkit-2.24<br>
@@ -51,20 +50,20 @@ make install <br><br>
 注：如果Makefile.PL执行失败，执行命令：yum -y install perl-devel yum -y install perl-CPAN ，再从perl Makefile.PL命令开始<br>
 </div> 
 
-<div class="title2">1.5. gnuplot 绘图工具,貌似不安也可以</div>
+<br><div class="title2">1.5. gnuplot 绘图工具,貌似不安也可以</div>
 <div class="rig">
 yum install -y gnuplot gd libpng zlib<br><br>
 注：命令行输入：gnuplot出现# gnuplot>则安装成功<br>
 </div>
 
-<div class="title1">2. 启动Tsung</div>
-<div class="title2">2.1. 配置文件</div>
+<br><div class="title1">2. 启动Tsung</div>
+<br><div class="title2">2.1. 配置文件</div>
 <div class="rig">
 Tsung启动的时候默认读取配置文件：~/.tsung/tsung.xml<br>
 启动命令：/usr/local/tsung/bin/tsung start<br>
 Tsung提供了一些模板文件：/usr/local/tsung/share/doc/tsung/examples/，这个目录下面有支持的所有协议的模板<br>
 </div>
-<div class="title2">2.2. 启动命令</div>
+<br><div class="title2">2.2. 启动命令</div>
  <div class="rig">
 <br>执行命令：<br>
 cp /usr/local/tsung/share/doc/tsung/examples/http_simple.xml ~/.tsung/tsung.xml<br>
@@ -84,35 +83,37 @@ session    required /lib64/security/pam_limits.so<br>
 </div>
 </div>
 
-<div class="title2">2.2. 启动配置文件参数说明那个</div>
+<br><div class="title2">2.2. 启动配置文件参数说明那个</div>
 <div class="rig">
 手册官网地址：http://tsung.erlang-projects.org/user_manual/
 基本参数说明:
 <div class="rig">
-
+<p>
+<clients><client host="v20z-14-01" maxusers="120000"><ip value="192.168.111.21"/><ip value="192.168.111.41"/></client><client host="v20z-14-02" maxusers="120000"><ip value="192.168.111.22"/><ip value="192.168.111.42"/></client><client host="v20z-14-03" maxusers="120000"><ip value="192.168.111.23"/><ip value="192.168.111.43"/></client><client host="v20z-14-04" maxusers="120000"><ip value="192.168.111.24"/><ip value="192.168.111.44"/></client><client host="v20z-14-05" maxusers="120000"><ip value="192.168.111.25"/><ip value="192.168.111.45"/></client><client host="v20z-14-06" maxusers="120000"><ip value="192.168.111.26"/><ip value="192.168.111.46"/></client><client host="v20z-14-07" maxusers="120000"><ip value="192.168.111.27"/><ip value="192.168.111.47"/></client><client host="v20z-14-08" maxusers="120000"><ip value="192.168.111.28"/><ip value="192.168.111.48"/></client><client host="v20z-14-10" maxusers="120000"><ip value="192.168.111.30"/><ip value="192.168.111.50"/></client><client host="v20z-14-11" maxusers="120000"><ip value="192.168.111.31"/><ip value="192.168.111.51"/></client></clients>
+</p>
 </div>
 </div>
 
-<div class="title1">3. 生成报告</div>
-<div class="title2">3.1. 生成命令</div>
+<br><div class="title1">3. 生成报告</div>
+<br><div class="title2">3.1. 生成命令</div>
 <div class="rig">
 log打在~/.tsung/log/日期/*，log生成的目录下面执行：<br>/usr/local/tsung/lib/tsung/bin/tsung_stats.pl<br>
 </div> 
 
-<div class="title2">3.2. 报告说明</div>
+<br><div class="title2">3.2. 报告说明</div>
 <div class="rig">
 生成的报告是html文件，打开report.html可以看到基础数据，graph.html是表格。<br>
 参数说明:
 <div class="rig">
-    request:每个请求的反应时间  
-    page:每一系列请求的反应时间(a page是一组不包含think-time的一组请求)  
-    connect：连接建立用的时间  
-    reconnect:重新连接的次数  
-    size_rcv:反应的大小(单位是byte)  
-    size_sent:请求的大小(单位是byte)  
-    session:用户会话时间  
-    users:同步用户数  
-    connected:同步连接用户数  
+    request:每个请求的反应时间 <br> 
+    page:每一系列请求的反应时间(a page是一组不包含think-time的一组请求)  <br>
+    connect：连接建立用的时间  <br>
+    reconnect:重新连接的次数  <br>
+    size_rcv:反应的大小(单位是byte)<br>  
+    size_sent:请求的大小(单位是byte)  <br>
+    session:用户会话时间  <br>
+    users:同步用户数  <br>
+    connected:同步连接用户数<br>  
 </div>
 </div> 
 
