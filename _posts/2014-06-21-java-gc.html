@@ -1,0 +1,66 @@
+---
+layout: default
+title: Java垃圾回收
+categories:
+  - java
+---
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+
+<div class="title1"> 1. 内存分配图</div>
+<div class="rig">
+java与C,c++有很大的不同就是java语言开发者不需要关注内存信息，不会显式的直接操作内存，而是通过jvm虚拟机来实现。<br>
+java虚拟机运行的时候内存分配图如下图：<br>
+<img src="/blog/image/javagc.jpg"><br>
+jvm虚拟机栈：一个是线程独有的，每次启动一个线程，就创建一个jvm虚拟机栈，线程退出的时候就销毁。这里面主要保存线程本地变量名和局部变量值。<br>
+本地方法栈： 调用本地jni方法的时候而创建的。这里分配的jvm之外的内存空间。方法调用结束之后销毁。<br>
+pc寄存器 ： 这个保存线程当前执行的字节码指令<br>
+堆：主要保存创建的对象。<br>
+方法区：保存class相关的信息。主要是class的一个内存结构信息<br>
+常量池：方法区的一部分，主要保存class内存结构中常量值 例如String值,public static final 类型的值<br>
+注: 我们这里说的垃圾回收，主要是java虚拟机对堆内存区域的回收。<br>
+</div>
+
+<br><div class="title1">2. 算法</div>
+<div class="title2">2.1. 引用计数法</div>
+<div class="rig">
+每个对象上都有一个引用计数，对象每被引用一次，引用计数器就+1，对象引用被释放，引用计数器-1，直到对象的引用计数为0，对象就标识可以回收<br>
+这个可以用数据算法中的图形表示，对象A-对象B-对象C 都有引用，所以不会被回收，对象B由于没有被引用，没有路径可以达到对象B，对象B的引用计数就就是0，对象B就会被回收<br>
+<img src="/blog/image/javagc1.jpg"><br>
+但是这个算法有明显的缺陷，对于循环引用的情况下，循环引用的对象就不会被回收。例如下图：对象A，对象B 循环引用，没有其他的对象引用A和B，则A和B 都不会被回收。<br>
+<img src="/blog/image/javagc2.jpg"><br>
+</div>
+
+<br><div class="title2">2.2 root搜索算法</div>
+<div class="rig">
+这种算法目前定义了几个root，也就是这几个对象是jvm虚拟机不会被回收的对象，所以这些对象引用的对象都是在使用中的对象，这些对象未使用的对象就是即将要被回收的对象。简单就是说：如果对象能够达到root，就不会被回收，如果对象不能够达到root，就会被回收。<br>
+如下图：对象D访问不到根对象，所以就会被回收<br>
+<img src="/blog/image/javagc3.jpg"><br>
+以下对象会被认为是root对象：
+<div class="rig">
+1. 被启动类（bootstrap加载器）加载的类和创建的对象<br>
+2. jvm运行时方法区类静态变量(static)引用的对象<br>
+3. jvm运行时方法区常量池引用的对象<br>
+4. jvm当前运行线程中的虚拟机栈变量表引用的对象<br>
+5. 本地方法栈中(jni)引用的对象<br>
+</div>
+由于这种算法即使存在互相引用的对象，但如果这两个对象无法访问到根对象，还是会被回收。如下图：对象C和对象D互相引用，但是由于无法访问根，所以会被回收<br>
+<img src="/blog/image/javagc4.jpg"><br>
+注: jvm在确定是否回收的对象的时候采用的是root搜索算法来实现。<br>
+在root搜索算法的里面，我们说的引用这里都指定的是强引用关系。所谓强引用关系，就是通过用new 方式创建的对象，并且显示关联的对象<br>
+Object obj = new Object();是代表的是强引用关系，变量obj 强引用了 Object的一个对象。<br>
+</div>
+<br><div class="title1">3. java引用类型</div>
+<div class="rig">
+java里面有四种应用关系，从强到弱分别为：<br>
+Strong Reference（强引用) –>Weak Reference (弱引用） -> Soft Reference（软引用） – > Phantom Reference（引用）<br>
+<div class="rig">
+Strong Reference ： 只有在引用对象root不可达的情况下才会标识为可回收，垃圾回收才可能进行回收<br>
+Weak Reference ：即使在root算法中 其引用的对象root可达到，但是如果jvm堆内存 不够的时候，还是会被回收。<br>
+Soft Reference ： 无论其引用的对象是否root可达，在响应内存需要时，由垃圾回收判断是否需要回收。<br>
+Phantom Reference ：在回收器确定其指示对象可另外回收之后，被加入垃圾回收队列.<br>
+</div>
+</div>
+</div> 
+
+</div>
