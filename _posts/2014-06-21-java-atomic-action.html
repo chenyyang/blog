@@ -41,10 +41,10 @@ Java从5.0开始提供原子变量类Atomic class来帮助我们简化同步处�
 compareAndSet(expectedValue, newValue) : 如果当前值(current value)等于期待的值(expectedValue)，则原子地更新指定值为新值(newValue)，如果更新成功，返回true，否则返回false，换句话可以这样说：将原子变量设置为新的值，但是如果从我上次看到的这个变量之后到现在被其他线程修改了(和我期望看到的值不符)，那么更新失败。<br>
 CAS实现的非阻塞算法:<br>
 <div class="rig">
-AtomicInteger a = new AtomicInteger(1);
-do {
-} while (!a.compareAndSet(1, 2));
-System.out.println(a);
+AtomicInteger a = new AtomicInteger(1);<br>
+do {<br>
+} while (!a.compareAndSet(1, 2));<br>
+System.out.println(a);<br>
 </div>
 </div>
 </div>
