@@ -1,0 +1,82 @@
+---
+layout: default
+title: Java多线程中的原子变量
+categories:
+  - java
+---
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+
+<div class="title1"> 1. 锁与volatile</div>
+<div class="rig">
+通过使用锁来协调对共享状态的访问，可以确保无论哪个持有锁的线程都能采用独占的方式来访问这些变量，并且在变量上做的任何修改对随后获得这个锁的其他线程都是可见的。当出现多个线程同时请求锁的时候，一些线程将被挂起（或者处于自旋等待状态），并在稍后恢复运行。通常，在挂起和恢复线程的过程中存在很大的开销，如果在锁上存在激烈竞争时，调度开销会比工作开销更大。<br>
+锁的另一个缺点是，当一个线程正在等待锁时，它只能等着不能做其他事情。如果一个线程在拿着锁的情况下被延迟，那么所有需要这个锁的线程都无法执行。如果被阻塞的线程优先级高，而持有锁的线程优先级低，那么就成了优先级反转（Priority Inversion）问题。<br>
+<br>
+在变量上声明volatile表示变量时不稳定的、易变的。被标记了volatile的变量，线程对它的存取一定是在共享内存中进行，而不会在自己的内存空间中进行，线程对共享内存中变量的存取，另一线程一定看得到。<br>
+volatile并不是完全线程安全的，因为在Java里面，i++或者i—并不是线程安全的，这里面有三个独立的操作：<br>
+<div class="rig">
+1、获取变量当前值
+2、改变参数的值
+3、写回新的值。
+</div>
+</div>
+
+<br><div class="title1">2. 比较并交换（CAS）</div>
+<div class="rig">
+在现代处理器中，提供了管理线程之间竞争时一种更细的技术，类似于volatile变量的机制，同时还支持原子的更新操作，例如：比较并交换（Comparare and Swap），CAS包含3个操作数：<br>
+<div class="rig">
+V：需要读写的内存位置
+A：进行比较的值
+B：待写入的新值
+</div><br>
+CAS的具体操作是：当且仅当V==A时，CAS才会通过原子方式用新值B来更新V的值，否则不执行任何操作，并且不管位置V的值是多少，都将返回V原有的值。
+<br>当多个线程尝试使用CAS同时更新一个变量时，只有其中一个线程能更新变量的值，其他线程都将失败，然而失败的线程不会被挂起，而是被告知在这次竞争中失败，可以再次尝试。
+</div>
+
+<br><div class="title1">3. Java中的原子变量类</div>
+<div class="rig">
+Java从5.0开始提供原子变量类Atomic class来帮助我们简化同步处理，JVM把他们编译为底层硬件提供的最有效的方法。原子变量类共有12个，最常用的为AtomicInteger、AtomicLong、AtomicBoolean以及AtomicReference等。<br>
+其重要方法如下：<br>
+<div class="rig">
+compareAndSet(expectedValue, newValue) : 如果当前值(current value)等于期待的值(expectedValue)，则原子地更新指定值为新值(newValue)，如果更新成功，返回true，否则返回false，换句话可以这样说：将原子变量设置为新的值，但是如果从我上次看到的这个变量之后到现在被其他线程修改了(和我期望看到的值不符)，那么更新失败。<br>
+CAS实现的非阻塞算法:<br>
+<div class="rig">
+AtomicInteger a = new AtomicInteger(1);
+do {
+} while (!a.compareAndSet(1, 2));
+System.out.println(a);
+</div>
+</div>
+<br><div class="title1">4. 小结</div>
+<div class="rig">
+1. JAVA JDK中的Atomic类也是通过CAS方法实现的。<br>
+2. volatile并不能实现线程安全。
+</div>
+</div> 
+
+<br><div class="title2">3.2. 报告说明</div>
+<div class="rig">
+生成的报告是html文件，打开report.html可以看到基础数据，graph.html是表格。<br>
+参数说明:
+<div class="rig">
+    request:每个请求的反应时间 <br> 
+    page:每一系列请求的反应时间(a page是一组不包含think-time的一组请求)  <br>
+    connect：连接建立用的时间  <br>
+    reconnect:重新连接的次数  <br>
+    size_rcv:反应的大小(单位是byte)<br>  
+    size_sent:请求的大小(单位是byte)  <br>
+    session:用户会话时间  <br>
+    users:同步用户数  <br>
+    connected:同步连接用户数<br>  
+</div>
+</div> 
+
+<br><div class="title2">3.3. 测试报告</div>
+压测机器配置<br>
+clinet： 四台机器，每台机器32G内存，8核。每个机器另外挂了5个虚拟IP。Intel(R) Xeon(R) CPU E3-1230 V2 @ 3.30GHz<br>
+server： 单机，32G内存，8核。Intel(R) Xeon(R) CPU E3-1230 V2 @ 3.30GHz<br>
+<div class="rig">
+1. <a href="/blog/tsung/openfire-tsung-test/report.html"  target="_blank">openfire报告</a><br>
+2. <a href="/blog/tsung/tigase-tsung-test/report.html"  target="_blank">tigase报告</a>
+</div>
+</div>
