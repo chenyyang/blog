@@ -1,0 +1,66 @@
+---
+layout: default
+title: jstack
+categories:
+  - java
+---
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+
+<div class="title1"> 1. Thread.State 线程状态</div>
+<div class="rig">
+线程状态。线程可以处于下列状态之一：
+<br><div class="rig">
+1. NEW
+至今尚未启动的线程处于这种状态。
+2. RUNNABLE
+正在 Java 虚拟机中执行的线程处于这种状态。
+3. BLOCKED
+受阻塞并等待某个监视器锁的线程处于这种状态。
+4. WAITING
+无限期地等待另一个线程来执行某一特定操作的线程处于这种状态。
+5. TIMED_WAITING
+等待另一个线程来执行取决于指定等待时间的操作的线程处于这种状态。
+6. TERMINATED
+已退出的线程处于这种状态。
+</div>
+</div>
+
+<br><div class="title1">2. jstack命令</div>
+<div class="rig">
+基本参数：
+<div class="rig">
+-F当’jstack [-l] pid’没有相应的时候强制打印栈信息<br>
+-l长列表. 打印关于锁的附加信息,例如属于java.util.concurrent的ownable synchronizers列表.<br>
+-m打印java和native c/c++框架的所有栈信息.<br>
+-h | -help打印帮助信息<br>
+</div>
+命令:
+<div class="rig">
+jstack [option] pid<br>
+</div>
+</div>
+</div>
+
+
+<br><div class="title1">2. 结果分析</div>
+<div class="rig">
+1.1 Runnable<br>
+该状态表示线程具备所有运行条件，在运行队列中准备操作系统的调度，或者正在运行。<br><br>
+1.2 Wait on condition<br>
+该状态出现在线程等待某个条件的发生。具体是什么原因，可以结合 stacktrace来分析。最常见的情况是线程在等待网络的读写，比如当网络数据没有准备好读时，线程处于这种等待状态，而一旦有数据准备好读之后，线程会重新激活，读取并处理数据。在 Java引入 NewIO之前，对于每个网络连接，都有一个对应的线程来处理网络的读写操作，即使没有可读写的数据，线程仍然阻塞在读写操作上，这样有可能造成资源浪费，而且给操作系统的线程调度也带来压力。在 NewIO里采用了新的机制，编写的服务器程序的性能和可扩展性都得到提高。<br>
+如果发现有大量的线程都在处在 Wait on condition，从线程 stack看， 正等待网络读写，这可能是一个网络瓶颈的征兆。因为网络阻塞导致线程无法执行。一种情况是网络非常忙，几 乎消耗了所有的带宽，仍然有大量数据等待网络读 写；另一种情况也可能是网络空闲，但由于路由等问题，导致包无法正常的到达。所以要结合系统的一些性能观察工具来综合分析，比如 netstat统计单位时间的发送包的数目，如果很明显超过了所在网络带宽的限制 ; 观察 cpu的利用率，如果系统态的 CPU时间，相对于用户态的 CPU时间比例较高；如果程序运行在 Solaris 10平台上，可以用 dtrace工具看系统调用的情况，如果观察到 read/write的系统调用的次数或者运行时间遥遥领先；这些都指向由于网络带宽所限导致的网络瓶颈。另外一种出现 Wait on condition的常见情况是该线程在 sleep，等待 sleep的时间到了时候，将被唤醒。<br>
+1.3 Waiting for monitor entry 和 in Object.wait()<br>
+在多线程的 JAVA程序中，实现线程之间的同步，就要说说 Monitor。 Monitor是 Java中用以实现线程之间的互斥与协作的主要手段，它可以看成是对象或者 Class的锁。每一个对象都有，也仅有一个 monitor。每个 Monitor在某个时刻，只能被一个线程拥有，该线程就是 “Active Thread”，而其它线程都是 “Waiting Thread”，分别在两个队列 “ Entry Set”和 “Wait Set”里面等候。在 “Entry Set”中等待的线程状态是 “Waiting for monitor entry”，而在 “Wait Set”中等待的线程状态是 “in Object.wait()”。<br>
+先看 “Entry Set”里面的线程。我们称被 synchronized保护起来的代码段为临界区。当一个线程申请进入临界区时，它就进入了 “Entry Set”队列。对应的 code就像：<br>
+<div class="rig">
+synchronized(obj) {<br>
+.........<br>
+}<br>
+</div>
+有两种可能性：
+<div class="rig">
+该 monitor不被其它线程拥有， Entry Set里面也没有其它等待线程。本线程即成为相应类或者对象的 Monitor的 Owner，执行临界区的代码<br>
+该 monitor被其它线程拥有，本线程在 Entry Set队列中等待。<br>
+</div>
+</div>
