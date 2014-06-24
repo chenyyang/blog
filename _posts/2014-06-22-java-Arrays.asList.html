@@ -1,0 +1,30 @@
+---
+layout: default
+title: Arrays.asList坑
+categories:
+  - java
+---
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+
+<div class="title1"> 1. Arrays.asList坑</div>
+<div class="rig">
+public static void main(String[] arg) {<br>
+<div class="rig">
+String[] array = newString("1,2,3,4,5").split(",");<br>
+List list = Arrays.asList(array);//返回的list是Array自己定义的一个内部类，只覆盖了部分方法，大部分修改方法没有重写，导致不能用add remove等。<br>
+System.out.println(list);<br>
+list.set(4, "7");<br>
+// list.add("7"); <br>
+// list.remove(0);<br>
+System.out.println(list);<br>
+</div>
+}
+</div>
+
+<br><div class="title1">2. 总结：</div>
+<div class="rig">
+ Collections.emptyList()和Arrays.asList返回的都不是原生的List,使用要慎重。
+</div>
+
+</div>
