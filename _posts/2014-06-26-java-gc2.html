@@ -43,7 +43,8 @@ categories:
 </div>
 
 <br><div class="title1"> 2. java垃圾收集器</div>
-<div class="title2"> 2.1. Serial收集器</div>
+<img src="/blog/image/gc2-6.jpg">
+<br><div class="title2"> 2.1. Serial收集器</div>
 <div class="rig">
 原理：Serial收集器是最基本、历史最悠久的收集器。这个收集器是单线程收集器，单线程说明：它是会使用一个CPU或者一条收集线程去完成垃圾回收。更重要的是它在垃圾回收的时候必须停止JVM的其他线程工作（Sun将这个事件称为“Stop The World”），直到它结束。<br>
 优点：与其他单线程收集器比更简单高效。对单个CPU环境，Serial收集器由于没有线程的交互的开销，专心做垃圾收集自然可以获取到最高的单线程收集效率。client模式下虚拟机很好的选择<br>
