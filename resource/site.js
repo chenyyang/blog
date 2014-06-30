@@ -77,3 +77,15 @@ $(document).ready(function(){
 })
 
 
+$(document).ready(function(){
+  $("#code").click(function(){
+    var getValue=document.getElementById("code").value;
+    var endValue=((getValue.replace(/<(.+?)>/gi,"&lt;$1&gt;")).replace(/ /gi,"&nbsp;")).replace(/\n/gi,"<br>");
+/*
+(1)转义“<”、“>”
+(2)改半角空格为&nbsp;
+(3)保留换行
+*/
+   document.getElementById("code").innerHTML=endValue;  
+});
+});
