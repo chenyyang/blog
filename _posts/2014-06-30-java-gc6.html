@@ -25,14 +25,11 @@ categories:
 通过SoftReference类来实现软引用，SoftReference很适合用于实现缓存。另，当GC认为扫描的SoftReference不经常使用时，可会进行回收。<br>
 使用方法：<br>
 
-<font color="red">
 <div class="rig code" name="code">
 User user = new User();  
 SoftReference <User>softReference  = new SoftReference <User>(user);  
 softReference.get();
 </div>
-
-</font>
 </div>
 </div>
 
@@ -42,7 +39,6 @@ softReference.get();
 当获取时，可通过weakReference.get方法获取，可能返回null<br>
 可传入一个ReferenceQueue对象到WeakReference构造，当引用对象被表示为可回收时，isEnqueued返回true<br>
 
-<font color="red">
 <div class="rig code" name="code">
 User user = new User();  
 WeakReference<User> weakReference = new WeakReference<User>(user);  
@@ -53,14 +49,13 @@ ReferenceQueue<User> referenceQueue = new ReferenceQueue<User>();
 WeakReference<User> weakReference2 = new WeakReference<User>(user, referenceQueue); 
 //当引用对象被标识为可回收时  返回true,  即当user对象标识为可回收时，返回true  
 weakReference.isEnqueued();  
-</div></font>
+</div>
 </div>
 
 <br><div class="title2"> 1.3 虚引用： </div>
 <div class="rig">
 虚引用称为“幻影引用”，它是最弱的一种引用关系，一个对象是否有虚引用的存在，完全不会对生存时间构成影响。为一个对象设置虚引用关联的唯一目的就是希望能在这个对象被GC回收时收到一个系统通知。通过PhantomReference类实现。<br>
 值得注意的是：phantomReference.get方法永远返回null, 当user从内存中删除时，调用isEnqueued会返回true<br>
-<font color="red">
 <div class="rig code" name="code">
 User user = new User();  
 ReferenceQueue<User> referenceQueue = new ReferenceQueue<User>();  
@@ -70,7 +65,7 @@ System.out.println(phantomReference.isEnqueued());
 //永远返回null
 System.out.println(phantomReference.get());  
 
-</div></font>
+</div>
 </div>
 <br>
 原文链接：http://blog.csdn.net/java2000_wl/article/details/8090276<br>
