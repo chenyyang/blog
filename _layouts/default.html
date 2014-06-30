@@ -55,7 +55,7 @@ while(n < $(".code").size()){
    var str=document.getElementsByName("code")[n].innerHTML;
    str=((str.replace(/<(.+?)>/gi,"&lt;$1&gt;")).replace(/ /gi,"&nbsp;").replace(/\n/gi,"<br>"));
    var end=str.lastIndexOf("<br>")-1;
-   if(str.substring(end+1,end+3)=="&lt;/"){
+   if(str.substring(end+1+"<br>".length,end+1+"<br>&lt;/".length)=="&lt;/"){
       str=str.substring(0,end);
    }
    document.getElementsByName("code")[n].innerHTML=str;   
