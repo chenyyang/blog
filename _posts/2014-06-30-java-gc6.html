@@ -26,7 +26,7 @@ categories:
 使用方法：<br>
 
 <font color="red">
-<div class="rig code" id="code">
+<div class="rig code" name="code">
 User user = new User();  
 SoftReference <User>softReference  = new SoftReference <User>(user);  
 softReference.get();
@@ -43,7 +43,7 @@ softReference.get();
 可传入一个ReferenceQueue对象到WeakReference构造，当引用对象被表示为可回收时，isEnqueued返回true<br>
 
 <font color="red">
-<div class="rig code" id="code">
+<div class="rig code" name="code">
 User user = new User();  
 WeakReference<User> weakReference = new WeakReference<User>(user);  
 weakReference.get();   
@@ -61,7 +61,7 @@ weakReference.isEnqueued();
 虚引用称为“幻影引用”，它是最弱的一种引用关系，一个对象是否有虚引用的存在，完全不会对生存时间构成影响。为一个对象设置虚引用关联的唯一目的就是希望能在这个对象被GC回收时收到一个系统通知。通过PhantomReference类实现。<br>
 值得注意的是：phantomReference.get方法永远返回null, 当user从内存中删除时，调用isEnqueued会返回true<br>
 <font color="red">
-<div class="rig code" id="code">
+<div class="rig code" name="code">
 User user = new User();  
 ReferenceQueue<User> referenceQueue = new ReferenceQueue<User>();  
 PhantomReference<User>  phantomReference = new PhantomReference<User>(user, referenceQueue); 
@@ -74,7 +74,7 @@ System.out.println(phantomReference.get());
 <script type="text/javascript">
 var n=0;
 while(n < $(".code").size()){
-   var str=$(".code")[n].html();
+   var str=document.getElementsByName("code")[n].value;
    $(".code")[n].html(((str.replace(/<(.+?)>/gi,"&lt;$1&gt;")).replace(/ /gi,"&nbsp;")).replace(/\n/gi,"<br>"));
    n++;
 }
