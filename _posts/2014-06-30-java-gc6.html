@@ -27,9 +27,9 @@ categories:
 
 <font color="red">
 <div class="rig" id="code">
-User user = new User();  <br>
-SoftReference <User>softReference  = new SoftReference <User>(user);  <br>
-softReference.get();<br>
+User user = new User();  
+SoftReference <User>softReference  = new SoftReference <User>(user);  
+softReference.get();
 </div>
 
 </font>
@@ -43,15 +43,16 @@ softReference.get();<br>
 可传入一个ReferenceQueue对象到WeakReference构造，当引用对象被表示为可回收时，isEnqueued返回true<br>
 
 <font color="red">
-<div class="rig">
-User user = new User();  <br>
-WeakReference<User> weakReference = new WeakReference<User>(user);  <br>
-weakReference.get();   <br><br>
+<div class="rig" id="code">
+User user = new User();  
+WeakReference<User> weakReference = new WeakReference<User>(user);  
+weakReference.get();   
 
-ReferenceQueue<User> referenceQueue = new ReferenceQueue<User>();  <br>
-WeakReference<User> weakReference2 = new WeakReference<User>(user, referenceQueue);  <br>
-//当引用对象被标识为可回收时  返回true,  即当user对象标识为可回收时，返回true  <br>
-weakReference.isEnqueued();  <br>
+
+ReferenceQueue<User> referenceQueue = new ReferenceQueue<User>();  
+WeakReference<User> weakReference2 = new WeakReference<User>(user, referenceQueue); 
+//当引用对象被标识为可回收时  返回true,  即当user对象标识为可回收时，返回true  
+weakReference.isEnqueued();  
 </div></font>
 </div>
 
@@ -60,14 +61,14 @@ weakReference.isEnqueued();  <br>
 虚引用称为“幻影引用”，它是最弱的一种引用关系，一个对象是否有虚引用的存在，完全不会对生存时间构成影响。为一个对象设置虚引用关联的唯一目的就是希望能在这个对象被GC回收时收到一个系统通知。通过PhantomReference类实现。<br>
 值得注意的是：phantomReference.get方法永远返回null, 当user从内存中删除时，调用isEnqueued会返回true<br>
 <font color="red">
-<div class="rig">
-User user = new User();  <br>
-ReferenceQueue<User> referenceQueue = new ReferenceQueue<User>();  <br>
-PhantomReference<User>  phantomReference = new PhantomReference<User>(user, referenceQueue); <br>
-//即当user对象标识为可回收时，返回true  <br>
-System.out.println(phantomReference.isEnqueued());  <br>
-//永远返回null<br>
-System.out.println(phantomReference.get());  <br>
+<div class="rig" id="code">
+User user = new User();  
+ReferenceQueue<User> referenceQueue = new ReferenceQueue<User>();  
+PhantomReference<User>  phantomReference = new PhantomReference<User>(user, referenceQueue); 
+//即当user对象标识为可回收时，返回true  
+System.out.println(phantomReference.isEnqueued());  
+//永远返回null
+System.out.println(phantomReference.get());  
 
 </div></font>
 <script type="text/javascript">
