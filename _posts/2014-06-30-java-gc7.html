@@ -1,0 +1,53 @@
+---
+layout: default
+title: java虚拟机学习 - 内存调优  
+categories:
+  - java
+---
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+
+<div class="title1"> 1. 内存调优 </div>
+<div class="rig">
+JVM调优主要是针对内存管理方面的调优，包括控制各个代的大小，GC策略。由于GC开始垃圾回收时会挂起应用线程，严重影响了性能，调优的目是为了尽量降低GC所导致的应用线程暂停时间、 减少Full GC次数。<br>
+</div>
+
+<div class="title2"> 1.1. 代大小调优</div>
+最关键参数：-Xms、 -Xmx 、-Xmn 、-XX:SurvivorRatio、-XX:MaxTenuringThreshold、-XX:PermSize、-XX:MaxPermSize
+<div class="rig">
+<font color="red">-Xms、 -Xmx</font>通常设置为相同的值，避免运行时要不断扩展JVM内存，这个值决定了JVM heap所能使用的最大内存。<br>
+<font color="red">-Xmn </font>决定了新生代空间的大小，新生代Eden、S0、S1三个区域的比率可以通过-XX:SurvivorRatio来控制(假如值为 4  表示：Eden:S0:S1 = 4:3:3 )<br>
+<font color="red">-XX:MaxTenuringThreshold</font>控制对象在经过多少次minor GC之后进入老年代，此参数只有在Serial 串行GC时有效。<br>
+<font color="red">-XX:PermSize、-XX:MaxPermSize</font>用来控制方法区的大小，通常设置为相同的值。<br>
+</div>
+
+<br>
+1.避免新生代大小设置过小
+<div class="rig">
+当新生代设置过小时，会产生两种比较明显的现象，一是minor GC次数频繁，二是可能导致 minor GC对象直接进入老年代。当老年代内存不足时，会触发Full GC。<br>
+</div>
+<br>
+2.避免新生代设置过大
+<div class="rig">
+新生代设置过大，会带来两个问题：一是老年大变小，可能导致Full  GC频繁执行；二是 minor GC 执行回收的时间大幅度增加。<br>
+</div>
+
+<br>3.避免Survivor区过大或过小
+<div class="rig">
+-XX:SurvivorRatio参数的值越大，就意味着Eden区域变大，minor GC次数会降低，但两块Survivor区域变小，如果超过Survivor区域内存大小的对象在minor GC后仍没被回收，则会直接进入老年代，<br>
+-XX:SurvivorRatio参数值设置过小，就意味着Eden区域变小，minor GC触发次数会增加，Survivor区域变大，意味着可以存储更多在minor GC后任存活的对象，避免其进入老年代。<br>
+</div>
+
+<br>4.合理设置对象在新生代存活的周期
+<div class="rig">
+新生代存活周期的值决定了新生代对象在经过多少次Minor GC后进入老年代。因此这个值要根据自己的应用来调优，Jvm参数上这个值对应的为-XX:MaxTenuringThreshold，默认值为15次。<br>
+</div>
+
+<div class="title1"> 2. GC调优 </div>
+<div class="title2"> 2.1. GC搭配</div>
+<a target="_blank" href="http://chenyyang.github.io/blog/2014/06/26/java-gc2/">垃圾收集器</a><br>
+<div class="title2"> 2.2. 查看JVM参数 </div>
+<a target="_blank" href="http://chenyyang.github.io/blog/2013/12/17/java-jstat/">JVM工具</a><br>
+<br>
+原文链接：http://blog.csdn.net/java2000_wl/article/details/8090940<br>
+
