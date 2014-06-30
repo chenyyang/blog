@@ -28,7 +28,7 @@ categories:
 <font color="red">
 <div class="rig" id="code">
 User user = new User();  <br>
-SoftReference softReference  = new SoftReference(user);  <br>
+SoftReference <User>softReference  = new SoftReference <User>(user);  <br>
 softReference.get();<br>
 </div>
 
@@ -73,7 +73,7 @@ System.out.println(phantomReference.get());  <br>
 <script type="text/javascript">
 
 var str=$("#code").html();
-$("#code").html(str.replace(/<(.+?)>/gi,"&lt;$1&gt;"));
+$("#code").html(((str.replace(/<(.+?)>/gi,"&lt;$1&gt;")).replace(/ /gi,"&nbsp;")).replace(/\n/gi,"<br>"));
 
 </script>
 </div>
