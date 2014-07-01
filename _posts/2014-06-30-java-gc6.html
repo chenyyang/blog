@@ -25,11 +25,11 @@ categories:
 通过SoftReference类来实现软引用，SoftReference很适合用于实现缓存。另，当GC认为扫描的SoftReference不经常使用时，可会进行回收。<br>
 使用方法：<br>
 
-<code>
+<pre>
 User user = new User();  
 SoftReference <User>softReference  = new SoftReference <User>(user);  
 softReference.get();
-</code>
+</pre>
 </div>
 </div>
 
