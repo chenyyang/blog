@@ -1,0 +1,33 @@
+---
+layout: default
+title: java运行jar包 
+categories:
+  - java
+---
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+
+<div class="title1"> 1. java运行jar包 </div>
+<div class="rig">
+打包以后的jar包依赖的其他jar包在lib目录下，需要修改CLASSPATH。使用脚本：
+main函数在com.mytest.test中 jar包为test.jar
+<div class="rig code" name="code">
+
+#!/bin/sh
+LIBPATH=lib
+CLASSPATH=test.jar
+OSName=`uname -o`
+for file in ${LIBPATH}/*.jar;
+do
+    case $OSName in
+        *Cygwin* ) CLASSPATH="${CLASSPATH};$file" ;;
+        * ) CLASSPATH="${CLASSPATH}:$file" ;;
+    esac
+done
+export CLASSPATH
+java -classpath "${CLASSPATH}" com.mytest.test
+
+</div>
+</div>
+
+
