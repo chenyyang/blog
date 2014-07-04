@@ -98,7 +98,7 @@ ClassLoader A -&gt; System class loader -&gt; Extension class loader -&gt; Boots
 那么委派链左边的ClassLoader就可以很自然的使用右边的ClassLoader所加载的类。 <br>
 但如果情况要反过来，是右边的ClassLoader所加载的代码需要反过来去找委派链靠左边的ClassLoader去加载东西怎么办呢？没辙，parent delegation是单向的，没办法反过来从右边找左边。 <br>
 这种情况下就可以把某个位于委派链左边的ClassLoader设置为线程的context class loader，这样就给机会让代码不受parent delegation的委派方向的限制而加载到类了。<br>
-<font color="red">ContextClassLoader可以让父亲ClassLoader访问到子ClassLoader的方法，只需要设置当前线程的ContextClassLoader为子ClassLoader，当子ClassLoader调用parent方法的时候，就可以通过getContextClassLoader获取到子ClassLoader</font>
+<font color="red">ContextClassLoader可以让父亲ClassLoader访问到子ClassLoader的方法，只需要设置当前线程的ContextClassLoader为子ClassLoader，当子ClassLoader调用parent方法的时候，父亲就可以通过getContextClassLoader获取到子ClassLoader</font>
 </div>
 
 
@@ -116,11 +116,11 @@ public class MyClassLoader extends ClassLoader {
         this.fileName = fileName;
     }
 
-    public Class<?> loadClass(String name) throws ClassNotFoundException {
+    public Class < ? > loadClass(String name) throws ClassNotFoundException {
         return findClass(name);
     }
 
-    protected Class<?> findClass(String className) throws ClassNotFoundException {
+    protected Class < ? > findClass(String className) throws ClassNotFoundException {
         System.out.println("this :" + this + "  parent :" + super.getParent());
         System.out.println("local load : " + className);
         ClassLoader pr = super.getParent();
