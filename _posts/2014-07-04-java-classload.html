@@ -16,7 +16,7 @@ categories:
 主要负责jdk_home/lib/ext目录下的jar包或 -Djava.ext.dirs 指定目录下的jar包装入工作<br>
 
 3. System ClassLoader/系统类加载器<br>
-主要负责java -classpath/-Djava.class.path所指的目录下的类与jar包装入工作.<br>
+主要负责java -classpath/-Djava.class.path所指的目录下的类与jar包装入工作.ClassLoader.getSystemClassLoader()获取，类名为AppClassLoader<br>
 
 4. User Custom ClassLoader/用户自定义类加载器(java.lang.ClassLoader的子类)<br>
 在程序运行期间, 通过java.lang.ClassLoader的子类动态加载class文件, 体现java动态实时类装入特性.<br>
@@ -36,9 +36,63 @@ jvm启动时，会启动jre/rt.jar里的类加载器：bootstrap classloader，�
 <br><img src="/blog/image/java-classload2.jpg"><br>
 ClassLoader的加载类流程图，以加载一个类的过程类示例说明整个ClassLoader的过程。<br>
 <br><img src="/blog/image/java-classload3.jpeg"><br>
-</div>
-
+对应源码：<br>
 <div class="rig code" name="code">
+
+   protected Class<?> loadClass(String name, boolean resolve)
+        throws ClassNotFoundException
+    {
+        synchronized (getClassLoadingLock(name)) {
+            // First, check if the class has already been loaded
+            Class c = findLoadedClass(name);
+            if (c == null) {
+                long t0 = System.nanoTime();
+                try {
+                    if (parent != null) {
+                        c = parent.loadClass(name, false);
+                    } else {
+                        c = findBootstrapClassOrNull(name);
+                    }
+                } catch (ClassNotFoundException e) {
+                    // ClassNotFoundException thrown if class not found
+                    // from the non-null parent class loader
+                }
+
+                if (c == null) {
+                    // If still not found, then invoke findClass in order
+                    // to find the class.
+                    long t1 = System.nanoTime();
+                    c = findClass(name);
+                }
+            }
+            if (resolve) {
+                resolveClass(c);
+            }
+            return c;
+        }
+    }
+
 </div>
 
+<font color="red">项目启动的时候，会按照类加载器的关系，JVM启动Bootstrap ClassLoader，Bootstrap ClassLoader加载Extension ClassLoader，Extension ClassLoader加载System ClassLoader，System ClassLoader加载User Custom ClassLoader。当用户自定义类加载器loadClass,会先检查自己有没有加载过，如果没有则给父亲System ClassLoader加载，当然父亲加载的时候也会检查自己有没有加载过。如果父亲没有加载，则调用自己的findClass方法>，所有有时候重写这个方法就行了。</font><br><br>
+使用双亲委托模式的优点：<br>
+<div class="rig">
+1. 可以避免重复加载，当父亲已经加载了该类的时候，就没有必要子ClassLoader再加载一次。 <br>
+2. 全因素，我们试想一下，如果不使用这种委托模式，那我们就可以随时使用自定义的String来动态替代java核心api中定义类型，这样会存在非常大的安全隐患，而双亲委托的方式，就可以避免这种情况，因为String已经在启动时被加载，所以用户自定义类是无法加载一个自定义的JDK类。除了这个原因JDK中的类不能被重写的原因,<font color="red">如果自定义的ClassLoader调用了defineClass方法，方法里面会对包名进行校验，如果是java开头就抛出异常:</font><br>
+对应源码：<br>
+<div class="rig">
+  protected final Class<?> defineClass(String name, byte[] b, int off, int len)
+      if ((name != null) && name.startsWith("java.")) {
+            throw new SecurityException
+                ("Prohibited package name: " +
+                 name.substring(0, name.lastIndexOf('.')));
+        }
+  }
+</div> 
+</div>
+</div>
 
+<br><div class="title1"> 3. 例子 </div>
+<div class="rig">
+
+</div>
