@@ -39,7 +39,7 @@ ClassLoader的加载类流程图，以加载一个类的过程类示例说明整
 对应源码：<br>
 <div class="rig code" name="code">
 
-   protected Class<?> loadClass(String name, boolean resolve)
+   protected Class < ? > loadClass(String name, boolean resolve)
         throws ClassNotFoundException
     {
         synchronized (getClassLoadingLock(name)) {
@@ -74,13 +74,13 @@ ClassLoader的加载类流程图，以加载一个类的过程类示例说明整
 
 </div>
 
-<font color="red">项目启动的时候，会按照类加载器的关系，JVM启动Bootstrap ClassLoader，Bootstrap ClassLoader加载Extension ClassLoader，Extension ClassLoader加载System ClassLoader，System ClassLoader加载User Custom ClassLoader。当用户自定义类加载器loadClass,会先检查自己有没有加载过，如果没有则给父亲System ClassLoader加载，当然父亲加载的时候也会检查自己有没有加载过。如果父亲没有加载，则调用自己的findClass方法>，所有有时候重写这个方法就行了。</font><br><br>
+<font color="red">项目启动的时候，会按照类加载器的关系，JVM启动Bootstrap ClassLoader，Bootstrap ClassLoader加载Extension ClassLoader，Extension ClassLoader加载System ClassLoader，System ClassLoader加载User Custom ClassLoader。当用户自定义类加载器loadClass,会先检查自己有没有加载过，如果没有则给父亲System ClassLoader加载，当然父亲加载的时候也会检查自己有没有加载过。如果父亲没有加载，则调用自己的findClass方法>，所以有时候重写这个方法就行了。</font><br><br>
 使用双亲委托模式的优点：<br>
 <div class="rig">
 1. 可以避免重复加载，当父亲已经加载了该类的时候，就没有必要子ClassLoader再加载一次。 <br>
 2. 全因素，我们试想一下，如果不使用这种委托模式，那我们就可以随时使用自定义的String来动态替代java核心api中定义类型，这样会存在非常大的安全隐患，而双亲委托的方式，就可以避免这种情况，因为String已经在启动时被加载，所以用户自定义类是无法加载一个自定义的JDK类。除了这个原因JDK中的类不能被重写的原因,<font color="red">如果自定义的ClassLoader调用了defineClass方法，方法里面会对包名进行校验，如果是java开头就抛出异常:</font><br>
 对应源码：<br>
-<div class="rig">
+<div class="rig code" name="code">
   protected final Class<?> defineClass(String name, byte[] b, int off, int len)
       if ((name != null) && name.startsWith("java.")) {
             throw new SecurityException
@@ -88,11 +88,220 @@ ClassLoader的加载类流程图，以加载一个类的过程类示例说明整
                  name.substring(0, name.lastIndexOf('.')));
         }
   }
-</div> 
 </div>
 </div>
 
 <br><div class="title1"> 3. 例子 </div>
 <div class="rig">
+MyClassLoader.java<br>
+<div class="rig" name="code">
+
+public class MyClassLoader extends ClassLoader {
+    private String fileName;
+
+    public MyClassLoader(String fileName) {
+        super();
+        this.fileName = fileName;
+    }
+
+    public Class<?> loadClass(String name) throws ClassNotFoundException {
+        return findClass(name);
+    }
+
+    protected Class<?> findClass(String className) throws ClassNotFoundException {
+        System.out.println("this :" + this + "  parent :" + super.getParent());
+        System.out.println("local load : " + className);
+        ClassLoader pr = super.getParent();
+        while (className.startsWith("java.") && pr != null) {
+            Class clazz = pr.loadClass(className);
+            if (clazz != null) {
+                System.out.println("get load from : " + pr);
+                return clazz;
+            }
+            pr = pr.getParent();
+        }
+        Class clazz = findLoadedClass(className);
+
+        if (null == clazz) {
+            try {
+                String classFile = getClassFile(className);
+                FileInputStream fis = new FileInputStream(classFile);
+                FileChannel fileC = fis.getChannel();
+                ByteArrayOutputStream baos = new
+                        ByteArrayOutputStream();
+                WritableByteChannel outC = Channels.newChannel(baos);
+                ByteBuffer buffer = ByteBuffer.allocateDirect(1024);
+                while (true) {
+                    int i = fileC.read(buffer);
+                    if (i == 0 || i == -1) {
+                        break;
+                    }
+                    buffer.flip();
+                    outC.write(buffer);
+                    buffer.clear();
+                }
+                fis.close();
+                byte[] bytes = baos.toByteArray();
+
+                clazz = defineClass(className, bytes, 0, bytes.length);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return clazz;
+    }
+
+    private byte[] loadClassBytes(String className) throws
+            ClassNotFoundException {
+        try {
+            String classFile = getClassFile(className);
+            FileInputStream fis = new FileInputStream(classFile);
+            FileChannel fileC = fis.getChannel();
+            ByteArrayOutputStream baos = new
+                    ByteArrayOutputStream();
+            WritableByteChannel outC = Channels.newChannel(baos);
+            ByteBuffer buffer = ByteBuffer.allocateDirect(1024);
+            while (true) {
+                int i = fileC.read(buffer);
+                if (i == 0 || i == -1) {
+                    break;
+                }
+                buffer.flip();
+                outC.write(buffer);
+                buffer.clear();
+            }
+            fis.close();
+            return baos.toByteArray();
+        } catch (IOException fnfe) {
+            throw new ClassNotFoundException(className);
+        }
+    }
+
+    private String getClassFile(String name) {
+        StringBuffer sb = new StringBuffer(fileName);
+        name = name.replace('.', File.separatorChar) + ".class";
+        sb.append(File.separator + name);
+        return sb.toString();
+    }
+}
 
 </div>
+
+<br>Test.java<br>
+<div class="rig" name="code">
+
+public class Test {
+    public Test() {
+        System.out.println("4111Test");
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Hello World");
+    }
+}
+
+</div>
+
+<br>Main1.java<br>
+<div class="rig" name="code">
+
+public class Main1 extends Thread {
+
+
+    public void run() {
+        MyClassLoader tc = new MyClassLoader(
+                "****/test/WEB-INF/classes/");
+        // ClassLoader c = t.getContextClassLoader();
+        // sets the context ClassLoader for this Thread
+        this.setContextClassLoader(tc);
+        System.out.println("Class = " + tc.getClass());
+        System.out.println("Parent = " + tc.getParent());
+
+        System.out.println("this = " + this.getClass().getClassLoader());
+
+        Test a = new Test();
+        System.out.println("a = " + a.getClass().getClassLoader());
+
+        try {
+            tc.loadClass("com.test.Test");
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void main(String args[]) {
+        new Main1().start();
+    }
+}
+
+
+</div>
+
+<br>Main2.java<br>
+<div class="rig" name="code">
+
+public class Main2 {
+
+    public static void main(String[] args) {
+        try {
+            Test a;
+            MyClassLoader tc = new MyClassLoader("***/test/target/test/WEB-INF/classes/");
+            Class c = tc.loadClass("com.test.MyClassLoader");
+            Object test = c.newInstance();
+
+
+            c = tc.loadClass("com.test.Test");
+            test = c.newInstance();
+            if (test instanceof Test) {
+                System.out.println("Test " + c.hashCode());
+            } else {
+                System.out.println("ddnot Test" + c.hashCode());
+            }
+
+            System.out.println("getClassLoader" + c.getClassLoader());
+            System.out.println();
+            c = tc.findClass("com.test.MyClassLoader");
+            test = c.newInstance();
+            if (test instanceof Test) {
+                System.out.println("Test" + c.hashCode());
+            } else {
+                System.out.println("ddnot Test" + c.hashCode());
+            }
+            System.out.println("getClassLoader" + c.getClassLoader());
+            System.out.println();
+
+            c = tc.loadClass("com.test.MyClassLoader");
+            test = c.newInstance();
+            if (test instanceof Test) {
+                System.out.println("Test" + c.hashCode());
+            } else {
+                System.out.println("ddnot Test" + c.hashCode());
+            }
+
+            System.out.println("getClassLoader" + c.getClassLoader());
+            System.out.println();
+            tc = new MyClassLoader("***/test/target/test/WEB-INF/classes/");
+            c = tc.findClass("com.test.Test");
+            test = c.newInstance();
+            if (test instanceof Test) {
+                System.out.println("Test" + c.hashCode());
+            } else {
+                System.out.println("ddnot Test" + c.hashCode());
+            }
+            System.out.println("getClassLoader" + c.getClassLoader());
+
+            System.out.println("thread : " + Thread.currentThread().getContextClassLoader());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+    }
+
+}
+
+</div>
+
+
