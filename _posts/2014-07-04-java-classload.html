@@ -81,7 +81,7 @@ ClassLoader的加载类流程图，以加载一个类的过程类示例说明整
 2. 全因素，我们试想一下，如果不使用这种委托模式，那我们就可以随时使用自定义的String来动态替代java核心api中定义类型，这样会存在非常大的安全隐患，而双亲委托的方式，就可以避免这种情况，因为String已经在启动时被加载，所以用户自定义类是无法加载一个自定义的JDK类。除了这个原因JDK中的类不能被重写的原因,<font color="red">如果自定义的ClassLoader调用了defineClass方法，方法里面会对包名进行校验，如果是java开头就抛出异常:</font><br>
 对应源码：<br>
 <div class="rig code" name="code">
-  protected final Class<?> defineClass(String name, byte[] b, int off, int len)
+  protected final Class < ? > defineClass(String name, byte[] b, int off, int len)
       if ((name != null) && name.startsWith("java.")) {
             throw new SecurityException
                 ("Prohibited package name: " +
@@ -98,7 +98,7 @@ ClassLoader A -&gt; System class loader -&gt; Extension class loader -&gt; Boots
 那么委派链左边的ClassLoader就可以很自然的使用右边的ClassLoader所加载的类。 <br>
 但如果情况要反过来，是右边的ClassLoader所加载的代码需要反过来去找委派链靠左边的ClassLoader去加载东西怎么办呢？没辙，parent delegation是单向的，没办法反过来从右边找左边。 <br>
 这种情况下就可以把某个位于委派链左边的ClassLoader设置为线程的context class loader，这样就给机会让代码不受parent delegation的委派方向的限制而加载到类了。<br>
-<font color="red">ContextClassLoader可以让父亲ClassLoader访问到子ClassLoader的方法</font>
+<font color="red">ContextClassLoader可以让父亲ClassLoader访问到子ClassLoader的方法，只需要设置当前线程的ContextClassLoader为子ClassLoader，当子ClassLoader调用parent方法的时候，就可以通过getContextClassLoader获取到子ClassLoader</font>
 </div>
 
 
