@@ -1,0 +1,39 @@
+---
+layout: default
+title: java class load 
+categories:
+  - java
+---
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+
+<div class="title1"> 1. 类加载器 </div>
+<div class="rig">
+1. Bootstrap ClassLoader/启动类加载器<br>
+主要负责jdk_home/lib目录下的核心 api 或 -Xbootclasspath 选项指定的jar包装入工作.<br>
+
+2. Extension ClassLoader/扩展类加载器<br>
+主要负责jdk_home/lib/ext目录下的jar包或 -Djava.ext.dirs 指定目录下的jar包装入工作<br>
+
+3. System ClassLoader/系统类加载器<br>
+主要负责java -classpath/-Djava.class.path所指的目录下的类与jar包装入工作.<br>
+
+4. User Custom ClassLoader/用户自定义类加载器(java.lang.ClassLoader的子类)<br>
+在程序运行期间, 通过java.lang.ClassLoader的子类动态加载class文件, 体现java动态实时类装入特性.<br>
+</div>
+
+
+<br><div class="title1"> 2. ClassLoader机制--双亲委托模式 </div>
+<div class="rig">
+JVM在加载类的时候，都是通过ClassLoader的loadClass()方法来加载class的，loadClass(String name)方法使用的是双亲委托模式;<br><br>
+jvm启动时，会启动jre/rt.jar里的类加载器：bootstrap classloader，用来加载java核心api；然后启动扩展类加载器ExtClassLoader加载扩展类，并加载用户程序加载器AppClassLoade,<font color="red">ClassLoade类的构造函数中指定加载这个ClassLoade的对象就是他的父亲</font>；<br><br>
+<font color="red">当类被加载时，会先检查这个类是否被自己加载过，不检查父亲是否加载，不同的ClassLoader实例对象之间的类是不共享的，同一个类可以被不同的ClassLoader实例对象重复加载。如果加载过，则不再加载，如果没有，再由父亲来加载；</font><br><br>
+<br><img src="/blog/image/java-classload.jpg"><br>
+<br><img src="/blog/image/java-classload2.jpg"><br>
+<br><img src="/blog/image/java-classload3.jpg"><br>
+</div>
+
+<div class="rig code" name="code">
+</div>
+
+
