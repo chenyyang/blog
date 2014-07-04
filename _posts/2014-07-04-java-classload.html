@@ -91,7 +91,19 @@ ClassLoader的加载类流程图，以加载一个类的过程类示例说明整
 </div>
 </div>
 
-<br><div class="title1"> 3. 例子 </div>
+<br><div class="title1"> 3. ContextClassLoader </div>
+<div class="rig">
+Thread context class loader存在的目的主要是为了解决parent delegation机制下无法干净的解决的问题。假如有下述委派链： <br>
+ClassLoader A -&gt; System class loader -&gt; Extension class loader -&gt; Bootstrap class loader <br>
+那么委派链左边的ClassLoader就可以很自然的使用右边的ClassLoader所加载的类。 <br>
+但如果情况要反过来，是右边的ClassLoader所加载的代码需要反过来去找委派链靠左边的ClassLoader去加载东西怎么办呢？没辙，parent delegation是单向的，没办法反过来从右边找左边。 <br>
+这种情况下就可以把某个位于委派链左边的ClassLoader设置为线程的context class loader，这样就给机会让代码不受parent delegation的委派方向的限制而加载到类了。<br>
+<font color="red">ContextClassLoader可以让父亲ClassLoader访问到子ClassLoader的方法</font>
+</div>
+
+
+<br><div class="title1"> 4. 例子 </div>
+main1是ContextClassLoader使用说明,main2是双亲模式说明。
 <div class="rig">
 MyClassLoader.java<br>
 <div class="rig code" name="code">
