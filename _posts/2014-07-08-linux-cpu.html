@@ -1,0 +1,60 @@
+---
+layout: default
+title: CPU load高 排查脚本 
+categories:
+  - linux
+---
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+
+<div class="title1"> 1. 脚本 </div>
+<div class="rig code" name="code">
+#!/bin/sh
+
+export LANG="zh_CN.UTF-8";
+export LC_ALL="zh_CN.UTF-8";
+
+LOG_FILE="/tmp/jcpu.log";
+JSTACK_FILE="/tmp/jstack.log";
+
+#进程ID
+PID="$1";
+shift;
+i=0;
+j="$1";
+if [ -z "${j}" ]; then
+    j=5;
+fi
+
+ps -mp ${PID} -o THREAD,tid,time | sort -rn > ${LOG_FILE};
+jstack ${PID} > ${JSTACK_FILE};
+
+for LINE in `cat ${LOG_FILE}|gawk -F '-' '{print $4}'|gawk -F ' ' '{print $1}'`
+do
+    i=$(($i+1));
+    if (($i>$j)); then
+        break;
+    fi;
+    XPID=`printf "%x\n" ${LINE}`;
+    echo -ne "\033[32m";
+    echo ${XPID};
+    echo -e "\033[34m";
+    grep -A 10 "0x${XPID}" ${JSTACK_FILE};
+    echo -e "\e[0m";
+done;
+</div>
+
+执行以上程序x_shift.sh：./x_shift.sh 1 2 3 4
+<br><br>
+结果显示如下：<br>
+第一个参数为: 1 参数个数为: 4<br>
+第一个参数为: 2 参数个数为: 3<br>
+第一个参数为: 3 参数个数为: 2<br>
+第一个参数为: 4 参数个数为: 1<br>
+<br><br>
+从上可知 shift 命令每执行一次，变量的个数($#)减一，而变量值提前一位，下面代码用 until 和 shift 命令计算所有命令行参数的和。<br>
+<font color="red">Shift 命令还有另外一个重要用途, Bash 定义了9个位置变量，从 $1 到 $9,这并不意味着用户在命令行只能使用9个参数，借助 shift 命令可以访问多于9个的参数.因为每次调用shift，下一个参数就可以用$1获取 </font>
+</div>
+
+
+
