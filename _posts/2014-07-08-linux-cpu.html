@@ -1,0 +1,62 @@
+---
+layout: default
+title: CPU load高 排查脚本 
+categories:
+  - linux
+---
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+
+<div class="title1"> 1. 脚本 </div>
+<div class="rig code" name="code">
+
+#!/bin/sh
+
+export LANG="zh_CN.UTF-8";
+export LC_ALL="zh_CN.UTF-8";
+
+LOG_FILE="/tmp/jcpu.log";
+JSTACK_FILE="/tmp/jstack.log";
+
+#进程ID
+PID="$1";
+shift;
+#for循环参数
+i=0;
+#取前几个线程
+j="$1";
+#默认五个
+if [ -z "${j}" ]; then
+    j=5;
+fi
+
+#-o,o user-defined  -m,m,-L,-T,H  threads  -p by process ID 
+#sort -r 降序排序  -n是数字排序
+ps -mp ${PID} -o THREAD,tid,time | sort -rn > ${LOG_FILE};
+#这个进程的线程栈信息
+jstack ${PID} > ${JSTACK_FILE};
+
+for LINE in `cat ${LOG_FILE}|awk -F '-' '{print $4}'|awk -F ' ' '{print $1}'`
+do
+    i=$(($i+1));
+    #如果i>j
+    if [ $i -gt $j ]; then
+        break;
+    fi
+#转化为16进制
+    XPID=`printf "%x\n" ${LINE}`;
+    echo -ne "\033[32m";
+    echo ${XPID};
+    echo -e "\033[34m";
+#输出这个线程的10行栈信息 
+   grep -A 10 "0x${XPID}" ${JSTACK_FILE};
+    echo -e "\e[0m";
+done;
+</div>
+
+执行以上脚本，/jkiller.sh 进程ID<br>
+
+结果中就能看出CPU占用最多的线程的栈信息。
+
+<br><br>
+
