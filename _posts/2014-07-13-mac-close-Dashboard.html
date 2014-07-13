@@ -1,0 +1,25 @@
+---
+layout: default
+title:  管理Mac上的Dashboard 
+categories:
+  - mac
+---
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+
+<div class="title1"> 1. 关闭Mac上的Dashboard   </div>
+<div class="rig">
+Mac的Dashboard用来显示股票、日历、天气预报等小widget，应该在Leopard时代就有了。可以说是遗迹。不用的话可以关掉。
+
+关闭Dashboard：
+打开“终端”，输入命令：
+<font color="red">defaults write com.apple.dashboard mcx-disabled -boolean YES</font>
+继续输入命令，重启Dock：
+<font color="red">killall Dock</font>
+</div>
+<div class="title1"> 2. 开启Mac上的Dashboard   </div>
+命令：
+<font color="red">defaults write com.apple.dashboard mcx-disabled -boolean NO</font>
+继续输入命令，重启Dock：
+<font color="red">killall Dock</font>
+</div>
