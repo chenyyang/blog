@@ -1,0 +1,148 @@
+---
+layout: default
+title:  static块、匿名块、构造方法三者按执行顺序
+categories:
+  - java
+---
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+
+<div class="title1"> 1. 静态代码块的执行   </div>
+<div class="rig code" name="code">
+public class StaticTest {
+    static
+    {
+        System.out.println("hello,world!");
+        System.exit(0);
+    }
+    public static void main(String[] args)
+    {
+        System.out.println("main");
+    }
+}
+</div>
+<font color="red">输出：hello,world!</font><br>
+在这段代码中，StaticTest类一加载，首先就执行了static代码块，虽然这里有main函数，只是这段代码的入，通过Eclipse的断点测试，根本就没有执行到就结束了，这里的main函数就是为了让代码能够执行才有的。<br>
+<br>
+
+<div class="title1"> 2. 构造代码块的执行   </div>
+<div class="rig code" name="code">
+
+public class StaticTest {
+    static
+    {
+        System.out.println("静态代码块！");
+        //System.exit(0);
+    }
+   
+    {
+       
+        System.out.println("构造代码块！");
+    }
+   
+   
+    public static void main(String[] args)
+    {
+        StaticTest st = new StaticTest();  //在对象一建立的时候就调用
+        System.out.println("主函数！");   
+    }
+}
+
+</div>
+<font color="red">输出：静态代码块！构造代码块！主函数!</font><br>
+先执行静态代码块，再构造函数。<br><br>
+
+<div class="title1"> 3. static块、匿名块、构造方法三者按执行顺序   </div>
+代码一：<br><div class="rig code" name="code">
+public class TestDemo {
+	public static int count = 10 ;
+	public int n = 100 ;
+	public static TestDemo td = new TestDemo() ;
+	public static TestDemo td1 = new TestDemo() ;
+	
+	{
+		System.out.println("tess : "+td.tess);
+	}
+	static {
+		System.out.println("静态变量："+count);
+		System.out.println("静态快 "+count);
+	}
+	public static int tess=1;
+	public  TestDemo(){
+		System.out.println("构造函数 "+count) ;
+	}
+	{
+		System.out.println("变量："+n);
+		System.out.println("普通代码块 "+count);
+	}
+	public static void main(String[] args) {  
+		 TestDemo td = new TestDemo() ;
+	 }
+}
+</div><br>
+<font color="red">
+tess : 0<br>
+变量：100<br>
+普通代码块 10<br>
+构造函数 10<br>
+tess : 0<br>
+变量：100<br>
+普通代码块 10<br>
+构造函数 10<br>
+静态变量：10<br>
+静态快 10<br>
+tess : 1<br>
+变量：100<br>
+普通代码块 10<br>
+构造函数 10<br>
+</font><br>
+<br>
+代码二：<br><div class="rig code" name="code">
+public class TestDemo {
+	public static int count = 10 ;
+	public int n = 100 ;
+	public static TestDemo td = new TestDemo() ;
+	
+	{
+		System.out.println("tess : "+td.tess);
+	}
+	static {
+		System.out.println("静态变量："+count);
+		System.out.println("静态快 "+count);
+	}
+	public static int tess=1;
+	public static TestDemo td1 = new TestDemo() ;
+	public  TestDemo(){
+		System.out.println("构造函数 "+count) ;
+	}
+	{
+		System.out.println("变量："+n);
+		System.out.println("普通代码块 "+count);
+	}
+	public static void main(String[] args) {  
+		 TestDemo td = new TestDemo() ;
+	 }
+}
+</div><br>
+<font color="red">
+tess : 0
+变量：100
+普通代码块 10
+构造函数 10
+静态变量：10
+静态快 10
+tess : 1
+变量：100
+普通代码块 10
+构造函数 10
+tess : 1
+变量：100
+普通代码块 10
+构造函数 10
+</font><br>
+<br>
+总结：<br>
+1. 先执行匿名区－>静态区－>构造函数。<br>
+2. 匿名区和静态区都是顺序执行<br>
+3. static int count = 10这种变量的复制也属于静态操作，也是顺序执行的。
+
