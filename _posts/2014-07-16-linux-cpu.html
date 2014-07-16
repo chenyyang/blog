@@ -1,0 +1,41 @@
+---
+layout: default
+title:  linux中查看CPU信息 
+categories:
+  - linux
+---
+<h2>{{ page.title }}</h2>
+<div id="sina_keyword_ad_area2" class="articalContent  ">
+
+<div class="title1"> 1. linux中查看CPU信息   </div>
+<div class="rig">
+cat /proc/cpuinfo中的信息<br>
+1. processor       逻辑处理器的id。<br>
+2. physical id    物理封装的处理器的id。<br>
+3. core id        每个核心的id。<br>
+4. cpu cores      位于相同物理封装的处理器中的内核数量。<br>
+5. siblings       位于相同物理封装的处理器中的逻辑处理器的数量。<br>
+<br>
+
+
+命令：<br>
+1.查看物理CPU的个数<br>
+<font color="red">cat /proc/cpuinfo |grep "physical id"|sort |uniq|wc –l</font><br>
+<br>2.查看逻辑CPU的个数<br>
+<font color="red">cat /proc/cpuinfo |grep "processor"|wc –l</font><br><br>
+3.查看CPU是几核<br>
+<font color="red">cat /proc/cpuinfo |grep "cores"|uniq</font><br><br>
+4.查看CPU的主频<br>
+<font color="red">cat /proc/cpuinfo |grep MHz|uniq </font><br><br>
+5.查看当前操作系统内核信息<br>
+<font color="red">uname -a</font><br><br>
+6.查看有几棵几核的cpu<br>
+<font color="red">cat /proc/cpuinfo | grep physical | uniq -c</font><br><br>
+</div>
+
+<div class="title1"> 1. linux中查看内存信息   </div>
+命令：<br>
+<div class="rig">
+<font color="red">cat /proc/meminfo</font><br><br>
+</div>
+
