@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  linux命令uptime
+title:  linux命令uptime和Load Average
 categories:
   - linux
 ---
@@ -14,5 +14,17 @@ categories:
 <font color="red">19:06  up  8:10, 4 users, load averages: 1.13 1.17 1.22</font>
 </div>
 Unix 命令，显示系统已经运行了多长时间，它依次显示下列信息：当前时间、系统已经运行了多长时间、目前有多少登陆用户、系统在过去的1分钟、5分钟和15分钟内的平均负载。
+</div>
+<div class="title1"> 2. Load Average(平均负载)基本概念   </div>
+<div class="rig">
+1. Load 指的是运行队列(run-queue)的长度：L = 等待进程的数目 + 运行进程的数目<br>
+2. Load Average指的是在一段时间内CPU正在处理以及等待CPU处理的进程数之和的统计信息，也就是CPU使用队列的长度的统计信息。<br>
+3. Load Average反映了CPU的使用情况和申请情况.<br>
+</div>
+<div class="title1"> 3. CPU利用率与Load Average的区别   </div>
+<div class="rig">
+CPU利用率，是对一个时间段内CPU使用状况的统计，通过这个指标可以看出在某一个时间段内CPU被占用的情况，如果CPU被占用时间很高，那么就需要考虑CPU是否已经处于超负荷运作，长期超负荷运作对于机器本身来说是一种损害，因此必须将CPU的利用率控制在一定的比例下，以保证机器的正常运作。<br>
+Load Average是 CPU的Load，它所包含的信息不是CPU的使用率状况，而是在一段时间内CPU正在处理以及等待CPU处理的进程数之和的统计信息，也就是CPU使用队列的长度的统计信息。<br>
+那么CPU利用率与Load Average对于性能测试的意义有什么区别呢？实际上，CPU利用率反映的是CPU被使用的情况，当CPU长期处于被使用而没有得到足够的时间休息间歇，那么对于CPU硬件来说是一种超负荷的运作，需要调整使用频度。而Load Average却从另一个角度来展现对于CPU使用状态的描述，Load Average越高说明对于CPU资源的竞争越激烈，CPU资源比较短缺。对于资源的申请和维护其实也是需要很大的成本，所以在这种高Average Load的情况下CPU资源的长期“热竞争”也是对于硬件的一种损害。
 </div>
 
