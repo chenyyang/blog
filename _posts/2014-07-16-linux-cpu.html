@@ -33,9 +33,24 @@ cat /proc/cpuinfo中的信息<br>
 <font color="red">cat /proc/cpuinfo | grep physical | uniq -c</font><br><br>
 </div>
 
-<div class="title1"> 1. linux中查看内存信息   </div>
+<div class="title1"> 2. linux中查看内存信息   </div>
 命令：<br>
 <div class="rig">
 <font color="red">cat /proc/meminfo</font><br><br>
+</div>
+<div class="title1">3. 查看机器型号  </div>
+命令：<br>
+<div class="rig">
+<font color="red">dmidecode | grep "Product Name"  </font><br><br>
+</div>
+<div class="title1">4.查看网卡信息 </div>
+命令：<br>
+<div class="rig">
+<font color="red"> dmesg | grep -i eth </font><br><br>
+</div>
+<div class="title1">5. 操作系统发行版信息</div>
+命令：<br>
+<div class="rig">
+<font color="red"> cat /etc/issue</font><br><br>
 </div>
 
