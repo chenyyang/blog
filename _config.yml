@@ -1,7 +1,9 @@
 baseurl: /blog
+auto: true
 production: false
 timezone: America/New_York
 markdown: kramdown
+paginate: 10
 kramdown:
   use_coderay: true
   coderay:
