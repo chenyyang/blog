@@ -29,12 +29,12 @@ true：表示当前logger的appender-ref和rootLogger的appender-ref都有效。
 	<param name="showIp" value="true" />
 </appender>
 <logger name="com.test.LogUtils.Scribe" additivity="true">
-	<level value="info" />
-	<appender-ref ref="scribe" />
+	<level value="info" / >
+	<appender-ref ref="scribe" / >
 </logger>
 <root>
-	<level value="${root_log4j_level}" />
-	<appender-ref ref="stdout" />
+	<level value="${root_log4j_level}" / >
+	<appender-ref ref="stdout" / >
 </root>	
 </div>
 上面的配置，最终com.test.LogUtils.Scribe文件的log会调用两个appender，scribe和stdout，即使root中的${root_log4j_level}是error，也会在stdout中打出来，因为只是用了root中的appender－ref。
