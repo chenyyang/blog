@@ -1,8 +1,8 @@
 ---
-
-layout: post
-categories: [Computer Vision]
-tags: [增强现实 ,AR, 机器视觉, 算法]
+layout: default
+title:  log4j additivity
+categories:
+  - others
 
 ---
 **这是篇旧文了= =没有什么格式**
