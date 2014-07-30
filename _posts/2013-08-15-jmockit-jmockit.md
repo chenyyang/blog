@@ -1,3 +1,9 @@
+---
+layout: default
+title: jmockit 
+categories:
+  - jmockit
+---
 
 # {{ page.title }}
 
@@ -5,9 +11,10 @@
 
 ### 1. 根据传入的参数做限制
 代码：
+
 {% highlight c %}
 /* hello world demo */
-#include <stdio.h>
+include <stdio.h>
 int main(int argc, char **argv)
 {
     printf("Hello, World!\n");
