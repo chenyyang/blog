@@ -4,12 +4,23 @@ title: jmockit
 categories:
   - jmockit
 ---
+
 # {{ page.title }}
 
 [jmockit参考原文](http://www.iteye.com/blogs/tag/jmockit)
 
 ### 1. 根据传入的参数做限制
 代码：
+
+{% highlight c %}
+/* hello world demo */
+include <stdio.h>
+int main(int argc, char **argv)
+{
+    printf("Hello, World!\n");
+    return 0;
+}
+{% endhighlight %}
 
 ```java
 new Expectations() {
