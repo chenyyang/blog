@@ -4,6 +4,8 @@ production: false
 timezone: America/New_York
 markdown: kramdown
 paginate: 10
+pygments: true
+mardown: redcarpet
 kramdown:
   use_coderay: true
   coderay:
