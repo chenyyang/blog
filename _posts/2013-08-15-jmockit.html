@@ -4,56 +4,40 @@ title: jmockit
 categories:
   - jmockit
 ---
+# {{ page.title }}
 
-<h2>{{ page.title }}</h2>
-<div id="sina_keyword_ad_area2" class="articalContent  ">
-			网址：<br>
-http://www.iteye.com/blogs/tag/jmockit<br>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace"><i>Assert.assertEquals(</i><font color="#7F0055"><i><b>true</b></i></font><i>,</i> <font color="#0000C0"><i>test</i></font><i>.getTestBoolean(9));</i></font><font face="Monospace"><span><i>检测返回值</i></span></font></font></p>
-<p style="margin-bottom: 0in"><font style="font-size: 16px;"><br></font></p>
-<p style="margin-bottom: 0in"><font style="font-size: 16px;">1.</font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>new</b></font><font color="#000000">Expectations()
-{</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">{</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#0000C0">test</font><font color="#000000">.getTestBoolean(10);</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#0000C0"><i>result</i></font><font color="#000000">=</font>
-<font color="#7F0055"><b>false</b></font><font color="#000000">;</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#0000C0"><i>times</i></font><font color="#000000">=
-1;</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">};</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#000000">2.</font>
-<font color="#7F0055"><b>new</b></font><font color="#000000">Expectations(MockService.</font><font color="#7F0055"><b>class</b></font><font color="#000000">)
-{</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">{</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#0000C0">test</font><font color="#000000">.getTestBoolean(10);</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#0000C0"><i>result</i></font><font color="#000000">=</font>
-<font color="#7F0055"><b>false</b></font><font color="#000000">;</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#0000C0"><i>times</i></font><font color="#000000">=
-1;</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">};</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;"><br></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="WenQuanYi Micro Hei"><span><font color="#000000"><font face="Monospace">第二种方法会限制只有传入的数值是</font></font></span></font><font style="font-size: 16px;" color="#000000"><font face="Monospace">10</font><font face="WenQuanYi Micro Hei"><span><font face="Monospace">的才会进入这个设置中，如果不是</font></span></font></font><font style="font-size: 16px;" color="#000000"><font face="Monospace">10</font><font face="WenQuanYi Micro Hei"><span><font face="Monospace">，则会进入自身的</font></span></font></font><font style="font-size: 16px;" color="#0000C0"><font face="Monospace">test</font></font><font style="font-size: 16px;" color="#000000"><font face="Monospace">.getTestBoolean(10)</font><font face="WenQuanYi Micro Hei"><span><font face="Monospace">逻辑中。</font></span></font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="WenQuanYi Micro Hei"><span><font face="Monospace">第一种方法会校验传入的参数是否是10，如果不是报错。</font></span></font></font></p>
-<p style="margin-bottom: 0in" align="left"><br></p>
-<p style="margin-bottom: 0in" align="left"><br></p>
-<p style="margin-bottom: 0in"><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F"><i>//</i></font></font>
-<font style="font-size: 16px;" face="Monospace"><span><font color="#3F7F5F"><i>对私有</i></font></span></font><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F"><i><u>int</u></i></font></font><font style="font-size: 16px;" face="Monospace"><span><font color="#3F7F5F"><i>类型的</i></font></span></font><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F"><i>memberCounts</i></font></font><font style="font-size: 16px;" face="Monospace"><span><font color="#3F7F5F"><i>进行设值</i></font></span></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#7F0055"><font face="Monospace"><b>this</b></font></font><font style="font-size: 16px;" color="#000000"><font face="Monospace">.setField(</font></font><font style="font-size: 16px;" color="#0000C0"><font face="Monospace">instanceInternalAccess</font></font><font style="font-size: 16px;" color="#000000"><font face="Monospace">,</font></font> <font style="font-size: 16px;" color="#2A00FF"><font face="Monospace">"memberCounts"</font></font><font style="font-size: 16px;" color="#000000"><font face="Monospace">,
-2);</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F"><i>//</i></font></font> <font style="font-size: 16px;" face="Monospace"><span><font color="#3F7F5F"><i>对私有方法进行</i></font></span></font><font style="font-size: 16px;" face="Monospace"><font color="#3F7F5F"><i>mock</i></font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>this</b></font><font color="#000000">.invoke(</font><font color="#0000C0">instanceInternalAccess</font><font color="#000000">,</font> <font color="#2A00FF">"getMemberCounts"</font><font color="#000000">);</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#0000C0"><font face="Monospace"><i>result</i></font></font><font style="font-size: 16px;" color="#000000"><font face="Monospace">=
-2;</font></font></p>
-<p style="margin-bottom: 0in" align="left"><br></p>
-<p style="margin-bottom: 0in" align="left"><font face="Monospace">2.</font><font face="Monospace"><font style="font-size: 16px;" face="Monospace"><font color="#000000">MockUp</font></font>获取对象的属性</font></p>
-<p style="margin-bottom: 0in" align="left">&nbsp;<wbr></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" face="Monospace"><font color="#7F0055"><b>new</b></font><font color="#000000">MockUp&lt;</font><font color="#000000"><u>XCacheImpl</u></font><font color="#000000">&gt;() {</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#7F0055"><font face="Monospace"><b>public</b></font></font><font style="font-size: 16px;" color="#000000"><font face="Monospace"><u>XCacheImpl</u></font></font><font style="font-size: 16px;" color="#0000C0"><font face="Monospace">it</font></font><font style="font-size: 16px;" color="#000000"><font face="Monospace">;</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">}</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">对象名一定要是it；</font></font></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace">只有被添加@Mock的方法才会被mock；<br></font></font></p>
-<p style="margin-bottom: 0in" align="left"><br></p>
-<p style="margin-bottom: 0in" align="left"><font style="font-size: 16px;" color="#000000"><font face="Monospace"><br></font></font></p>							
-		</div>
+[jmockit实践](http://www.iteye.com/blogs/tag/jmockit)
+
+### 1. 根据传入的参数做限制
+
+	newExpectations() {
+		test.getTestBoolean(10);
+		result= false;
+		times= 1;
+	};
+
+	newExpectations(MockService.class) {
+	test.getTestBoolean(10);
+	result= false;
+	times= 1;
+	};
+
+第二种方法会限制只有传入的数值是10的才会进入这个设置中，如果不是10，则会进入自身的test.getTestBoolean(10)逻辑中。
+
+第一种方法会校验传入的参数是否是10，如果不是报错。
+
+	// 对私有int类型的memberCounts进行设值
+	this.setField(instanceInternalAccess, "memberCounts", 2);
+	// 对私有方法进行mock
+	this.invoke(instanceInternalAccess, "getMemberCounts");
+	result= 2;
+
+### 2.MockUp获取对象的属性
+
+	newMockUp<XCacheImpl>() {
+		public XCacheImpl it;
+	}
+
+对象名一定要是it；
+
+只有被添加@Mock的方法才会被mock；
