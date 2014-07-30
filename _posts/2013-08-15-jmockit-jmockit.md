@@ -34,9 +34,11 @@ categories:
 	// 对私有方法进行mock
 	this.invoke(instanceInternalAccess, "getMemberCounts");
 	result= 2;
-
+  
 
 ### 2.MockUp获取对象的属性
+
+代码：
 
 	new MockUp<XCacheImpl>() {
 		public XCacheImpl it;
