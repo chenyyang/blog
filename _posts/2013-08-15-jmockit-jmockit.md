@@ -8,9 +8,7 @@ categories:
 # {{ page.title }}
 
 [jmockit参考原文](http://www.iteye.com/blogs/tag/jmockit)
-
 ### 1. 根据传入的参数做限制
-代码：
 <pre class="prettyPrint">
 // code here
 /* hello world demo */
