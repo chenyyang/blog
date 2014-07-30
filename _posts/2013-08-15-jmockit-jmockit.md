@@ -8,6 +8,7 @@ categories:
 # {{ page.title }}
 
 [jmockit参考原文](http://www.iteye.com/blogs/tag/jmockit)
+
 ### 1. 根据传入的参数做限制
 <pre class="prettyPrint">
 // code here
@@ -20,7 +21,7 @@ int main(int argc, char **argv)
 }
 </pre>
 
-{% highlight c %}
+{% highlight java %}
 /* hello world demo */
 include <stdio.h>
 int main(int argc, char **argv)
