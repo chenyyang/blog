@@ -12,13 +12,17 @@ categories:
 ### 1. 根据传入的参数做限制
 代码：
 
-new Expectations() { 
-	test.getTestBoolean(10); 
-	result= false; 
-	times= 1; 
-};
-
-new Expectations(MockService.class) { test.getTestBoolean(10); result= false; times= 1; }; 
+	new Expectations() { 
+		test.getTestBoolean(10); 
+		result= false; 
+		times= 1; 
+	};
+	
+	new Expectations(MockService.class) { 
+		test.getTestBoolean(10); 
+		result= false; 
+		times= 1; 
+	}; 
 
 
 第二种方法会限制只有传入的数值是10的才会进入这个设置中，如果不是10，则会进入自身的test.getTestBoolean(10)逻辑中。
