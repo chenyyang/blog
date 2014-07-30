@@ -1,9 +1,3 @@
----
-layout: default
-title: jmockit 
-categories:
-  - jmockit
----
 # {{ page.title }}
 
 [jmockit参考原文](http://www.iteye.com/blogs/tag/jmockit)
