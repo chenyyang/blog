@@ -32,6 +32,7 @@ categories:
 	this.invoke(instanceInternalAccess, "getMemberCounts");
 	result= 2;
 
+
 ### 2.MockUp获取对象的属性
 
 	newMockUp<XCacheImpl>() {
