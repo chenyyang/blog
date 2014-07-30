@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/blog/resource/site.css" />
     <link rel="shortcut icon" href="/favicon.png" />
     <link rel="stylesheet" href="/blog/resource/prettify.css" />
-    <link rel="stylesheet" href="/blog/resource/prettify.js" />
+    <script href="/blog/resource/prettify.js" ></script>
     <script src="/blog/resource/jquery-1.7.1.min.js"></script> 
     <script src="/blog/resource/site.js"></script>
   </head>
@@ -65,6 +65,10 @@ while(n < $(".code").size()){
    
    n++;
 }
+$(document).ready(function() {
+   $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto');
+   prettyPrint();
+});
 </script>
 
 </html>
