@@ -69,10 +69,10 @@ while(n < $(".code").size()){
 </script>
 <script type="text/javascript">
 $(function() {
-  window.prettyPrint && prettyPrint();
+  $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto');
 });
 $(function() {
-  $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto');
+  window.prettyPrint && prettyPrint();
 });
 </script>
 </html>
