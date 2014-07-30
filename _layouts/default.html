@@ -65,10 +65,12 @@ while(n < $(".code").size()){
    
    n++;
 }
-$(document).ready(function() {
-   $('pre').addClass('prettyprint linenums').attr('style', 'overflow:auto');
-   prettyPrint();
-});
-</script>
 
+</script>
+<script type="text/javascript">
+  $(function(){
+    $("pre").addClass("prettyprint linenums");
+    prettyPrint();
+  });
+</script>
 </html>
