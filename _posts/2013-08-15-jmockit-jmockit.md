@@ -9,7 +9,7 @@ categories:
 [jmockit实践](http://www.iteye.com/blogs/tag/jmockit)
 
 ### 1. 根据传入的参数做限制
-...java
+...bash
 	new Expectations() {
 		test.getTestBoolean(10);
 		result= false;
