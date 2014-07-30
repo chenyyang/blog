@@ -9,7 +9,7 @@ categories:
 
 [jmockit参考原文](http://www.iteye.com/blogs/tag/jmockit)
 
-### 1. 根据传入的参数做限制
+## 1. 根据传入的参数做限制
 代码：
 
 	new Expectations() { 
@@ -34,9 +34,10 @@ categories:
 	// 对私有方法进行mock
 	this.invoke(instanceInternalAccess, "getMemberCounts");
 	result= 2;
+以上是对变量和方法的反射控制。
   
 
-### 2.MockUp获取对象的属性
+## 2.MockUp获取对象的属性
 
 代码：
 
