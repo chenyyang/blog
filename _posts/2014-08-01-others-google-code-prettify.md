@@ -7,7 +7,6 @@ categories:
 ---
 # {{ page.title }}
 
-google-code-prettfy是利用css和js来完成代码高亮和行号.
 
 ##使用方法
 1. 从https://code.google.com/p/google-code-prettify/downloads/list中下载中打包下载pretty.css以及pretty.js,并保存到本地服务器的相应目录中来引用
@@ -30,6 +29,7 @@ google-code-prettfy是利用css和js来完成代码高亮和行号.
 		window.prettyPrint && prettyPrint();
 	});
 	</script>
+
 <br>
 其中addClass('prettyprint linenums')的linenums是添加行号的意思。默认只显示第5、10、15…行，可以在css文件中li的格式添加list-style-type: decimal;，以显示全部行号。
 
