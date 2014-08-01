@@ -18,7 +18,6 @@ categories:
 	<link rel="stylesheet" href="/blog/resource/prettify-desert.css" />
 	<script type="text/javascript" src="/blog/resource/prettify.js" ></script>
     
-<br>
 
 3. 添加脚本，用于识别并高亮代码块，这个需要使用jQuery。
 
@@ -31,7 +30,6 @@ categories:
 	});
 	</script>
 
-<br>
 其中addClass('prettyprint linenums')的linenums是添加行号的意思。默认只显示第5、10、15…行，可以在css文件中li的格式添加list-style-type: decimal;，以显示全部行号。
 
 4. 使用
