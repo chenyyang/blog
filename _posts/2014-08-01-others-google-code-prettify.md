@@ -10,7 +10,7 @@ categories:
 
 ##1.下载
 
-从https://code.google.com/p/google-code-prettify/downloads/list中下载中打包下载pretty.css以及pretty.js,并保存到本地服务器的相应目录中来引用
+从[https://code.google.com/p/google-code-prettify/downloads/list](https://code.google.com/p/google-code-prettify/downloads/list)中下载中打包下载pretty.css以及pretty.js,并保存到本地服务器的相应目录中来引用
 
 ##2.引用pretty.css以及pretty.js
 
