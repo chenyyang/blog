@@ -16,8 +16,8 @@ google-code-prettfy是利用css和js来完成代码高亮和行号.
 
 如下:
 
-   <link rel="stylesheet" href="/blog/resource/prettify-desert.css" />
-   <script type="text/javascript" src="/blog/resource/prettify.js" ></script>
+  <link rel="stylesheet" href="/blog/resource/prettify-desert.css" />
+  <script type="text/javascript" src="/blog/resource/prettify.js" ></script>
     
 3. 添加脚本，用于识别并高亮代码块，这个需要使用jQuery。
 
