@@ -17,6 +17,8 @@ categories:
 
 	<link rel="stylesheet" href="/blog/resource/prettify-desert.css" />
 	<script type="text/javascript" src="/blog/resource/prettify.js" ></script>
+	
+考虑到加载速度，最好js写到文档末尾，body闭合标签之前，css写到头部。
 
 ###3.添加脚本，用于识别并高亮代码块，这个需要使用jQuery。
 
