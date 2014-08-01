@@ -10,7 +10,9 @@ categories:
 
 ##使用方法
 
-###1.从https://code.google.com/p/google-code-prettify/downloads/list中下载中打包下载pretty.css以及pretty.js,并保存到本地服务器的相应目录中来引用
+###1.下载
+
+从https://code.google.com/p/google-code-prettify/downloads/list中下载中打包下载pretty.css以及pretty.js,并保存到本地服务器的相应目录中来引用
 
 ###2.引用pretty.css以及pretty.js
 
@@ -21,7 +23,7 @@ categories:
 	
 考虑到加载速度，最好js写到文档末尾，body闭合标签之前，css写到头部。
 
-###3.添加脚本，用于识别并高亮代码块，这个需要使用jQuery。
+###3.添加脚本
 
 如下：
 
@@ -32,7 +34,7 @@ categories:
 	});
 	</script>
 
-其中addClass('prettyprint linenums')的linenums是添加行号的意思。默认只显示第5、10、15…行，可以在css文件中li的格式添加list-style-type: decimal;，以显示全部行号。
+用于识别并高亮代码块，这个需要使用jQuery。其中addClass('prettyprint linenums')的linenums是添加行号的意思。默认只显示第5、10、15…行，可以在css文件中li的格式添加list-style-type: decimal;，以显示全部行号。
 
 ###4.使用
 
