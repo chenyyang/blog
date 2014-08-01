@@ -11,6 +11,13 @@ categories:
 
 ## 1. 根据传入的参数做限制
 代码：
+<pre class="prettyPrint">
+new Expectations() { 
+	test.getTestBoolean(10); 
+	result= false; 
+	times= 1; 
+};
+</pre>
 
 	new Expectations() { 
 		test.getTestBoolean(10); 
