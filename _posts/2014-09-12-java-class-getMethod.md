@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  java class.getMethods
+title:  class.getMethods
 categories:
   - java
 

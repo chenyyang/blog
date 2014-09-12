@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  java Annotation继承关系
+title:  Annotation继承关系
 categories:
   - java
 
