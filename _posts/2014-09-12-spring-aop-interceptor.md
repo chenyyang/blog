@@ -93,9 +93,9 @@ categories:
 ##4. 配置文件
 
 	<bean class="com.test.service.TestAdvisor"></bean>
- 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
-        	<property name="proxyTargetClass" value="true"/>
-    	</bean>
+		<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+		<property name="proxyTargetClass" value="true"/>
+	</bean>
 
 ##5. 基础知识
 1. "切入点(Advisor)"的定义相当于更加细化地规定了哪些方法被哪些拦截器所拦截，而并非所有的方法都被所有的拦截器所拦截。在ProxyFactoryBean的属性中，interceptorNames属性的对象也由拦截（Advice）变成了引入通知（Advisor），正是在Advisor中详细定义了切入点（PointCut）和拦截（Advice）的对应关系，比如常见的基于名字的切入点匹配（NameMatchMethodPointcutAdvisor类）和基于正则表达式的切入点匹配（RegExpPointcutAdvisor类）。这些切入点都属于”静态切入点“，因为他们只在代理创建的时候被创建一次，而不是每次运行都创建。
