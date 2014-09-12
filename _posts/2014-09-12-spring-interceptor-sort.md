@@ -90,4 +90,4 @@ OrderComparator是排序算法的类。每次class init 以后会筛选出匹配
 	...
 	}
 
-如果是ROLE_INFRASTRUCTURE类型的拦截器（例如事务的拦截器：BeanFactoryTransactionAttributeSourceAdvisor）则会比自己定义的要晚拦截，一般我们的都是ROLE_APPLICATION类型。
+如果是ROLE_INFRASTRUCTURE类型的拦截器（例如事务的拦截器：BeanFactoryTransactionAttributeSourceAdvisor）则会比项目中定义的要晚拦截，先用项目中的拦截器，后用系统定义的拦截器。一般我们的都是ROLE_APPLICATION类型。
