@@ -414,7 +414,7 @@ ClassUtils用于处理class的逻辑，包括取method的class，如果是cglib�
 	    </bean> 
 	    <bean id="daynamicDataSource" class="com.test.jade.transaction.datasource.DynamicDataSource">
 	        <property name="jadeDataSourceFactory" ref="jade.dataSourceFactory" />
-	        <property name="defaultCatelog" value="newsfeed_v2" /><!-- 默认的catelog -->
+	        <property name="defaultCatelog" value="test" /><!-- 默认的catelog -->
 	    </bean>
 	   
 	     <!-- jade事务拦截器支持 -->
