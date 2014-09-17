@@ -1,0 +1,273 @@
+---
+layout: default
+title: Java Map遍历方式性能比较
+categories:
+  - java
+---
+
+# {{ page.title }}
+
+##1. 阐述
+
+    对于Java中Map的遍历方式，很多文章都推荐使用entrySet，认为 其比keySet的效率高很多。理由是：entrySet方法一次拿到所有key和value的集合；而keySet拿到的只是key的集合，针对每个 key，都要去Map中额外查找一次value，从而降低了总体效率。那么实际情况如何呢？
+
+    为了解遍历性能的真实差距，包括在遍历key+value、遍历key、遍历value等不同场景下的差异，我试着进行了一些对比测试。
+
+##2. 对比测试
+
+    一开始只进行了简单的测试，但结果却表明keySet的性能更好，这一点让我很是费解，不都说entrySet明显好于keySet吗？为了进一步地进行验证，于是采用了不同的测试数据进行更详细的对比测试。
+
+###2.1 测试数据
+
+####2.1.1 HashMap测试数据
+
+HashMap-1，大小为100万，key和value均为String，key的值为1、2、3……1000000：
+
+	
+	Map map = new HashMap();
+	
+	String key, value;
+	
+	for (i = 1; i <= num; i++) {
+	
+	    key = "" + i;
+	
+	    value = "value";
+	
+	    map.put(key, value);
+	
+	}
+
+HashMap-2，大小为100万，key和value均为String，key的值为50、100、150、200、……、50000000：
+
+	Map map = new HashMap();
+	
+	String key, value;
+	
+	for (i = 1; i <= num; i++) {
+	
+	    key = "" + (i * 50);
+	
+	    value = "value";
+	
+	    map.put(key, value);
+	
+	}
+
+####2.1.2 TreeMap测试数据
+
+TreeMap-1，大小为100万，key和value均为String，key的值为1、2、3……1000000：
+
+	Map map = new TreeMap();
+	
+	String key, value;
+	
+	for (i = 1; i <= num; i++) {
+	
+	    key = "" + i;
+	
+	    value = "value";
+	
+	    map.put(key, value);
+	
+	}
+
+TreeMap-2，大小为100万，key和value均为String，key的值为50、100、150、200、……、50000000，更离散：
+
+	Map map = new TreeMap();
+	
+	String key, value;
+	
+	for (i = 1; i <= num; i++) {
+	
+	    key = "" + (i * 50);
+	
+	    value = "value";
+	
+	    map.put(key, value);
+	
+	}
+
+###2.2 测试场景
+
+分别使用keySet、entrySet和values的多种写法测试三种场景：遍历key+value、遍历key、遍历value的场景。
+
+####2.2.1 遍历key+value
+
+keySet遍历key+value（写法1）：
+
+	
+	Iterator iter = map.keySet().iterator();
+	
+	while (iter.hasNext()) {
+	
+	    key = iter.next();
+	
+	    value = map.get(key);
+	
+	}
+
+keySet遍历key+value（写法2）：
+
+	for (String key : map.keySet()) {
+	    value = map.get(key);
+	}
+
+entrySet遍历key+value（写法1）：
+
+	Iterator iter = map.entrySet().iterator();
+	Entry entry;
+	while (iter.hasNext()) {
+	    entry = iter.next();
+	    key = entry.getKey();
+	    value = entry.getValue();
+	}
+
+entrySet遍历key+value（写法2）：
+
+	
+	for (Entry entry: map.entrySet()) {
+	
+	    key = entry.getKey();
+	
+	    value = entry.getValue();
+	
+	}
+####2.2.2 遍历key
+
+keySet遍历key（写法1）：
+
+	
+	Iterator iter = map.keySet().iterator();
+	
+	while (iter.hasNext()) {
+	
+	    key = iter.next();
+	
+	}
+
+keySet遍历key（写法2）：
+
+	for (String key : map.keySet()) {
+
+	}
+
+ entrySet遍历key（写法1）：
+
+	Iterator iter = map.entrySet().iterator();
+	while (iter.hasNext()) {
+    		key = iter.next().getKey();
+	}
+
+entrySet遍历key（写法2）：
+
+	for (Entry entry: map.entrySet()) {
+    		key = entry.getKey();
+	}
+
+####2.2.3 遍历value
+
+keySet遍历value（写法1）：
+	
+	Iterator iter = map.keySet().iterator();
+	while (iter.hasNext()) {
+    		value = map.get(iter.next());
+	}
+
+keySet遍历value（写法2）：
+
+	for (String key : map.keySet()) {
+		value = map.get(key);
+	}
+
+entrySet遍历value（写法1）：
+
+	Iterator iter = map.entrySet().iterator();
+	while (iter.hasNext()) {
+		value = iter.next().getValue();
+	}
+
+entrySet遍历value（写法2）：
+	
+	for (Entry entry: map.entrySet()) {
+		value = entry.getValue();
+	}
+
+values遍历value（写法1）：
+
+	Iterator iter = map.values().iterator();
+	while (iter.hasNext()) {
+		value = iter.next();
+	}
+
+values遍历value（写法2）：
+
+	for (String value : map.values()) {
+		
+	}
+
+###2.3 测试结果
+
+####2.3.1 HashMap测试结果
+
+<div align="center">
+<table style="" border="1" cellpadding="0" cellspacing="0">
+<tbody>
+<tr>
+<td valign="top" width="308">
+<p align="center"><span style="font-size: 14px;">单位：毫秒</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">HashMap-1</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">HashMap-2</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">keySet遍历key+value（写法1）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">39</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">93</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">keySet遍历key+value（写法2）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">38</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">87</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">entrySet遍历key+value（写法1）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">43</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">86</span></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="308">
+<p><span style="font-size: 14px;">entrySet遍历key+value（写法2）</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">43</span></p>
+</td>
+<td valign="top" width="112">
+<p align="center"><span style="font-size: 14px;">85</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
