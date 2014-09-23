@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  BeanPostProcessor init前后加操作
+title:  Spring BeanPostProcessor init前后加操作
 categories:
   - java
 
