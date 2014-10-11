@@ -53,7 +53,7 @@ TestAnnotation.java用于测试的annotation
 
 ##3. CopyOfBean.java
 
-	package com.xiaomi.miliao.newsfeed.inter;
+	package com.test.newsfeed.inter;
 	
 	import java.lang.annotation.Annotation;
 	import java.lang.reflect.Method;
@@ -108,23 +108,23 @@ TestAnnotation.java用于测试的annotation
 
 ##4. 结果 
 
-	 Bean class  annotation  :  @com.xiaomi.miliao.newsfeed.inter.TestAnnotation()  
-	 CopyOfBean class  annotation  :  @com.xiaomi.miliao.newsfeed.inter.TestAnnotation()  
+	 Bean class  annotation  :  @com.test.newsfeed.inter.TestAnnotation()  
+	 CopyOfBean class  annotation  :  @com.test.newsfeed.inter.TestAnnotation()  
 	
-	 Bean method public void com.xiaomi.miliao.newsfeed.inter.Bean.overrideMethod()  annotation length : 1
-	 @com.xiaomi.miliao.newsfeed.inter.TestAnnotation()  
-	 CopyOfBean method public void com.xiaomi.miliao.newsfeed.inter.CopyOfBean.overrideMethod()  annotation length : 0
-	
-	
-	 Bean method public abstract void com.xiaomi.miliao.newsfeed.inter.Bean.abstractMethod()  annotation length : 1
-	 @com.xiaomi.miliao.newsfeed.inter.TestAnnotation()  
-	 CopyOfBean method public void com.xiaomi.miliao.newsfeed.inter.CopyOfBean.abstractMethod()  annotation length : 0
+	 Bean method public void com.test.newsfeed.inter.Bean.overrideMethod()  annotation length : 1
+	 @com.test.newsfeed.inter.TestAnnotation()  
+	 CopyOfBean method public void com.test.newsfeed.inter.CopyOfBean.overrideMethod()  annotation length : 0
 	
 	
-	 Bean method public void com.xiaomi.miliao.newsfeed.inter.Bean.extendsMethod()  annotation length : 1
-	 @com.xiaomi.miliao.newsfeed.inter.TestAnnotation()  
-	 CopyOfBean method public void com.xiaomi.miliao.newsfeed.inter.Bean.extendsMethod()  annotation length : 1
-	 @com.xiaomi.miliao.newsfeed.inter.TestAnnotation()  
+	 Bean method public abstract void com.test.newsfeed.inter.Bean.abstractMethod()  annotation length : 1
+	 @com.test.newsfeed.inter.TestAnnotation()  
+	 CopyOfBean method public void com.test.newsfeed.inter.CopyOfBean.abstractMethod()  annotation length : 0
+	
+	
+	 Bean method public void com.test.newsfeed.inter.Bean.extendsMethod()  annotation length : 1
+	 @com.test.newsfeed.inter.TestAnnotation()  
+	 CopyOfBean method public void com.test.newsfeed.inter.Bean.extendsMethod()  annotation length : 1
+	 @com.test.newsfeed.inter.TestAnnotation()  
 	
 结果如上
 
