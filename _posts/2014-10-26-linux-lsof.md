@@ -2,7 +2,7 @@
 layout: default
 title:  lsof命令
 categories:
-  - java
+  - linux
 
 ---
 # {{ page.title }}
