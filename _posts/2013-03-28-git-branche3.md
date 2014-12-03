@@ -6,7 +6,7 @@ categories:
 ---
 # {{ page.title }}
 
-###1. 创建分支：
+### **1. 创建分支：**
 
 git branch -b [分支名] ：  git branch -b test (创建分支并进入分支)
 
@@ -16,7 +16,7 @@ git branch test
 
 git checkout test
 
-###2. 切换分支：
+### **2. 切换分支：**
 
 git checkout [分支名] ：  git checkout test
 
