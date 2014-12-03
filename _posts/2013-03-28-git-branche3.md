@@ -11,8 +11,8 @@ categories:
 git branch -b [分支名] ：  git branch -b test (创建分支并进入分支)
 
 相当于：
-git branch test
-git checkout test
+>git branch test
+>git checkout test
 
 ##2. 切换分支：
 
