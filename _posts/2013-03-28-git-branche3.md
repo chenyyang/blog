@@ -60,3 +60,7 @@ git reset --hard
 ###11. 重置提交
 
 git reset --hard HEAD~3 （会将最新的3次提交全部重置，就像没有提交过一样。）
+
+###12. 回退到某个版本
+
+git reset --hard 版本号 （git log查看版本号，例如：e4bee1e34ba96ef4abee442f64e588ad627a888a）
