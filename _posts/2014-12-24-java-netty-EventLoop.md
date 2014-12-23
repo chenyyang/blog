@@ -7,6 +7,7 @@ categories:
 ---
 # {{ page.title }}
 
+NioEventLoopGroup线程池里面有［cpu个数 * 每个cpu的核数 * (超线程 ? 2 : 1 )］个数的NioEventLoop,每个NioEventLoop里面有一个thread。
 
 ##1. NioEventLoopGroup线程池
 
