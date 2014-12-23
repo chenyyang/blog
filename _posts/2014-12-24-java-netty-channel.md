@@ -9,6 +9,8 @@ categories:
 
 本例子讲解server从启动监听到最终建立链接的过程。首先是server创建端口监听，接着接受请求事件，最后建立链接并监听链接。
 
+![大概的类图](../netty-channel.jpg)
+
 ##1. server启动代码：
 
     public final class SocksServer {
