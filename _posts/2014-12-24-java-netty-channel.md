@@ -82,9 +82,9 @@ categories:
 
 如上代码，如上代码拆分可见，重点方法init-->register-->doBind0。
 
-init方法主要是new channel。
-register主要是注册到线程池
-doBind0主要是套接字的绑定。
+init方法主要是channel 中handler的设置。<br>
+register主要是注册到线程池。<br>
+doBind0主要是套接字的绑定。<br>
 
 ##3. init方法
 
@@ -128,9 +128,10 @@ doBind0主要是套接字的绑定。
         });
     }
 
-init方法主要是p.addLast两个handler，handler()如果设置了则会监听整个channel的生命周期，hander2是一个匿名内部类，ServerBootstrapAcceptor方法是主要内容。
+init方法主要是p.addLast两个handler，handler()如果设置了则会监听整个channel的生命周期，hander2是一个匿名内部类，ServerBootstrapAcceptor方法是主要内容。<br>
+ServerBootstrapAcceptor里面是链接初始化类，包括客户端过来的链接的线程分配和注册selector。
 
-##4. AbstractNioChannel.doRegister()方法
+##4. register方法会执行对于的AbstractNioChannel.doRegister()方法
 
     protected void doRegister() throws Exception {
         boolean selected = false;
@@ -149,9 +150,9 @@ init方法主要是p.addLast两个handler，handler()如果设置了则会监听
         }
     }
 
-如上，javaChannel()获取封装的java channel，注册到对应的selector。这样在selector.select就可以监听到channel的事件,并且带上了channel的信息。
+如上，javaChannel()获取封装的java channel，注册到对应的selector。这样在线程在轮训selector.select就可以监听到channel的事件,并且带上了channel的信息。
 
-##5. read方法。线程循环执行read方法。
+##5. selector.select监听到事件，就执行channel的read方法。
 
     private final class NioMessageUnsafe extends AbstractNioUnsafe {
 
@@ -264,7 +265,7 @@ for循环查询accept，知道返回null表示没有链接请求。然后调用p
 
 accept发挥的java channel封装成了：new NioSocketChannel(this, ch)。
 
-##6.  pipeline.fireChannelRead()
+##6.  pipeline中handler只有ServerBootstrapAcceptor，所以fireChannelRead()执行ServerBootstrapAcceptor.channelRead
 
 ServerBootstrapAcceptor:
 
@@ -305,7 +306,7 @@ childGroup.register方法是重点，child是封装了channel对象的NioSocketC
 
 childGroup.register和之前注册到线程池相似，只是线程在遍历的时候调用的read方法，会进入AbstractNioByteChannel.NioByteUnsafe.read
 
-##7.  NioSocketChannel的read方法
+##7.  NioSocketChannel的read方法:AbstractNioByteChannel.NioByteUnsafe.read
 
         public void read() {
             final ChannelConfig config = config();
