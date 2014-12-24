@@ -63,3 +63,27 @@ final class DefaultChannelPipeline implements ChannelPipeline {
 
 如上列举了部分变量的意思。简而言之ChannelPipeline就是一个双向链表。
 
+head=HeadContext,HeadContext是一个DefaultChannelPipeline的内部类
+
+    static final class HeadContext extends AbstractChannelHandlerContext implements ChannelOutboundHandler {
+
+        @Override
+        public void bind(
+                ChannelHandlerContext ctx, SocketAddress localAddress, ChannelPromise promise)
+                throws Exception {
+            unsafe.bind(localAddress, promise);
+        }
+
+        @Override
+        public void connect(
+                ChannelHandlerContext ctx,
+                SocketAddress remoteAddress, SocketAddress localAddress,
+                ChannelPromise promise) throws Exception {
+            unsafe.connect(remoteAddress, localAddress, promise);
+        }
+  
+    }
+
+上面是主要的两个方法，是建立链接的时候调用的。
+
+tail＝TailContext，TailContext是一个DefaultChannelPipeline的内部类，没有什么实质的逻辑。
