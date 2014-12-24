@@ -12,9 +12,7 @@ categories:
 
 事件流有两种，upstream事件和downstream事件。upstream是从socket read数据开始到最终处理到数据。downstream是write数据到socket。
 
-![流](/blog/image/netty-handler3.jpg)
-
-上面是stream事件的模拟图，左边是upstream,右边是downstream。upstream对应与ChannelInboundHandler和decoder，downstream对应ChannelOutboundHandler和encoder类。
+upstream对应与ChannelInboundHandler和decoder，downstream对应ChannelOutboundHandler和encoder类。
 
 ![大概的类图](/blog/image/netty-handler.jpg)
 
