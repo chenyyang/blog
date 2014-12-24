@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  channel
+title:  源码解析之channel
 categories:
   - netty
 
