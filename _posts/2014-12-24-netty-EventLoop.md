@@ -1,8 +1,8 @@
 ---
 layout: default
-title:  java netty之eventLoop
+title:  eventLoop
 categories:
-  - java
+  - netty
 
 ---
 # {{ page.title }}

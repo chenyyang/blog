@@ -1,8 +1,8 @@
 ---
 layout: default
-title:  java netty之channel
+title:  channel
 categories:
-  - java
+  - netty
 
 ---
 # {{ page.title }}
