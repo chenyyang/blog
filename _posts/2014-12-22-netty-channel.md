@@ -154,6 +154,31 @@ ServerBootstrapAcceptor里面是链接初始化类，包括客户端过来的链
 
 如上，javaChannel()获取封装的java channel，注册到对应的selector。这样在线程在轮训selector.select就可以监听到channel的事件,并且带上了channel的信息。
 
+SingleThreadEventExecutor.execute方法在AbstractUnsafe.register会调用。
+
+    @Override
+    public void execute(Runnable task) {
+        if (task == null) {
+            throw new NullPointerException("task");
+        }
+
+        boolean inEventLoop = inEventLoop();
+        if (inEventLoop) {
+            addTask(task);
+        } else {
+            startThread();
+            addTask(task);
+            if (isShutdown() && removeTask(task)) {
+                reject();
+            }
+        }
+
+        if (!addTaskWakesUp && wakesUpForTask(task)) {
+            wakeup(inEventLoop);
+        }
+    }
+如上，调用了startThread，线程就是在此处启动的。
+
 ##5. selector.select监听到事件，就执行channel的read方法。
 
     private final class NioMessageUnsafe extends AbstractNioUnsafe {
