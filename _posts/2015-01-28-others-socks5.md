@@ -13,7 +13,7 @@ categories:
 socks5是基于tcp的代理协议，socks4是早版本，不能支持UDP协议。HTTP代理基于应用层的代理协议，比socks5慢一些。
 
 缺点：<br>
-socks在传输层，基于tcp协议，一般是1080端口。HTTP代理是基于http协议，一般是80、8080端口。所以socks可能被防火墙拦截。而http不会。
+socks在传输层，基于tcp协议，一般是1080端口。HTTP代理是基于http协议，一般是80、8080、3128端口。所以socks可能被防火墙拦截。而http不会。
 
 ##2. socks5协议
 
