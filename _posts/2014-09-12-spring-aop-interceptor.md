@@ -68,11 +68,11 @@ categories:
 	
 	    private final StaticMethodMatcherPointcut pointcut = new StaticMethodMatcherPointcut() {
 	
-					@Override
-					public boolean matches(java.lang.reflect.Method method,Class targetClass) {
+		@Override
+		public boolean matches(java.lang.reflect.Method method,Class targetClass) {
 	                    return method.isAnnotationPresent(TestAnnotation.class);
-					}
-	            };
+		}
+	    };
 	
 	    @Autowired
 	    private TestInterceptor interceptor;
@@ -93,7 +93,7 @@ categories:
 ##4. 配置文件
 
 	<bean class="com.test.service.TestAdvisor"></bean>
-		<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
 		<property name="proxyTargetClass" value="true"/>
 	</bean>
 
