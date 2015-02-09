@@ -28,7 +28,7 @@ categories:
 
 ##2. 通过yum来进行mysql的安装
 
-我是通过yum的方式来进行mysql的数据库安装，首先我们可以输入 yum list | grep mysql 命令来查看yum上提供的mysql数据库可下载的版本：
+我是通过yum的方式来进行mysql的数据库安装，首先我们查看yum上提供的mysql数据库可下载的版本：
 
 
 	[root@xiaoluo ~]# yum list | grep mysql
@@ -98,7 +98,7 @@ categories:
 	正在启动 mysqld：                                            [确定]
 
 
-这时我们会看到第一次启动mysql服务器以后会提示非常多的信息，目的就是对mysql数据库进行初始化操作，当我们再次重新启动mysql服务时，就不会提示这么多信息了，如：
+<br>这时我们会看到第一次启动mysql服务器以后会提示非常多的信息，目的就是对mysql数据库进行初始化操作，当我们再次重新启动mysql服务时，就不会提示这么多信息了，如：
 
 
 	[root@xiaoluo ~]# service mysqld restart
@@ -106,14 +106,14 @@ categories:
 	正在启动 mysqld：                                          [确定]
 
 
-我们在使用mysql数据库时，都得首先启动mysqld服务，我们可以 通过  chkconfig --list | grep mysqld 命令来查看mysql服务是不是开机自动启动，如：
+<br>我们在使用mysql数据库时，都得首先启动mysqld服务，我们可以 通过  chkconfig --list | grep mysqld 命令来查看mysql服务是不是开机自动启动，如：
 
 
 	[root@xiaoluo ~]# chkconfig --list | grep mysqld
 	mysqld             0:关闭    1:关闭    2:关闭    3:关闭    4:关闭    5:关闭    6:关闭
 
 
-我们发现mysqld服务并没有开机自动启动，我们当然可以通过 chkconfig mysqld on 命令来将其设置成开机启动，这样就不用每次都去手动启动了
+<br>我们发现mysqld服务并没有开机自动启动，我们当然可以通过 chkconfig mysqld on 命令来将其设置成开机启动，这样就不用每次都去手动启动了
 
 
 	[root@xiaoluo ~]# chkconfig mysqld on
@@ -121,19 +121,19 @@ categories:
 	mysqld             0:关闭    1:关闭    2:启用    3:启用    4:启用    5:启用    6:关闭
 
 
-mysql数据库安装完以后只会有一个root管理员账号，但是此时的root账号还并没有为其设置密码，在第一次启动mysql服务时，会进行数据库的一些初始化工作，在输出的一大串信息中，我们看到有这样一行信息 ：
+<br>mysql数据库安装完以后只会有一个root管理员账号，但是此时的root账号还并没有为其设置密码，在第一次启动mysql服务时，会进行数据库的一些初始化工作，在输出的一大串信息中，我们看到有这样一行信息 ：
 
 
 	/usr/bin/mysqladmin -u root password 'new-password'　　// 为root账号设置密码
 
 
-所以我们可以通过 该命令来给我们的root账号设置密码(注意：这个root账号是mysql的root账号，非Linux的root账号)
+<br>所以我们可以通过 该命令来给我们的root账号设置密码(注意：这个root账号是mysql的root账号，非Linux的root账号)
 
 
 	[root@xiaoluo ~]# mysqladmin -u root password 'root'　　// 通过该命令给root账号设置密码为 root
 
 
-此时我们就可以通过 mysql -u root -p 命令来登录我们的mysql数据库了
+<br>此时我们就可以通过 mysql -u root -p 命令来登录我们的mysql数据库了
 
 
 ![大概的类图](/blog/image/mysql2.jpg)
