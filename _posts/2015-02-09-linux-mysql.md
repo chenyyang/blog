@@ -106,7 +106,7 @@ categories:
 	正在启动 mysqld：                                          [确定]
 
 
-<br>我们在使用mysql数据库时，都得首先启动mysqld服务，我们可以 通过  chkconfig --list | grep mysqld 命令来查看mysql服务是不是开机自动启动，如：
+<br>我们在使用mysql数据库时，都得首先启动mysqld服务，我们可以来查看mysql服务是不是开机自动启动，如：
 
 
 	[root@xiaoluo ~]# chkconfig --list | grep mysqld
