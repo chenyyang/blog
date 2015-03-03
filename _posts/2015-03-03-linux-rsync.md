@@ -134,11 +134,11 @@ sync的主要有以下三个配置文件rsyncd.conf(主配置文件)、rsyncd.se
 
 我们在例子中rsyncd.secrets的内容如下类似的；在文档中说，有些系统不支持长密码，自己尝试着设置一下吧。
 
-　　easylife:keer
-　　root:mike
+	easylife:keer
+	root:mike
 
-　　chown root.root rsyncd.secrets 　#修改属主
-　　chmod 600 rsyncd.secrets     #修改权限
+	chown root.root rsyncd.secrets 　#修改属主
+	chmod 600 rsyncd.secrets     #修改权限
 
 注：1、将rsyncd.secrets这个密码文件的文件属性设为root拥有, 且权限要设为600, 否则无法备份成功!            出于安全目的，文件的属性必需是只有属主可读。
 　　2、这里的密码值得注意，为了安全你不能把系统用户的密码写在这里。比如你的系统用户easylife密码是000000，为了安全你可以让rsync中的easylife为keer。这和samba的用户认证的密码原理是差不多的。
@@ -147,10 +147,10 @@ sync的主要有以下三个配置文件rsyncd.conf(主配置文件)、rsyncd.se
 
 它是定义rysnc服务器信息的，也就是用户登录信息。比如让用户知道这个服务器是谁提供的等；类似ftp服务器登录时，我们所看到的 linuxsir.org ftp ……。 当然这在全局定义变量时，并不是必须的，你可以用#号注掉，或删除；我在这里写了一个 rsyncd.motd的内容为：
 
-　　++++++++++++++++++++++++++++++++++++++++++++++
-　　Welcome to use the mike.org.cn rsync services!
-           2002------2009
-　　++++++++++++++++++++++++++++++++++++++++++++++
+	++++++++++++++++++++++++++++++++++++++++++++++
+	Welcome to use the mike.org.cn rsync services!
+		2002------2009
+	++++++++++++++++++++++++++++++++++++++++++++++
 
 ##3. 启动rsync服务器
 
@@ -158,11 +158,11 @@ sync的主要有以下三个配置文件rsyncd.conf(主配置文件)、rsyncd.se
 
 A、--daemon参数方式，是让rsync以服务器模式运行
 
-　　#/usr/bin/rsync --daemon  --config=/etc/rsyncd/rsyncd.conf 　#--config用于指定rsyncd.conf的位置,如果在/etc下可以不写
+	#/usr/bin/rsync --daemon  --config=/etc/rsyncd/rsyncd.conf 　#--config用于指定rsyncd.conf的位置,如果在/etc下可以不写
 
 B、xinetd方式
 
-	yum install -y xinetd
+	#yum install -y xinetd
 
 修改services加入如下内容
 
@@ -195,16 +195,16 @@ B、xinetd方式
 
 rsync中的参数
 
-　　-r 是递归 
-　　-l 是链接文件，意思是拷贝链接文件；-p 表示保持文件原有权限；-t 保持文件原有时间；-g 保持文件原有用户组；-o 保持文件原有属主；-D 相当于块设备文件；
-　　-z 传输时压缩；
-　　-P 传输进度；
-　　-v 传输时的进度等信息，和-P有点关系，自己试试。可以看文档；
-　　-e ssh的参数建立起加密的连接。
-　　-u只进行更新，防止本地新文件被重写，注意两者机器的时钟的同时
-　　--progress是指显示出详细的进度情况
-　　--delete是指如果服务器端删除了这一文件，那么客户端也相应把文件删除，保持真正的一致
-　　--password-file=/password/path/file来指定密码文件，这样就可以在脚本中使用而无需交互式地输入验证密码了，这里需要注意的是这份密码文件权限属性要设得只有属主可读。
+　　-r 是递归 <br>
+　　-l 是链接文件，意思是拷贝链接文件；-p 表示保持文件原有权限；-t 保持文件原有时间；-g 保持文件原有用户组；-o 保持文件原有属主；-D 相当于块设备文件；<br>
+　　-z 传输时压缩；<br>
+　　-P 传输进度；<br>
+　　-v 传输时的进度等信息，和-P有点关系，自己试试。可以看文档；<br>
+　　-e ssh的参数建立起加密的连接。<br>
+　　-u只进行更新，防止本地新文件被重写，注意两者机器的时钟的同时<br>
+　　--progress是指显示出详细的进度情况<br>
+　　--delete是指如果服务器端删除了这一文件，那么客户端也相应把文件删除，保持真正的一致<br>
+　　--password-file=/password/path/file来指定密码文件，这样就可以在脚本中使用而无需交互式地输入验证密码了，这里需要注意的是这份密码文件权限属性要设得只有属主可读。<br>
 
 ###4.1. 一些实例：
 
@@ -246,12 +246,12 @@ B1、列出rsync 服务器上的所提供的同步内容；
 后面的root@ip中，root是指定密码文件中的用户名，之后的::rhel4home这是rhel4home模块名
 B2、rsync客户端同步数据；
 
-#rsync -avzP root@192.168.145.5::rhel4home rhel4home
-Password: 这里要输入root的密码，是服务器端rsyncd.secrets提供的。在前面的例子中我们用的是mike，输入的密码并不回显，输好就回车。
+	#rsync -avzP root@192.168.145.5::rhel4home rhel4home
+	#Password: 这里要输入root的密码，是服务器端rsyncd.secrets提供的。在前面的例子中我们用的是mike，输入的密码并不回显，输好就回车。
 
 注： 这个命令的意思就是说，用root用户登录到服务器上，把rhel4home数据，同步到本地当前目录rhel4home上。当然本地的目录是可以你自己 定义的。如果当你在客户端上当前操作的目录下没有rhel4home这个目录时，系统会自动为你创建一个；当存在rhel4home这个目录中，你要注意 它的写权限。
 
-#rsync -avzP  --delete linuxsir@linuxsir.org::rhel4home   rhel4home
+	#rsync -avzP  --delete linuxsir@linuxsir.org::rhel4home   rhel4home
 
 这回我们引入一个--delete 选项，表示客户端上的数据要与服务器端完全一致，如果 linuxsirhome目录中有服务器上不存在的文件，则删除。最终目的是让linuxsirhome目录上的数据完全与服务器上保持一致；用的时候要 小心点，最好不要把已经有重要数所据的目录，当做本地更新目录，否则会把你的数据全部删除；
 
