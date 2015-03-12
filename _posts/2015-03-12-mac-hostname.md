@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  Mac终端名字 
+title:  Mac终端主机名 
 categories:
   - mac
 
