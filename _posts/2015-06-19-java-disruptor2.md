@@ -31,7 +31,7 @@ Disruptor的YidldingWaitStrategy模式消耗cpu特别严重。
 <td>P1-C8</td><td>350万</td><td>900万（620+cpu,3.4 load）</td><td>680万</td>
 </tr>
 <tr>
-<td>P1-C16</td><td>2100万</td><td>780万（700+cpu,3.4 load）</td><td>680万</td>
+<td>P1-C16</td><td>210万</td><td>780万（700+cpu,3.4 load）</td><td>680万</td>
 </tr>
 <tr>
 <td>P1-C32</td><td>120万</td><td>440万（740+cpu,4 load）</td><td>700万</td>
@@ -107,3 +107,15 @@ Disruptor的YidldingWaitStrategy模式消耗cpu特别严重。
 
 
 通过上面可以看出BlockingWaitStrategy不管在方数据还是在取数据的时候都是有锁的。另外大部分线程包括生产者和消费者都在wait。
+
+##3. 总结
+
+1. disruptor的消费者越少qps效果越好，在consumer线程多的时候ThreadPoolExecutor比较好。
+
+2. disruptor的BlockingWaitStrategy模式cpu确实比ThreadPoolExecutor高，不是高很多。其他模式都比较耗cpu。
+
+3. 内存方面差不多，disruptor可能稍微好一点。
+                 
+4.disruptor有几个配置项bufferSize和thread不是很好配置，配置错了很影响性能，而ThreadPoolExecutor多配置了线程应该不会很大。
+
+5. ThreadPoolExecutor放入数据的时候如果buffer满了会抛出异常，disruptor则会等待。

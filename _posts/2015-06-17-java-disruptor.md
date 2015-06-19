@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  disruptor源码介绍一：参数介绍 
+title:  disruptor介绍二：源码参数介绍disruptor 
 categories:
   - Java
 
