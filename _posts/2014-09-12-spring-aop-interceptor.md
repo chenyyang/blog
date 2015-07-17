@@ -2,7 +2,7 @@
 layout: default
 title:  aop interceptor annotation实现
 categories:
-  - java
+  - Spring
 
 ---
 # {{ page.title }}

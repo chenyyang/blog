@@ -2,7 +2,7 @@
 layout: default
 title:  spring 拦截器加载顺序
 categories:
-  - java
+  - spring
 
 ---
 # {{ page.title }}
