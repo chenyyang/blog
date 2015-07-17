@@ -7,6 +7,8 @@ categories:
 ---
 # {{ page.title }}
 
+   JdbcTemplate是spring对数据库使用的封装。
+
    JdbcTemplate将我们使用的JDBC的流程封装起来，包括了异常的捕捉、SQL的执行、查询结果的转换等等。spring大量使用Template Method模式来封装固定流程的动作，XXXTemplate等类别都是基于这种方式的实现。 
    
    除了大量使用Template Method来封装一些底层的操作细节，spring也大量使用callback方式类回调相关类别的方法以提供JDBC相关类别的功能，使传统的JDBC的使用者也能清楚了解spring所提供的相关封装类别方法的使用。 
