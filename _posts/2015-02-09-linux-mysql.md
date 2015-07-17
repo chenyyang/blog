@@ -26,6 +26,8 @@ categories:
 
 在删除完以后我们可以通过 rpm -qa | grep mysql 命令来查看mysql是否已经卸载成功！！
 
+重新安装一定要删除mysql以前得文件/etc/my.cnf 中配置了文件得路径。
+
 ##2. 通过yum来进行mysql的安装
 
 我是通过yum的方式来进行mysql的数据库安装，首先我们查看yum上提供的mysql数据库可下载的版本：
