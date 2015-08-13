@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  solr data-import.xml
+title:  data-import.xml
 categories:
   - solr
 
@@ -45,8 +45,9 @@ Solr提供了full-import和delta-import两种导入方式，这篇文章主要�
         </document>
     </dataConfig>
 
+上面是一个delta-import示例。
 
-部分参数：
+## 1. 部分参数：
 
 entity:<br>
         entity是document下面的标签（data-config.xml）。使用这个参数可以有选择的执行一个或多个entity   。使用多个entity参数可以使得多个entity同时运行。如果不选择此参数那么所有的都会被运行。

@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  solr solrconfig.xml
+title:  solrconfig.xml
 categories:
   - solr
 

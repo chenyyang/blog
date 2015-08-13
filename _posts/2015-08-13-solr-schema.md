@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  solr schema.xml
+title:  schema.xml
 categories:
   - solr
 
