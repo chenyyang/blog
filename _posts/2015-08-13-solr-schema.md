@@ -1,13 +1,15 @@
 ---
 layout: default
-title:  solr schema.xml配置
+title:  solr schema.xml
 categories:
-  - java
+  - solr
 
 ---
 # {{ page.title }}
 
 schema.xml文件用户存储表的结构：
+
+1. 示例
 
     <?xml version="1.0" ?>
     <!--
@@ -61,6 +63,7 @@ schema.xml文件用户存储表的结构：
 
 上面是文件的例子，根据location来搜索附近的人，location是geohash类型，geohash是solr.GeoHashField.class定义的类。
 
+##2. 优化
 
 为了改进性能，可以采取以下几种措施：
 1.   将所有只用于搜索的，而不需要作为查询结果的field（特别是一些比较大的field）的stored设置为false。

@@ -1,8 +1,8 @@
 ---
 layout: default
-title:  solr data-import.xml配置
+title:  solr data-import.xml
 categories:
-  - java
+  - solr
 
 ---
 # {{ page.title }}
@@ -20,7 +20,9 @@ Solr提供了full-import和delta-import两种导入方式，这篇文章主要�
 其实last_index_time是最近一次索引（full-import或者delta-import）的时间。
 通过比较这个时间和我们数据库表中的timestamp列即可得出哪些是之后修改或者添加的。
 
-    <?xml version="1.0" encoding="UTF-8"?>
+## 1. 示例
+  
+   <?xml version="1.0" encoding="UTF-8"?>
     <dataConfig>
         <dataSource type="JdbcDataSource"
                     driver="com.mysql.jdbc.Driver"
@@ -46,15 +48,19 @@ Solr提供了full-import和delta-import两种导入方式，这篇文章主要�
 
 部分参数：
 
-entity:
+entity:<br>
         entity是document下面的标签（data-config.xml）。使用这个参数可以有选择的执行一个或多个entity   。使用多个entity参数可以使得多个entity同时运行。如果不选择此参数那么所有的都会被运行。
-clean:
+
+clean:<br>
         选择是否要在索引开始构建之前删除之前的索引，默认为true
-commit:
+
+commit:<br>
         选择是否在索引完成之后提交。默认为true
-optimize:
+
+optimize:<br>
         是否在索引完成之后对索引进行优化。默认为true
-debug:
+
+debug:<br>
         是否以调试模式运行，适用于交互式开发（interactive development mode）之中。
         请注意，如果以调试模式运行，那么默认不会自动提交，请加参数“commit=true”
 

@@ -1,11 +1,13 @@
 ---
 layout: default
-title:  solr solrconfig.xml配置
+title:  solr solrconfig.xml
 categories:
-  - java
+  - solr
 
 ---
 # {{ page.title }}
+
+## 1. 示例
 
 solrconfig.xml文件里面配置了这个库的信息。
 
@@ -85,7 +87,7 @@ solrconfig.xml文件里面配置了这个库的信息。
                 <str name="confFiles">schema.xml,stopwords.txt</str>
             </lst>
 
-            <!-- 从对应的配置如下  pollInterval表示同步间隔
+            <!-- 从对应从的配置如下  pollInterval表示同步间隔
             <lst name="slave">
                 <str name="masterUrl">http://master的ip:8983/solr/user_location</str>
                 <str name="pollInterval">00:00:10</str>
