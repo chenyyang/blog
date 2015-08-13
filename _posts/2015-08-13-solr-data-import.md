@@ -65,3 +65,10 @@ debug:<br>
         是否以调试模式运行，适用于交互式开发（interactive development mode）之中。
         请注意，如果以调试模式运行，那么默认不会自动提交，请加参数“commit=true”
 
+##2. 页面
+
+如果直接用solr启动的，需要到入jar包才能打开http://ip:8983/solr/#/user_location/dataimport//dataimport。
+
+在这个页面直接选择你需要的选项即可。
+
+<img src="/blog/image/solr-dataimport.png" style="max-width:80%;"/>
