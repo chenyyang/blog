@@ -31,17 +31,19 @@ appender-ref需要指到一个appender，最终还是通过这个appender打印�
 ##2. 压测
 
 <table>
-<tr><td>结果\条件</td><td>DailyRollingFileAppender</td><td>AsyncAppender</td>
+<tr><td>结果\条件 </td><td> DailyRollingFileAppender </td><td> AsyncAppender</td>
 </tr>
 <tr>
-<td>QPS</td><td>10万</td><td>22万</td></tr>
+<td>QPS</td><td> 10万</td><td> 22万</td></tr>
 <tr>
-<td>CPU</td><td>170%</td><td>125%</td></tr>
+<td>CPU</td><td> 170%</td><td> 125%</td></tr>
 <tr>
-<td>MEM</td><td>27.2%</td><td>27.3%</td></tr>
+<td>MEM</td><td> 27.2%</td><td> 27.3%</td></tr>
 <tr>
-<td>LOAD</td><td>0.25</td><td>1.2</td></tr>
+<td>LOAD</td><td> 0.25</td><td> 1.2</td></tr>
 </table>
+
+async确实提高了qps，但是load也上升不少。
 
 ##3. 源码解析
 
