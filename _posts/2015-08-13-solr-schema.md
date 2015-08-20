@@ -7,7 +7,8 @@ categories:
 ---
 # {{ page.title }}
 
-schema.xml文件用户存储表的结构：
+schema.xml文件用户存储表的结构,可以实时地修改，在页面上reload一下就行，但是此处修改的配置不会对以前的数据造成影响，也就是说新加的字段只会在以后的结果中输出。
+
 
 1. 示例
 
@@ -27,7 +28,7 @@ schema.xml文件用户存储表的结构：
     <!-- 表的字段已经对应的
             type：类型，和上面对应，
             indexed：是否是索引，将不需要被用于搜索的，而只是作为查询结果返回的field的indexed设置为false
-            stored：是否存储，将所有只用于搜索的，而不需要作为查询结果的field（特别是一些比较大的field）的stored设置为false
+            stored：是否存储，如果是false则不会作为查询结果返回，将所有只用于搜索的，而不需要作为查询结果的field（特别是一些比较大的field）的stored设置为false
             multiValued：是否有多个值（对可能存在多值的字段尽量设置为true，避免建索引时抛出错误）
             required： 是否必填项-->
     <field name="user_id"     type="slong"   indexed="true"  stored="true"  multiValued="false" required="true"/>
