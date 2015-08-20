@@ -11,6 +11,9 @@ schema.xml文件用户存储表的结构：
 
 1. 示例
 
+配置文件：
+
+    <?xml version="1.0" encoding="UTF-8" ?>
     <schema name="example core zero" version="1.1">
     
     <!-- 定义用到的字段类型，可以自定义 -->
