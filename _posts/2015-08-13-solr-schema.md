@@ -11,37 +11,36 @@ schema.xml文件用户存储表的结构：
 
 1. 示例
 
-
     <schema name="example core zero" version="1.1">
-
-       <!-- 定义用到的字段类型，可以自定义 -->
-        <fieldtype name="string"  class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
-        <fieldType name="slong" class="solr.SortableLongField" sortMissingLast="true" omitNorms="true"/>
-        <fieldType name="tint" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0"/>
-        <fieldType name="tlong" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
-        <fieldType name="int" class="solr.IntField"/>
-        <fieldtype name="geohash" class="solr.GeoHashField"/>
-
-        <!-- 表的字段已经对应的
-        type：类型，和上面对应，
-        indexed：是否是索引，将不需要被用于搜索的，而只是作为查询结果返回的field的indexed设置为false
-        stored：是否存储，将所有只用于搜索的，而不需要作为查询结果的field（特别是一些比较大的field）的stored设置为false
-        multiValued：是否有多个值（对可能存在多值的字段尽量设置为true，避免建索引时抛出错误）
-        required： 是否必填项-->
-        <field name="user_id"     type="slong"   indexed="true"  stored="true"  multiValued="false" required="true"/>
-        <field name="location"    type="geohash"   indexed="true"  stored="true"  multiValued="false" />
-        <field name="gender"      type="tint"   indexed="true"  stored="true"  multiValued="false" />
-        <field name="create_time" type="slong"     indexed="true"  stored="true"/>
-        <field name="_version_"   type="tlong"     indexed="true"  stored="true"/>
-
-        <!-- field to use to determine and enforce document uniqueness. -->
-        <uniqueKey>user_id</uniqueKey>
-
-        <!-- field for the QueryParser to use when an explicit fieldname is absent -->
-        <defaultSearchField>location</defaultSearchField>
-
-        <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
-        <solrQueryParser defaultOperator="OR"/>
+    
+    <!-- 定义用到的字段类型，可以自定义 -->
+    <fieldtype name="string"  class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
+    <fieldType name="slong" class="solr.SortableLongField" sortMissingLast="true" omitNorms="true"/>
+    <fieldType name="tint" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="tlong" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="int" class="solr.IntField"/>
+    <fieldtype name="geohash" class="solr.GeoHashField"/>
+    
+    <!-- 表的字段已经对应的
+            type：类型，和上面对应，
+            indexed：是否是索引，将不需要被用于搜索的，而只是作为查询结果返回的field的indexed设置为false
+            stored：是否存储，将所有只用于搜索的，而不需要作为查询结果的field（特别是一些比较大的field）的stored设置为false
+            multiValued：是否有多个值（对可能存在多值的字段尽量设置为true，避免建索引时抛出错误）
+            required： 是否必填项-->
+    <field name="user_id"     type="slong"   indexed="true"  stored="true"  multiValued="false" required="true"/>
+    <field name="location"    type="geohash"   indexed="true"  stored="true"  multiValued="false" />
+    <field name="gender"      type="tint"   indexed="true"  stored="true"  multiValued="false" />
+    <field name="create_time" type="slong"     indexed="true"  stored="true"/>
+    <field name="_version_"   type="tlong"     indexed="true"  stored="true"/>
+    
+    <!-- field to use to determine and enforce document uniqueness. -->
+    <uniqueKey>user_id</uniqueKey>
+    
+    <!-- field for the QueryParser to use when an explicit fieldname is absent -->
+    <defaultSearchField>location</defaultSearchField>
+    
+    <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
+    <solrQueryParser defaultOperator="OR"/>
     </schema>
 
 上面是文件的例子，根据location来搜索附近的人，location是geohash类型，geohash是solr.GeoHashField.class定义的类。
