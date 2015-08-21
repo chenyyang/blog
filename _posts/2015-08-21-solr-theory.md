@@ -272,11 +272,11 @@ Query Vector = {weight1, weight2, …… , weight N}
 
 举个例子，查询语句有11个Term，共有三篇文档搜索出来。其中各自的权重(Term weight)，如下表格。
 
-<img src="/blog/image/theory13.png" />
+<img src="/blog/image/theory13.png" style="max-width:90%;"/>
 
 于是计算，三篇文档同查询语句的相关性打分分别为：
 
-<img src="/blog/image/theory14.png" />
+<img src="/blog/image/theory14.png" style="max-width:90%;"/>
 
 于是文档二相关性最高，先返回，其次是文档一，最后是文档三。<br>
 到此为止，我们可以找到我们最想要的文档了。<br>
