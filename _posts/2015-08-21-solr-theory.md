@@ -61,7 +61,7 @@ Lucene 是一个高效的，基于Java 的全文检索库。
 反向索引的所保存的信息一般如下：<br>
 假设我的文档集合里面有100篇文档，为了方便表示，我们为文档编号从1到100，得到下面的结构<br>
 
-<img src="/blog/image/theory2.png" style="max-width:90%;"/>
+<img src="/blog/image/theory2.jpg" style="max-width:90%;"/>
 
 左边保存的是一系列字符串，称为词典 。<br>
 每个字符串都指向包含此字符串的文档(Document)链表，此文档链表称为倒排表 (Posting List)。<br>
@@ -71,7 +71,7 @@ Lucene 是一个高效的，基于Java 的全文检索库。
 2. 取出包含字符串“solr”的文档链表。<br>
 3. 通过合并链表，找出既包含“lucene”又包含“solr”的文件。 <br>
 
-<img src="/blog/image/theory3.png" style="max-width:90%;"/>
+<img src="/blog/image/theory3.jpg" style="max-width:90%;"/>
 
 看到这个地方，有人可能会说，全文检索的确加快了搜索的速度，但是多了索引的过程，两者加起来不一定比顺序扫描快多少。的确，加上索引的过程，全文检索不一定比顺序扫描快，尤其是在数据量小的时候更是如此。而对一个很大量的数据创建索引也是一个很慢的过程。<br>
 然而两者还是有区别的，顺序扫描是每次都要扫描，而创建索引的过程仅仅需要一次，以后便是一劳永逸的了，每次搜索，创建索引的过程不必经过，仅仅搜索创建好的索引就可以了。<br>
@@ -150,7 +150,7 @@ Stemming和lemmatization不是互斥关系，是有交集的，有的词利用�
 
 3. 合并相同的词(Term) 成为文档倒排(Posting List) 链表。
 
-<img src="/blog/image/theory6.png" />
+<img src="/blog/image/theory6.jpg" />
 
 4. 在此表中，有几个定义：
 
@@ -166,7 +166,7 @@ Frequency 即词频率，表示此文件中包含了几个此词(Term)。<br>
 然而事情并没有结束，找到了仅仅是全文检索的一个方面。不是吗？如果仅仅只有一个或十个文档包含我们查询的字符串，我们的确找到了。然而如果结果有一千个，甚至成千上万个呢？那个又是您最想要的文件呢？<br>
 打开Google吧，比如说您想在微软找份工作，于是您输入“Microsoft job”，您却发现总共有22600000个结果返回。好大的数字呀，突然发现找不到是一个问题，找到的太多也是一个问题。在如此多的结果中，如何将最相关的放在最前面呢？<br>
 
-<img src="/blog/image/theory7.png" />
+<img src="/blog/image/theory7.jpg" />
 
 当然Google做的很不错，您一下就找到了jobs at Microsoft。想象一下，如果前几个全部是“Microsoft does a good job at software industry…”将是多么可怕的事情呀。<br>
 如何像Google一样，在成千上万的搜索结果中，找到和查询语句最相关的呢？<br>
@@ -192,12 +192,12 @@ Frequency 即词频率，表示此文件中包含了几个此词(Term)。<br>
 如果发现查询语句不满足语法规则，则会报错。如lucene NOT AND learned，则会出错。<br>
 如上述例子，lucene AND learned NOT hadoop形成的语法树如下：<br>
 
-<img src="/blog/image/theory8.png" />
+<img src="/blog/image/theory8.jpg" />
 
 3. 第三步：语言处理同索引过程中的语言处理几乎相同。
 如learned变成learn等。<br>
 经过第二步，我们得到一棵经过语言处理的语法树。<br>
-<img src="/blog/image/theory9.png" />
+<img src="/blog/image/theory9.jpg" />
 
 ###4.3 第三步：搜索索引，得到符合语法树的文档。
 
