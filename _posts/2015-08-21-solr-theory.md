@@ -259,7 +259,7 @@ Query Vector = {weight1, weight2, …… , weight N}
 
 如图：
 
-<img src="/blog/image/theory11.png" />
+<img src="/blog/image/theory11.jpg" />
 
 我们认为两个向量之间的夹角越小，相关性越大。<br>
 所以我们计算夹角的余弦值作为相关性的打分，夹角越小，余弦值越大，打分越高，相关性越大。<br>
@@ -283,7 +283,7 @@ Query Vector = {weight1, weight2, …… , weight N}
 说了这么多，其实还没有进入到Lucene，而仅仅是信息检索技术(Information retrieval)中的基本理论，然而当我们看过Lucene后我们会发现，Lucene是对这种基本理论的一种基本的的实践。所以在以后分析Lucene的文章中，会常常看到以上理论在Lucene中的应用。<br>
 在进入Lucene之前，对上述索引创建和搜索过程所一个总结，如图：<br>
 
-<img src="/blog/image/theory15.png" />
+<img src="/blog/image/theory15.jpg" />
 
 1. 索引过程：
 
