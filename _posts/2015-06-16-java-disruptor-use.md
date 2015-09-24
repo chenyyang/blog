@@ -169,7 +169,8 @@ Consumer:
 
 ##6. 例子
 
-import com.lmax.disruptor.EventHandler;
+    
+    import com.lmax.disruptor.EventHandler;
     import com.lmax.disruptor.RingBuffer;
     import com.lmax.disruptor.dsl.Disruptor;
     import com.lmax.disruptor.util.Util;
