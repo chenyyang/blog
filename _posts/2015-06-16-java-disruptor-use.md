@@ -166,3 +166,143 @@ Consumer:
     }
 
 上面是所有的多消费者代码，而且是并发消费。
+
+##6. 例子
+
+import com.lmax.disruptor.EventHandler;
+    import com.lmax.disruptor.RingBuffer;
+    import com.lmax.disruptor.dsl.Disruptor;
+    import com.lmax.disruptor.util.Util;
+    
+    import java.util.concurrent.*;
+    
+    public class Sample {
+    
+        /**
+         * 两个handler，handler1－－》handler2，一个事件会被两个消费者都消费到
+         * @param args
+         */
+        public static void main2(String[] args) {
+            ExecutorService exec = Executors.newCachedThreadPool();
+            Disruptor<ValueEvent> disruptor = new Disruptor<ValueEvent>(ValueEvent.EVENT_FACTORY, 4, exec);
+    
+            final EventHandler<ValueEvent> handler1 = new EventHandler<ValueEvent>() {
+                public void onEvent(final ValueEvent event, final long sequence, final boolean endOfBatch) throws Exception {
+                    System.out.println("handler1:  Sequence: " + sequence + "   ValueEvent: " + event.getValue());
+                }
+            };
+            final EventHandler<ValueEvent> handler2 = new EventHandler<ValueEvent>() {
+                public void onEvent(final ValueEvent event, final long sequence, final boolean endOfBatch) throws Exception {
+                    System.out.println("handler2:  Sequence: " + sequence + "   ValueEvent: " + event.getValue());
+                }
+            };
+    
+            disruptor.handleEventsWith( handler2);
+            disruptor.handleEventsWith(handler1);
+    
+            //这里会启动两个线程
+            RingBuffer<ValueEvent> ringBuffer = disruptor.start();
+    
+            int bufferSize = ringBuffer.getBufferSize();
+            System.out.println("bufferSize =  " + bufferSize);
+    
+            for (long i = 0; i < 1000; i++) {
+                long seq = ringBuffer.next();
+                try {
+                    ValueEvent valueEvent = ringBuffer.get(seq);
+                    valueEvent.setValue(i);
+                } finally {
+                    ringBuffer.publish(seq);
+                }
+            }
+    
+            disruptor.shutdown();
+            exec.shutdown();
+    
+            int scale = Util.getUnsafe().arrayIndexScale(Object[].class);
+            System.out.println(scale);
+    
+        }
+    
+        //压测
+        public static void main1(String [] arg){
+            System.out.print("－－－－－ 1");
+            final ExecutorService exec = new ThreadPoolExecutor(2, 2*2, 0, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(100000));
+            for (int j = 0; j < 50; j++) {
+                System.out.println("==================set====================== client " + j);
+                new Thread(new Runnable() {
+                    public void run() {
+                        send(exec);
+                    }
+                }).start();
+            }
+    
+            send(exec);
+        }
+    
+        private static void send(ExecutorService exec) {
+            while (true) {
+                try {
+                    exec.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                System.out.println("consumer ...");
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }catch (Exception e) {
+                    System.out.print("");
+                }
+            }
+        }
+    
+        /**
+         * 一个handler
+         * @param args
+         */
+        public static void main(String[] args) {
+            ExecutorService exec = Executors.newFixedThreadPool(100);
+            //不管设置多少个线程，只会有一个线程启动
+            Disruptor<ValueEvent> disruptor = new Disruptor<ValueEvent>(ValueEvent.EVENT_FACTORY, 1024, exec);
+    
+            final EventHandler<ValueEvent> handler = new EventHandler<ValueEvent>() {
+    
+                public void onEvent(final ValueEvent event, final long sequence, final boolean endOfBatch) throws Exception {
+                    try {
+                        Thread.sleep(10000);
+                        System.out.println("consumer ...");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            disruptor.handleEventsWith(handler);
+            //start会更具handleEventsWith个数启动对应的线程，一个handler一个线程
+            RingBuffer<ValueEvent> ringBuffer = disruptor.start();
+    
+            int bufferSize = ringBuffer.getBufferSize();
+            System.out.println("bufferSize =  " + bufferSize);
+    
+           while (true){
+                long seq = ringBuffer.next();
+                try {
+                    ValueEvent valueEvent = ringBuffer.get(seq);
+                    valueEvent.setValue(0);
+                    System.out.println(" -----  ");
+                    exec.isShutdown();
+                } finally {
+                    ringBuffer.publish(seq);
+                }
+            }
+    
+    //        disruptor.shutdown();
+    //        exec.shutdown();
+    //
+    //        int scale = Util.getUnsafe().arrayIndexScale(Object[].class);
+    //        System.out.println(scale);
+    
+        }
+    }
