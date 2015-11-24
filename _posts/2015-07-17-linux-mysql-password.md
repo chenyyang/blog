@@ -2,7 +2,7 @@
 layout: default
 title:  Mysql改密码和授权
 categories:
-  - linux
+  - database
 
 ---
 # {{ page.title }}
