@@ -42,7 +42,7 @@ key+value的表达形式，key种包含类型和位置信息，value用变长编
 
 <img src="/blog/image/protobuf3.png" style="max-width:100%;"/>
 
-wire_type : 
+wire_type划分，其中3、4已经废弃 : 
 
 <img src="/blog/image/protobuf4.png" style="max-width:100%;"/>
 
