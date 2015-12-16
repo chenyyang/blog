@@ -38,7 +38,7 @@ Protocol buffers是google使用的一种结构化数据序列化编码解码方�
 
 key+value的表达形式，key种包含类型和位置信息，value用变长编码表示值。
 
-##3.1. key
+###3.1. key
 
 <img src="/blog/image/protobuf3.png" style="max-width:100%;"/>
 
@@ -46,7 +46,7 @@ wire_type :
 
 <img src="/blog/image/protobuf4.png" style="max-width:100%;"/>
 
-##3.2. value
+###3.2. value
 在Protocol Buffers中采用Base-128变长编码，所谓变长编码是和定长编码相对的，定长编码使用固定字节数来表示，如int32类型的数字固定使用4 bytes表示，而变长编码是需要几个字节就使用几个字节，如对于int32类型的数字1来说，只需要1 bytes足够。Base-128变长编码的原则就两条：<br>
 
 	1.每个字节使用使用低7位表示数字，除了最后一个字节，其他字节的最高位都设置为1。<br>
@@ -55,7 +55,7 @@ wire_type :
 
 <img src="/blog/image/protobuf2.png" style="max-width:100%;"/>
 
-##3.2. 例子
+###3.3. 例子
 
 例子1
 
