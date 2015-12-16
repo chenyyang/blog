@@ -2,7 +2,7 @@
 layout: default
 title:  CentOS6.4下Mysql数据库的安装与配置
 categories:
-  - linux
+  - database
 
 ---
 # {{ page.title }}

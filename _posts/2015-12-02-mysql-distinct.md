@@ -2,7 +2,7 @@
 layout: default
 title:  GROUP BY完成只取一个
 categories:
-  - mysql
+  - database
 
 ---
 # {{ page.title }}
