@@ -78,6 +78,8 @@ linux:linux的源里的ffmpeg很老，建议直接下载文件安装。
 
 上面安装以后就可以使用简单的ffmpeg功能
 
+有一篇关于安装说的比较好的[博客](http://www.centoscn.com/image-text/install/2015/0523/5512.html)
+
 ##3. java代码调用命令行
 
     /**
@@ -153,3 +155,5 @@ cmd代码：
 
 
 如上代码放一起就行了
+
+
