@@ -7,7 +7,6 @@ categories:
 ---
 # {{ page.title }}
 
-git submodule使用
 
 ## 1. 添加
 
