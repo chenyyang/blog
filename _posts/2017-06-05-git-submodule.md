@@ -20,15 +20,12 @@ git submodule使用
 1. 编辑.gitmodules,删除对应要删除的submodule的行．
 2. 编辑.git/config,删除有对应要删除的submodule的行．
 3. 删除命令:
-删除命令
     
-    git rm --cached ${submodule_PATH}  (PS:此处最后没有符号 / .)
+        git rm --cached ${submodule_PATH}  (PS:此处最后没有符号 / .)
 
 4. 删除对应的目录:
-
-删除对应的目录
     
-    rm -rf ${submodule_PATH}
+        rm -rf ${submodule_PATH}
 
 
 ## 3. 下载后初始化
