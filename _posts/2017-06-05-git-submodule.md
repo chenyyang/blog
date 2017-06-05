@@ -9,13 +9,13 @@ categories:
 
 git submodule使用
 
-## 添加
+## 1. 添加
 
 为当前工程添加submodule，命令如下：
     
     git submodule add 仓库地址 路径
 
-## 删除
+## 2. 删除
 
 1. 编辑.gitmodules,删除对应要删除的submodule的行．
 2. 编辑.git/config,删除有对应要删除的submodule的行．
@@ -28,7 +28,7 @@ git submodule使用
     rm -rf ${submodule_PATH}
 
 
-## 下载后初始化
+## 3. 下载后初始化
 
 cd到submodule的目录下
 
