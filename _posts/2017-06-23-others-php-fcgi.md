@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  CGI、FastCGI和PHP-FPM关系
+title:  FastCGI和PHP-FPM关系
 categories:
   - others
 
