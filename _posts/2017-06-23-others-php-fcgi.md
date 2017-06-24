@@ -9,7 +9,7 @@ categories:
 
 ## 1. FastCgi与PHP-fpm关系
 
-<img src="/blog/image/fcgi2.png" style="max-width:100%;"/* 
+<img src="/blog/image/fcgi2.png" style="max-width:100%;"/> 
 
 当Web Server收到 index.php 这个请求后，会启动对应的 CGI 程序，这里就是PHP的解析器。接下来PHP解析器会解析php.ini文件，初始化执行环境，然后处理请求，再以规定CGI规定的格式返回处理后的结果，退出进程，Web server再把结果返回给浏览器。这就是一个完整的动态PHP Web访问流程，接下来再引出这些概念，就好理解多了，
 
@@ -24,7 +24,7 @@ WEB 中
   
 流程: 
 
-<img src="/blog/image/fcgi3.png" style="max-width:100%;"/* 
+<img src="/blog/image/fcgi3.png" style="max-width:100%;"/> 
 
 1. Web Server启动时载入FastCGI进程管理器（Apache Module或IIS ISAPI等)
 2. FastCGI进程管理器自身初始化，启动多个CGI解释器进程(可建多个php-cgi)，并等待来自Web Server的连接。
@@ -38,7 +38,7 @@ FastCGI与CGI特点：
 
 演变过程：
 
-<img src="/blog/image/fcgi4.png" style="max-width:100%;"/* 
+<img src="/blog/image/fcgi4.png" style="max-width:100%;"/> 
 
 ## 2. CGI
 CGI是为了保证web server传递过来的数据是标准格式的，方便CGI程序的编写者。
